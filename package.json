@@ -1,0 +1,28 @@
+{
+  "name": "@splincode/client-logger",
+  "version": "0.0.4",
+  "description": "Simple logger for browser",
+  "main": "./dist/src/logger.js",
+  "typings": "logger.d.ts",
+  "scripts": {
+    "compile": "ts-node logger.ts",
+    "prepublishOnly": "tsc -p ./ --outDir dist/src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splincodewd/client-logger.git"
+  },
+  "keywords": [
+    "console",
+    "logger",
+    "javascript",
+    "browser",
+    "typescript"
+  ],
+  "author": "splincodewd",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/splincodewd/client-logger/issues"
+  },
+  "homepage": "https://github.com/splincodewd/client-logger#readme"
+}
