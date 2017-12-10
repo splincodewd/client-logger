@@ -3,8 +3,8 @@
 > Lightweight and configurable JavaScript logger (written on TypeScript)
 
 Translations:
-- [Русский](https://github.com/splincodewd/client-logger/README-ru.md)
-- [English](https://github.com/splincodewd/client-logger/README.md)
+- [Русский](https://github.com/splincodewd/client-logger/blob/master/README-ru.md)
+- [English](https://github.com/splincodewd/client-logger/blob/master/README.md)
 
 ## Installation
 
@@ -38,6 +38,10 @@ logger.error("error is worked", 5, (2.55).toFixed());
 * **Default level: All**
 
 ![](https://habrastorage.org/webt/uj/ng/dw/ujngdwq-wngbjkzrbmlz_fb2sos.png)
+
+* **Show time**
+
+![](https://habrastorage.org/webt/1i/lj/rh/1iljrhzeiw_3mvbaji5gcx2adnm.gif)
 
 * **Disable trace on console:**
 
