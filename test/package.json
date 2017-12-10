@@ -1,0 +1,21 @@
+{
+  "name": "logger-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r ts-node/register logger.spec.ts",
+    "mocha": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.0.8",
+    "@types/jasmine": "^2.8.2",
+    "@types/mocha": "^2.2.44",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "ts-node": "^3.3.0",
+    "typings": "^2.1.1"
+  }
+}

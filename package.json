@@ -1,12 +1,13 @@
 {
   "name": "@splincode/client-logger",
-  "version": "0.0.4",
+  "version": "0.0.20",
   "description": "Simple logger for browser",
-  "main": "./dist/src/logger.js",
-  "typings": "logger.d.ts",
+  "main": "dist/logger.js",
+  "typings": "dist/logger",
   "scripts": {
-    "compile": "ts-node logger.ts",
-    "prepublishOnly": "tsc -p ./ --outDir dist/src/"
+    "test": "mocha -r ts-node/register test/logger.spec.ts",
+    "compile": "ts-node src/logger.ts",
+    "prepublishOnly": "tsc"
   },
   "repository": {
     "type": "git",

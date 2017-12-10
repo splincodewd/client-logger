@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es5",
     "module": "commonjs",
-    "sourceMap": true,
+    "target": "es5",
+    "noImplicitAny": false,
+    "sourceMap": false,
     "declaration": true,
-    "declarationDir": "./dist/src",
-    "outDir": "./dist/src",
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": false,
+    "outDir": "./dist",
+    "moduleResolution": "node"
   },
+  "filesGlob": [
+    "./**/*.ts",
+    "!./node_modules/**/*.ts"
+  ],
+  "files": [
+    "./src/logger.ts"
+  ],
   "exclude": [
-    "node_modules",
-    "dist"
+    "node_modules"
   ]
 }
