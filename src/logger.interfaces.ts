@@ -39,3 +39,9 @@ export const DEFAULT_COLORS: LoggerColor = {
     [LoggerLevel.WARN]: "#FF6419",
     [LoggerLevel.ERROR]: "#F1062D"
 };
+
+export interface ConsoleGroupOptions {
+    title: string;
+    open: boolean;
+    callback: Function;
+}

@@ -1,4 +1,5 @@
 import {
+    ConsoleGroupOptions,
     DEFAULT_COLORS,
     DEFAULT_LABELS,
     LoggerColor,
@@ -18,12 +19,13 @@ export class ClientLogger {
     constructor(options: LoggerConfig = {}) {
         this.stream = options.consoleStream || (<any>Object).assign({}, console);
         this.colorLabel = <LoggerColor>{...this.colorLabel, ...options.colorConfig};
+        this.configLabel = <LoggerColor>{...this.configLabel, ...options.labelConfig};
         this.minLevel = options.logLevel || LoggerLevel.ALL;
         if (options.showLevel) this.debug("Logging levels: ", LoggerLevel[this.minLevel]);
     }
 
     public get level() {
-        return this.minLevel;
+        return <any>LoggerLevel[this.minLevel];
     }
 
     public set level(logLevel: LoggerLevel) {
@@ -68,14 +70,17 @@ export class ClientLogger {
         return this.stream.clear.bind(this.stream);
     }
 
-    public group(label: string, callback: Function, customTitle: string = this.configLabel[LoggerLevel.INFO]) {
+    public group(label: string, callback: Function, open: boolean = false, prefix: string = this.configLabel[LoggerLevel.INFO]) {
         if (this.minLevel === LoggerLevel.OFF) return this.noop;
-        this.groupCollapsed(label, callback, customTitle);
+        if (!this.stream.hasOwnProperty("groupEnd")) return callback();
+        const title = `${(prefix) ? (prefix + ' ') : ('')}${String(label).toUpperCase()}`;
+        this.showConsoleGroup({title, open, callback});
     }
 
-    private groupCollapsed(label: string, callback: Function, customTitle: string) {
-        if (!this.stream.hasOwnProperty("groupCollapsed")) callback();
-        this.stream.groupCollapsed(`[${customTitle}]: ${label.toUpperCase()}`);
+    private showConsoleGroup(options: ConsoleGroupOptions) {
+        let {title, open, callback} = options;
+        let typeGroup = !open ? "groupCollapsed" : "group";
+        this.stream[typeGroup](title);
         callback();
         this.stream.groupEnd();
     }
@@ -85,3 +90,5 @@ export class ClientLogger {
     }
 
 }
+
+export const logger = new ClientLogger();
