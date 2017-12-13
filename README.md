@@ -14,7 +14,10 @@ npm i @splincode/client-logger --save-dev
 
 ## Usage
 
-Use this logger quite easily for browser. You only need to install the package and connect it in your scripts before assembly. To check how the logger works, you can test online how it works on this link [http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8). And also you can run the example yourself on the webpack:
+Use this logger quite easily for browser. You only need to install the package and connect it in your scripts before assembly. 
+To check how the logger works, you can test online 
+how it [works on this link](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8). 
+And also you can run the example yourself on the webpack:
 
 ```bash
 $ git clone https://github.com/splincodewd/client-logger 
