@@ -6,6 +6,7 @@ typings
 
 *.log
 *.tgz
+*.yml
 
 src/
 test/
