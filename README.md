@@ -190,4 +190,3 @@ npm test
 ## About
 
 Author: [Maxim Ivanov](https://github.com/splincode) <br>
-Contributors: [Nikolay Mitropolsky](https://github.com/xiexed)
