@@ -15,7 +15,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@splincode/client-logger": "0.0.26",
+    "@splincode/client-logger": "0.0.30",
     "@types/jasmine": "^2.5.53",
     "@types/lodash": "^4.14.70",
     "awesome-typescript-loader": "^3.2.1",
