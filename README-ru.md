@@ -1,23 +1,27 @@
 # ClientLogger [![Build Status](https://travis-ci.org/splincodewd/client-logger.svg?branch=master)](https://travis-ci.org/splincodewd/client-logger) [![npm version](https://badge.fury.io/js/%40splincode%2Fclient-logger.svg)](https://badge.fury.io/js/%40splincode%2Fclient-logger) [![dependencies Status](https://david-dm.org/splincodewd/client-logger/status.svg)](https://david-dm.org/splincodewd/client-logger)
 
-> Lightweight and configurable JavaScript logger (written on TypeScript)
+> Легковесное и легконастраиваемое логгирование на JavaScript (реализовано на TypeScript)
 
-Translations:
+Перевод:
 - [Русский](https://github.com/splincodewd/client-logger/blob/master/README-ru.md)
 - [English](https://github.com/splincodewd/client-logger/blob/master/README.md)
 
-## Installation
+## Установка
 
 ```bash
 npm i @splincode/client-logger --save-dev
 ```
 
-## Usage
+## Использование
 
-You could easily use this Logger in the browser. 
-You only need to install the package and import it in your scripts before assembly.
-To see how to use the Logger please [follow the link](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8).
-You can also run the examples on webpack:
+Это достаточно легко использовать в своем браузер. Перед сборкой вам нужно установить пакет и импортировать
+его в свой скрипт. Чтобы убедиться как работает логгирование, вы можете [перейти по ссылке](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8).
+Также вы можете запустить примеры самостоятельно на webpack:
+
+You could easily use for browser. You only need to install the package and attach it in your scripts before assembly. 
+To check how the logger works, you can test online 
+how it [works on this link](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8). 
+And also you can run the example yourself on the webpack:
 
 ```bash
 $ git clone https://github.com/splincodewd/client-logger 
@@ -26,7 +30,7 @@ $ npm install
 $ npm start # open http://localhost:3000/
 ```
 
-### Example 1: basic method, groups
+### Пример 1: базовые методы, группировка
 
 ```typescript
 import {logger} from "@splincode/client-logger";
@@ -38,15 +42,15 @@ logger.warn("warn is worked", 4, String);
 logger.error("error is worked", 5, (2.55).toFixed());
 ```
 
-* **Default level: All**
+* **Уровень по умолчанию: отображать все**
 
 ![](https://habrastorage.org/webt/uj/ng/dw/ujngdwq-wngbjkzrbmlz_fb2sos.png)
 
-* **Show time**
+* **Отображение времени**
 
 ![](https://habrastorage.org/webt/1i/lj/rh/1iljrhzeiw_3mvbaji5gcx2adnm.gif)
 
-* **Disable trace on console:**
+* **Просмотр трассировки в браузере:**
 
 ```typescript
 import {logger} from "@splincode/client-logger";
@@ -58,7 +62,7 @@ for (let i = 0; i < 20; i++) {
 
 ![](https://habrastorage.org/webt/un/fl/81/unfl81h_wjnltr184of-vx1skio.gif)
 
-* **Logger group:**
+* **Группы:**
 
 ```typescript
 import {logger} from "@splincode/client-logger";
@@ -88,7 +92,7 @@ logger.group("EXAMPLE 4: custom prefix group", () => {
 
 ![](https://habrastorage.org/webt/sd/fd/zg/sdfdzgxtymqfrykubfkd3cu9xws.png)
 
-### Example 2: Multiple uses of the logger
+### Пример 2: Сборка проекта с флагом (DEV|PROD)
 
 ```typescript
 import {LoggerLevel} from "@splincode/client-logger/dist/logger.interfaces";
@@ -123,7 +127,7 @@ logger.error("error is worked", 5, (2.55).toFixed());
 
 ![](https://habrastorage.org/webt/63/er/en/63erenncr7taxfg8gl7jqmjcjr8.png)
 
-### Example 3: Full configurations
+### Пример 3: Дополнительные настройки
 
 ```typescript
 import {LoggerLevel} from "@splincode/client-logger/dist/logger.interfaces";
@@ -132,13 +136,15 @@ import {MyConsole} from "./MyConsole";
 
 const logger = new ClientLogger({
 
-    // Drop-in replacement for console, if needed
+    // Если мы хотим использовать API консоли
+    // мы можем использовать не console,
+    // а любой другой объект
     consoleStream: <Console> new MyConsole(),
 
-    // The logging level is displayed in the console
+    // Отображать уровень логгирования при инициализации
     showLevel: true,
 
-    // Custom color
+    // Установка цветовой палитры для меток
     colorConfig: {
         [LoggerLevel.TRACE]: "Grey",
         [LoggerLevel.DEBUG]: "Blue",
@@ -157,6 +163,9 @@ const logger = new ClientLogger({
     }
 
 });
+
+// Пример: переопределения консоли (monkey patching)
+// при этом наш логгер впорядке
 
 const _info = console.info;
 console.info = function () {
@@ -177,13 +186,13 @@ logger.error("error is worked", 5, (2.55).toFixed());
 
 ![](https://habrastorage.org/webt/-5/we/y7/-5wey7fsz_d9bumai6zxn_ujkv8.png)
 
-## Run Tests
-All Сlient Logger tests are written with mocha, chai.
+## Запуск тестов
+Все тесты работают на mocha, chai.
 
 ```bash
 npm test
 ```
 
-## About
+## О проекте
 
-Author: [Maxim Ivanov](https://github.com/splincode) <br>
+Автор: [Maxim Ivanov](https://github.com/splincode) <br>
