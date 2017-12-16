@@ -5,7 +5,7 @@
   "main": "dist/logger.js",
   "typings": "dist/logger",
   "scripts": {
-    "test": "mocha -r ts-node/register test/logger.spec.ts",
+    "test": "mocha -r ts-node/register src/*.spec.ts",
     "compile": "ts-node src/logger.ts",
     "prepublishOnly": "tsc"
   },
@@ -30,6 +30,10 @@
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
     "ts-node": "^4.0.1",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "@types/chai": "^4.0.8",
+    "@types/jasmine": "^2.8.2",
+    "@types/mocha": "^2.2.44",
+    "typings": "^2.1.1"
   }
 }

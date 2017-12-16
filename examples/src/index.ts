@@ -1,7 +1,7 @@
-import {MyConsole} from "./MyConsole";
 import {ClientLogger, logger, LoggerLevel} from "@splincode/client-logger";
+import {MyConsole} from "./MyConsole";
+declare const process: any;
 
-// noinspection TypescriptExplicitMemberType
 window["showExample1"] = function showExample1() {
 
     logger.clear();
@@ -15,7 +15,6 @@ window["showExample1"] = function showExample1() {
     logger.error("error is worked", 5, (2.55).toFixed());
 };
 
-// noinspection TypescriptExplicitMemberType
 window["showExample2"] = function showExample2() {
 
     logger.clear();
@@ -45,7 +44,6 @@ window["showExample2"] = function showExample2() {
 };
 
 
-// noinspection TypescriptExplicitMemberType
 window["showExample3"] = function showExample3() {
 
     logger.clear();
@@ -61,7 +59,6 @@ window["showExample3"] = function showExample3() {
     logger.error("error is worked", 5, (2.55).toFixed());
 };
 
-// noinspection TypescriptExplicitMemberType
 window["showExample4"] = function showExample4() {
 
     logger.clear();
@@ -105,7 +102,6 @@ window["showExample4"] = function showExample4() {
 
     console.info("monkey patching doesn't break anything ");
 
-    // Own method
     newLogger.trace("trace is worked", 1, {a: 1});
     newLogger.debug("debug is worked", 2, console);
     newLogger.info("info is worked", 3, Object);

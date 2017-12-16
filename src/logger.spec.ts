@@ -1,6 +1,5 @@
-import {LoggerInjector, LoggerLineType} from "./helper/converter";
-import {LoggerLevel} from "../src/logger.interfaces";
-import {ClientLogger} from "../src/logger";
+import {LoggerInjector, LoggerLineType} from "../helpers/converter";
+import {ClientLogger, LoggerLevel} from "./logger";
 import {expect} from 'chai';
 import 'mocha';
 
