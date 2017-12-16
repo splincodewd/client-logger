@@ -5,9 +5,27 @@
   "main": "dist/logger.js",
   "typings": "dist/logger",
   "scripts": {
-    "test": "mocha -r ts-node/register src/*.spec.ts",
+    "test": "nyc mocha",
     "compile": "ts-node src/logger.ts",
     "prepublishOnly": "tsc"
+  },
+  "nyc": {
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
   },
   "repository": {
     "type": "git",
