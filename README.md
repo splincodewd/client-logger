@@ -1,4 +1,4 @@
-# ClientLogger [![Build Status](https://travis-ci.org/splincodewd/client-logger.svg?branch=master)](https://travis-ci.org/splincodewd/client-logger) [![npm version](https://badge.fury.io/js/%40splincode%2Fclient-logger.svg)](https://badge.fury.io/js/%40splincode%2Fclient-logger) [![dependencies Status](https://david-dm.org/splincodewd/client-logger/status.svg)](https://david-dm.org/splincodewd/client-logger)
+# ClientLogger [![Build Status](https://travis-ci.org/splincodewd/client-logger.svg?branch=master)](https://travis-ci.org/splincodewd/client-logger) [![npm version](https://badge.fury.io/js/%40splincode%2Fclient-logger.svg)](https://badge.fury.io/js/%40splincode%2Fclient-logger) [![dependencies Status](https://david-dm.org/splincodewd/client-logger/status.svg)](https://david-dm.org/splincodewd/client-logger) [![Coverage Status](https://coveralls.io/repos/github/splincodewd/client-logger/badge.svg?branch=master)](https://coveralls.io/github/splincodewd/client-logger?branch=master)
 
 > Lightweight and configurable JavaScript logger (written on TypeScript)
 
@@ -26,6 +26,8 @@ $ npm install
 $ npm start # open http://localhost:3000/
 ```
 
+![](https://habrastorage.org/webt/jf/zn/_9/jfzn_9ir8zkns2gqhp6brzoztws.gif)
+
 ### Example 1: basic method, groups
 
 ```typescript
@@ -40,7 +42,7 @@ logger.error("error is worked", 5, (2.55).toFixed());
 
 * **Default level: All**
 
-![](https://habrastorage.org/webt/uj/ng/dw/ujngdwq-wngbjkzrbmlz_fb2sos.png)
+![](https://habrastorage.org/webt/x-/bc/3b/x-bc3bztgftwzvamekuffrxcilq.png)
 
 * **Show time**
 
@@ -63,7 +65,7 @@ for (let i = 0; i < 20; i++) {
 ```typescript
 import {logger} from "@splincode/client-logger";
 
-logger.group("EXAMPLE 1: show logger stack", () => {
+logger.group("EXAMPLE 2: show stack", () => {
     logger.trace("trace is worked", 1, {a: 1});
     logger.debug("debug is worked", 2, console);
     logger.info("info is worked", 3, Object);
@@ -71,22 +73,22 @@ logger.group("EXAMPLE 1: show logger stack", () => {
     logger.error("error is worked", 5, (2.55).toFixed());
 });
 
-logger.group("EXAMPLE 2: show trace", () => {
+logger.group("Show trace", () => {
     for (let i = 0; i < 20; i++) {
         logger.trace("trace is worked", i);
     }
 });
 
-logger.group("EXAMPLE 3: show open group", () => {
+logger.group("Opened group", () => {
     logger.debug("Level logger:", logger.level);
 }, true);
 
-logger.group("EXAMPLE 4: custom prefix group", () => {
+logger.group("Custom prefix group", () => {
     logger.assert(<any>1 === <any>"1", "Type check trusty");
-}, true, "");
+}, true, "[TYPE CHECK]:");
 ```
 
-![](https://habrastorage.org/webt/sd/fd/zg/sdfdzgxtymqfrykubfkd3cu9xws.png)
+![](https://habrastorage.org/webt/jg/ak/st/jgakstdrpkdyh02ml3akfxachcu.png)
 
 ### Example 2: Multiple uses of the logger
 
@@ -166,7 +168,7 @@ console.info = function () {
     console.log("after invoke method", "\n\n\n");
 };
 
-console.info("[test monkey patching]");
+console.info("monkey patching doesn't break anything ");
 
 logger.trace("trace is worked", 1, {a: 1});
 logger.debug("debug is worked", 2, console);

@@ -1,10 +1,11 @@
-# ClientLogger [![Build Status](https://travis-ci.org/splincodewd/client-logger.svg?branch=master)](https://travis-ci.org/splincodewd/client-logger) [![npm version](https://badge.fury.io/js/%40splincode%2Fclient-logger.svg)](https://badge.fury.io/js/%40splincode%2Fclient-logger) [![dependencies Status](https://david-dm.org/splincodewd/client-logger/status.svg)](https://david-dm.org/splincodewd/client-logger)
+# ClientLogger [![Build Status](https://travis-ci.org/splincodewd/client-logger.svg?branch=master)](https://travis-ci.org/splincodewd/client-logger) [![npm version](https://badge.fury.io/js/%40splincode%2Fclient-logger.svg)](https://badge.fury.io/js/%40splincode%2Fclient-logger) [![dependencies Status](https://david-dm.org/splincodewd/client-logger/status.svg)](https://david-dm.org/splincodewd/client-logger) [![Coverage Status](https://coveralls.io/repos/github/splincodewd/client-logger/badge.svg?branch=master)](https://coveralls.io/github/splincodewd/client-logger?branch=master)
 
 > Легковесное и легконастраиваемое логгирование на JavaScript (реализовано на TypeScript)
 
 Перевод:
 - [Русский](https://github.com/splincodewd/client-logger/blob/master/README-ru.md)
 - [English](https://github.com/splincodewd/client-logger/blob/master/README.md)
+
 
 ## Установка
 
@@ -18,17 +19,14 @@ npm i @splincode/client-logger --save-dev
 его в свой скрипт. Чтобы убедиться как работает логгирование, вы можете [перейти по ссылке](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8).
 Также вы можете запустить примеры самостоятельно на webpack:
 
-You could easily use for browser. You only need to install the package and attach it in your scripts before assembly. 
-To check how the logger works, you can test online 
-how it [works on this link](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8). 
-And also you can run the example yourself on the webpack:
-
 ```bash
 $ git clone https://github.com/splincodewd/client-logger 
 $ cd client-logger/examples/
 $ npm install
 $ npm start # open http://localhost:3000/
 ```
+
+![](https://habrastorage.org/webt/jf/zn/_9/jfzn_9ir8zkns2gqhp6brzoztws.gif)
 
 ### Пример 1: базовые методы, группировка
 
@@ -44,7 +42,7 @@ logger.error("error is worked", 5, (2.55).toFixed());
 
 * **Уровень по умолчанию: отображать все**
 
-![](https://habrastorage.org/webt/uj/ng/dw/ujngdwq-wngbjkzrbmlz_fb2sos.png)
+![](https://habrastorage.org/webt/x-/bc/3b/x-bc3bztgftwzvamekuffrxcilq.png)
 
 * **Отображение времени**
 
@@ -67,7 +65,7 @@ for (let i = 0; i < 20; i++) {
 ```typescript
 import {logger} from "@splincode/client-logger";
 
-logger.group("EXAMPLE 1: show logger stack", () => {
+logger.group("EXAMPLE 2: show stack", () => {
     logger.trace("trace is worked", 1, {a: 1});
     logger.debug("debug is worked", 2, console);
     logger.info("info is worked", 3, Object);
@@ -75,22 +73,22 @@ logger.group("EXAMPLE 1: show logger stack", () => {
     logger.error("error is worked", 5, (2.55).toFixed());
 });
 
-logger.group("EXAMPLE 2: show trace", () => {
+logger.group("Show trace", () => {
     for (let i = 0; i < 20; i++) {
         logger.trace("trace is worked", i);
     }
 });
 
-logger.group("EXAMPLE 3: show open group", () => {
+logger.group("Opened group", () => {
     logger.debug("Level logger:", logger.level);
 }, true);
 
-logger.group("EXAMPLE 4: custom prefix group", () => {
+logger.group("Custom prefix group", () => {
     logger.assert(<any>1 === <any>"1", "Type check trusty");
-}, true, "");
+}, true, "[TYPE CHECK]:");
 ```
 
-![](https://habrastorage.org/webt/sd/fd/zg/sdfdzgxtymqfrykubfkd3cu9xws.png)
+![](https://habrastorage.org/webt/jg/ak/st/jgakstdrpkdyh02ml3akfxachcu.png)
 
 ### Пример 2: Сборка проекта с флагом (DEV|PROD)
 
@@ -140,10 +138,10 @@ const logger = new ClientLogger({
     // мы можем использовать не console,
     // а любой другой объект
     consoleStream: <Console> new MyConsole(),
-
+    
     // Отображать уровень логгирования при инициализации
     showLevel: true,
-
+    
     // Установка цветовой палитры для меток
     colorConfig: {
         [LoggerLevel.TRACE]: "Grey",
@@ -152,7 +150,7 @@ const logger = new ClientLogger({
         [LoggerLevel.WARN]: "Orange",
         [LoggerLevel.ERROR]: "Red",
     },
-
+    
     // Custom label
     labelConfig: {
         [LoggerLevel.TRACE]: "trace: ",
@@ -164,9 +162,6 @@ const logger = new ClientLogger({
 
 });
 
-// Пример: переопределения консоли (monkey patching)
-// при этом наш логгер впорядке
-
 const _info = console.info;
 console.info = function () {
     console.log("\n\n\n");
@@ -175,7 +170,9 @@ console.info = function () {
     console.log("after invoke method", "\n\n\n");
 };
 
-console.info("[test monkey patching]");
+// Пример: переопределения консоли (monkey patching)
+// при этом наш логгер в порядке
+console.info("monkey patching doesn't break anything ");
 
 logger.trace("trace is worked", 1, {a: 1});
 logger.debug("debug is worked", 2, console);
@@ -195,4 +192,4 @@ npm test
 
 ## О проекте
 
-Автор: [Maxim Ivanov](https://github.com/splincode) <br>
+Автор: [Максим Иванов](https://github.com/splincode) <br>
