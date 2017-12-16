@@ -43,7 +43,7 @@ var config = {
             }
         }),
         new HtmlWebpackPlugin({
-            title: "Typescript Webpack Starter",
+            title: "ClientLogger examples",
             template: "!!ejs-loader!src/index.html"
         }),
         new webpack.optimize.CommonsChunkPlugin({

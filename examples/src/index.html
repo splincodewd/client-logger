@@ -1,21 +1,58 @@
 <!DOCTYPE html>
-<html lang="">
-
+<html lang="en" class="ext-box" id="app">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
-
   <meta name="description" content="<%= htmlWebpackPlugin.options.title %>">
-
+  <style>html{display: none}</style>
 </head>
 
-<body>
-  <div> Open the console to see the results of the work </div>
+<body class="int-box">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h3 class="center m-bottom">Simple logger for javascript</h3>
+        <p class="center">
+          In order to see examples, you need to open the browser console or press F12.
+        </p>
+      </div>
+    </div>
+
+    <div id="console-activate" class="row example no-display">
+
+      <div class="col-3">
+        <button class="center-block" onclick="showExample1()">Show me (example 1)</button>
+        <h5 class="center m-bottom">Basic method <br> (trace, debug, info, ..)</h5>
+      </div>
+      <div class="col-3">
+        <button class="center-block" onclick="showExample2()">Show me (example 2)</button>
+        <h5 class="center m-bottom">Example groups <br> (closed, opened)</h5>
+      </div>
+      <div class="col-3">
+        <button class="center-block" onclick="showExample3()">Show me (example 3)</button>
+        <h5 class="center m-bottom">Show only warnings <br> and error</h5>
+      </div>
+      <div class="col-3">
+        <button class="center-block" onclick="showExample4()">Show me (example 4)</button>
+        <h5 class="center m-bottom">Full configuration <br> (change colors and text)</h5>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="console-dis-activate" class="row example no-display">
+
+    <div class="col-12">
+      <h4 class="center m-bottom">You need open console</h4>
+    </div>
+
+  </div>
+
 </body>
 
 </html>

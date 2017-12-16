@@ -9,11 +9,11 @@ export enum LoggerLevel {
 }
 
 export interface LoggerConfig {
-    logLevel?: LoggerLevel;
-    colorConfig?: LoggerColor;
-    labelConfig?: LoggerLabels;
-    consoleStream?: Console;
-    showLevel?: boolean;
+    logLevel: LoggerLevel;
+    colorConfig: LoggerColor;
+    labelConfig: LoggerLabels;
+    consoleStream: Console;
+    showLevel: boolean;
 }
 
 export interface LoggerLabels {

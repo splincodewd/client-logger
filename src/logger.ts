@@ -16,7 +16,7 @@ export class ClientLogger {
     private colorLabel: LoggerColor = DEFAULT_COLORS;
     private configLabel: LoggerLabels = DEFAULT_LABELS;
 
-    constructor(options: LoggerConfig = {}) {
+    constructor(options: Partial<LoggerConfig> = {}) {
         this.stream = options.consoleStream || (<any>Object).assign({}, console);
         this.colorLabel = <LoggerColor>{...this.colorLabel, ...options.colorConfig};
         this.configLabel = <LoggerColor>{...this.configLabel, ...options.labelConfig};
@@ -92,3 +92,4 @@ export class ClientLogger {
 }
 
 export const logger = new ClientLogger();
+export {LoggerLevel, LoggerColor, LoggerConfig, LoggerLabels} from "./logger.interfaces";

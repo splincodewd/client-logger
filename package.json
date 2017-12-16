@@ -1,6 +1,6 @@
 {
   "name": "@splincode/client-logger",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "Simple logger for browser",
   "main": "dist/logger.js",
   "typings": "dist/logger",
