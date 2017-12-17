@@ -10,7 +10,7 @@ export enum LoggerLevel {
 
 export interface LoggerConfig {
     logLevel: LoggerLevel;
-    colorConfig: LoggerColor;
+    colorConfig: LoggerColors;
     labelConfig: LoggerLabels;
     consoleStream: Console;
     showLevel: boolean;
@@ -20,7 +20,7 @@ export interface LoggerLabels {
     [loggerLevel: number]: string;
 }
 
-export interface LoggerColor {
+export interface LoggerColors {
     [loggerLevel: number]: string;
 }
 
@@ -32,7 +32,7 @@ export const DEFAULT_LABELS: LoggerLabels = {
     [LoggerLevel.ERROR]: "[ERROR]:"
 };
 
-export const DEFAULT_COLORS: LoggerColor = {
+export const DEFAULT_COLORS: LoggerColors = {
     [LoggerLevel.TRACE]: "#000080",
     [LoggerLevel.DEBUG]: "#00BFFE",
     [LoggerLevel.INFO]: "#000000",

@@ -2,7 +2,7 @@ import {
     ConsoleGroupOptions,
     DEFAULT_COLORS,
     DEFAULT_LABELS,
-    LoggerColor,
+    LoggerColors,
     LoggerConfig,
     LoggerLabels,
     LoggerLevel
@@ -13,13 +13,13 @@ export class ClientLogger {
     private minLevel: LoggerLevel;
     private stream: Console;
     private noop = (): any => undefined;
-    private colorLabel: LoggerColor = DEFAULT_COLORS;
+    private colorLabel: LoggerColors = DEFAULT_COLORS;
     private configLabel: LoggerLabels = DEFAULT_LABELS;
 
     constructor(options: Partial<LoggerConfig> = {}) {
         this.stream = options.consoleStream || (<any>Object).assign({}, console);
-        this.colorLabel = <LoggerColor>{...this.colorLabel, ...options.colorConfig};
-        this.configLabel = <LoggerColor>{...this.configLabel, ...options.labelConfig};
+        this.colorLabel = <LoggerColors>{...this.colorLabel, ...options.colorConfig};
+        this.configLabel = <LoggerColors>{...this.configLabel, ...options.labelConfig};
         this.minLevel = options.logLevel || LoggerLevel.ALL;
         if (options.showLevel) this.debug("Logging levels: ", LoggerLevel[this.minLevel]);
     }
@@ -92,4 +92,4 @@ export class ClientLogger {
 }
 
 export const logger = new ClientLogger();
-export {LoggerLevel, LoggerColor, LoggerConfig, LoggerLabels} from "./logger.interfaces";
+export {LoggerLevel, LoggerColors, LoggerConfig, LoggerLabels} from "./logger.interfaces";
