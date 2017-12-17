@@ -1,59 +1,43 @@
 import {LoggerInjector, LoggerLineType} from "../helpers/converter";
-import {ClientLogger, LoggerLevel} from "./logger";
+import {logger, LoggerLevel} from "../src/logger";
+import {COLORS, LABELS} from "../src/logger.interfaces";
 import {expect} from 'chai';
 import 'mocha';
 
-const myConsoleStream = LoggerInjector.patch();
-const logger = new ClientLogger({
+const myConsoleStream: Console = LoggerInjector.patch();
+logger.console = myConsoleStream;
 
-    // Since we are emulating the console
-    // and do not want the data to be output
-    // during testing, we make the monkey patching
-    consoleStream: myConsoleStream,
+enum CUSTOM_COLORS {
+    TRACE = "BlueViolet",
+    DEBUG = "CornflowerBlue",
+    INFO = "DarkGreen",
+    WARN = "Coral",
+    ERROR = "Crimson"
+}
 
-    // The logging level is displayed in the console
-    showLevel: true,
+enum CUSTOM_LABELS {
+    TRACE = "trace:",
+    DEBUG = "debug:",
+    INFO = "info:",
+    WARN = "warning:",
+    ERROR = "error:"
+}
 
-    // If we want to set text our own label
-    labelConfig: {
-        [LoggerLevel.TRACE]: "trace:",
-        [LoggerLevel.DEBUG]: "debug:",
-        [LoggerLevel.INFO]: "info:",
-        [LoggerLevel.WARN]: "warning:",
-        [LoggerLevel.ERROR]: "error:",
-    },
+describe('[TEST]: invoke default instance logger', () => {
 
-    // Also you can set the color for your label
-    colorConfig: {
-        [LoggerLevel.TRACE]: "BlueViolet",
-        [LoggerLevel.DEBUG]: "CornflowerBlue",
-        [LoggerLevel.INFO]: "DarkGreen",
-        [LoggerLevel.WARN]: "Coral",
-        [LoggerLevel.ERROR]: "Crimson"
-    }
-
-});
-
-describe('[TEST]: ClientLogger', () => {
+    it(`Clear console stack is worked`, () => {
+        logger.clear();
+        logger.level = LoggerLevel.ALL;
+        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack());
+    });
 
     it(`Default minimal level is: ALL`, () => {
         expect(logger.level).to.equal(LoggerLevel[LoggerLevel.ALL]);
     });
 
-    it(`The logging level is displayed in the console`, () => {
-        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            {[LoggerLineType.DEBUG]: ["Logging levels: ", LoggerLevel[LoggerLevel.ALL]]}
-        ));
-    });
-
-    it(`Clear console stack is worked`, () => {
-        logger.clear();
-        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack());
-    });
-
-    it(`Set minimal level: ALL`, () => {
-        logger.level = LoggerLevel.ALL;
-        expect(logger.level).to.equal(LoggerLevel[LoggerLevel.ALL]);
+    it(`Set minimal level: INFO`, () => {
+        logger.level = LoggerLevel.INFO;
+        expect(logger.level).to.equal(LoggerLevel[LoggerLevel.INFO]);
     });
 
     it(`All data must go to the console, minimal level: TRACE`, () => {
@@ -166,7 +150,7 @@ describe('[TEST]: ClientLogger', () => {
 
     });
 
-    it(`Set new text for labels: [trace, debug, info, warn, error]`, () => {
+    it(`Detect default labels: [TRACE, DEBUG, INFO, WARN, ERROR]`, () => {
 
         logger.level = LoggerLevel.ALL;
         logger.clear();
@@ -188,17 +172,96 @@ describe('[TEST]: ClientLogger', () => {
 
         const stackOptionsList = LoggerInjector.stackOptionsList();
 
-        const {label:traceLabel} = stackOptionsList[traceLine];
-        const {label:debugLabel} = stackOptionsList[debugLine];
-        const {label:infoLabel} = stackOptionsList[infoLine];
-        const {label:warnLabel} = stackOptionsList[warnLine];
-        const {label:errorLabel} = stackOptionsList[errorLine];
+        const {label: traceLabel} = stackOptionsList[traceLine];
+        const {label: debugLabel} = stackOptionsList[debugLine];
+        const {label: infoLabel} = stackOptionsList[infoLine];
+        const {label: warnLabel} = stackOptionsList[warnLine];
+        const {label: errorLabel} = stackOptionsList[errorLine];
 
-        expect(traceLabel).to.equal("trace:");
-        expect(debugLabel).to.equal("debug:");
-        expect(infoLabel).to.equal("info:");
-        expect(warnLabel).to.equal("warning:");
-        expect(errorLabel).to.equal("error:");
+        expect(traceLabel).to.equal(LABELS.TRACE);
+        expect(debugLabel).to.equal(LABELS.DEBUG);
+        expect(infoLabel).to.equal(LABELS.INFO);
+        expect(warnLabel).to.equal(LABELS.WARN);
+        expect(errorLabel).to.equal(LABELS.ERROR);
+
+    });
+
+    it(`Set new text for labels: [trace, debug, info, warn, error]`, () => {
+
+        logger.level = LoggerLevel.ALL;
+        logger.clear();
+
+        logger.setLabels({
+            [LoggerLevel.TRACE]: CUSTOM_LABELS.TRACE,
+            [LoggerLevel.DEBUG]: CUSTOM_LABELS.DEBUG,
+            [LoggerLevel.INFO]: CUSTOM_LABELS.INFO,
+            [LoggerLevel.WARN]: CUSTOM_LABELS.WARN,
+            [LoggerLevel.ERROR]: CUSTOM_LABELS.ERROR
+        });
+
+        const traceLine = 0;
+        logger.trace("trace is worked", 1, {a: 1});
+
+        const debugLine = 1;
+        logger.debug("debug is worked", 2, console);
+
+        const infoLine = 2;
+        logger.info("info is worked", 3, Object);
+
+        const warnLine = 3;
+        logger.warn("warn is worked", 4, String);
+
+        const errorLine = 4;
+        logger.error("error is worked", 5, (2.55).toFixed());
+
+        const stackOptionsList = LoggerInjector.stackOptionsList();
+
+        const {label: traceLabel} = stackOptionsList[traceLine];
+        const {label: debugLabel} = stackOptionsList[debugLine];
+        const {label: infoLabel} = stackOptionsList[infoLine];
+        const {label: warnLabel} = stackOptionsList[warnLine];
+        const {label: errorLabel} = stackOptionsList[errorLine];
+
+        expect(traceLabel).to.equal(CUSTOM_LABELS.TRACE);
+        expect(debugLabel).to.equal(CUSTOM_LABELS.DEBUG);
+        expect(infoLabel).to.equal(CUSTOM_LABELS.INFO);
+        expect(warnLabel).to.equal(CUSTOM_LABELS.WARN);
+        expect(errorLabel).to.equal(CUSTOM_LABELS.ERROR);
+
+    });
+
+    it(`Detect default colors`, () => {
+
+        logger.level = LoggerLevel.ALL;
+        logger.clear();
+
+        const traceLine = 0;
+        logger.trace("trace is worked", 1, {a: 1});
+
+        const debugLine = 1;
+        logger.debug("debug is worked", 2, console);
+
+        const infoLine = 2;
+        logger.info("info is worked", 3, Object);
+
+        const warnLine = 3;
+        logger.warn("warn is worked", 4, String);
+
+        const errorLine = 4;
+        logger.error("error is worked", 5, (2.55).toFixed());
+
+        const stackOptionsList = LoggerInjector.stackOptionsList();
+        const {styles: traceStyle} = stackOptionsList[traceLine];
+        const {styles: debugStyle} = stackOptionsList[debugLine];
+        const {styles: infoStyle} = stackOptionsList[infoLine];
+        const {styles: warnStyle} = stackOptionsList[warnLine];
+        const {styles: errorStyle} = stackOptionsList[errorLine];
+
+        expect(traceStyle.color).to.equal(COLORS.TRACE);
+        expect(debugStyle.color).to.equal(COLORS.DEBUG);
+        expect(infoStyle.color).to.equal(COLORS.INFO);
+        expect(warnStyle.color).to.equal(COLORS.WARN);
+        expect(errorStyle.color).to.equal(COLORS.ERROR);
 
     });
 
@@ -207,6 +270,14 @@ describe('[TEST]: ClientLogger', () => {
         logger.level = LoggerLevel.ALL;
         logger.clear();
 
+        logger.setColors({
+            [LoggerLevel.TRACE]: CUSTOM_COLORS.TRACE,
+            [LoggerLevel.DEBUG]: CUSTOM_COLORS.DEBUG,
+            [LoggerLevel.INFO]: CUSTOM_COLORS.INFO,
+            [LoggerLevel.WARN]: CUSTOM_COLORS.WARN,
+            [LoggerLevel.ERROR]: CUSTOM_COLORS.ERROR
+        });
+
         const traceLine = 0;
         logger.trace("trace is worked", 1, {a: 1});
 
@@ -223,21 +294,19 @@ describe('[TEST]: ClientLogger', () => {
         logger.error("error is worked", 5, (2.55).toFixed());
 
         const stackOptionsList = LoggerInjector.stackOptionsList();
-        const {styles:traceStyle} = stackOptionsList[traceLine];
-        const {styles:debugStyle} = stackOptionsList[debugLine];
-        const {styles:infoStyle} = stackOptionsList[infoLine];
-        const {styles:warnStyle} = stackOptionsList[warnLine];
-        const {styles:errorStyle} = stackOptionsList[errorLine];
+        const {styles: traceStyle} = stackOptionsList[traceLine];
+        const {styles: debugStyle} = stackOptionsList[debugLine];
+        const {styles: infoStyle} = stackOptionsList[infoLine];
+        const {styles: warnStyle} = stackOptionsList[warnLine];
+        const {styles: errorStyle} = stackOptionsList[errorLine];
 
-        expect(traceStyle.color).to.equal("BlueViolet");
-        expect(debugStyle.color).to.equal("CornflowerBlue");
-        expect(infoStyle.color).to.equal("DarkGreen");
-        expect(warnStyle.color).to.equal("Coral");
-        expect(errorStyle.color).to.equal("Crimson");
+        expect(traceStyle.color).to.equal(CUSTOM_COLORS.TRACE);
+        expect(debugStyle.color).to.equal(CUSTOM_COLORS.DEBUG);
+        expect(infoStyle.color).to.equal(CUSTOM_COLORS.INFO);
+        expect(warnStyle.color).to.equal(CUSTOM_COLORS.WARN);
+        expect(errorStyle.color).to.equal(CUSTOM_COLORS.ERROR);
 
     });
-
-
 
 });
 

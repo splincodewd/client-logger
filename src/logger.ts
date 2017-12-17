@@ -18,10 +18,9 @@ export class ClientLogger {
 
     constructor(options: Partial<LoggerConfig> = {}) {
         this.stream = options.consoleStream || (<any>Object).assign({}, console);
-        this.colorLabel = <LoggerColors>{...this.colorLabel, ...options.colorConfig};
-        this.configLabel = <LoggerColors>{...this.configLabel, ...options.labelConfig};
+        this.colorLabel = {...this.colorLabel, ...options.colorConfig};
+        this.configLabel = {...this.configLabel, ...options.labelConfig};
         this.minLevel = options.logLevel || LoggerLevel.ALL;
-        if (options.showLevel) this.debug("Logging levels: ", LoggerLevel[this.minLevel]);
     }
 
     public get level() {
@@ -30,6 +29,14 @@ export class ClientLogger {
 
     public set level(logLevel: LoggerLevel) {
         this.minLevel = logLevel;
+    }
+
+    public get console(): Console {
+        return this.stream;
+    }
+
+    public set console(console: Console) {
+        this.stream = console;
     }
 
     public get assert() {
@@ -68,6 +75,14 @@ export class ClientLogger {
 
     public get clear() {
         return this.stream.clear.bind(this.stream);
+    }
+
+    public setLabels(labelConfig: LoggerLabels) {
+        this.configLabel = {...this.configLabel, ...labelConfig};
+    }
+
+    public setColors(colorConfig: LoggerColors) {
+        this.colorLabel = {...this.colorLabel, ...colorConfig};
     }
 
     public group(label: string, callback: Function, open: boolean = false, prefix: string = this.configLabel[LoggerLevel.INFO]) {
