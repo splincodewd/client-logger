@@ -5,9 +5,10 @@
   "main": "dist/logger.js",
   "typings": "dist/logger",
   "scripts": {
-    "mocha": "mocha -r ts-node/register test/*.test.ts",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "test": "nyc --reporter=html --reporter=text mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "mocha": "mocha -r ts-node/register test/*.test.ts",
     "compile": "ts-node src/logger.ts",
     "prepublishOnly": "tsc"
   },
@@ -55,6 +56,8 @@
     "mocha": "^4.0.1",
     "nyc": "^11.3.0",
     "ts-node": "^4.0.1",
+    "tslint": "^5.8.0",
+    "tslint-config-standard": "^7.0.0",
     "typescript": "^2.6.2",
     "typings": "^2.1.1"
   }

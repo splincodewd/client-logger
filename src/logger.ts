@@ -1,26 +1,33 @@
 import {
+    CallbackGroupFn,
     ConsoleGroupOptions,
     DEFAULT_COLORS,
     DEFAULT_LABELS,
     LoggerColors,
     LoggerConfig,
     LoggerLabels,
-    LoggerLevel
-} from "./logger.interfaces";
+    LoggerLevel,
+    NoOperationFn
+} from './logger.interfaces';
 
 export class ClientLogger {
 
     private minLevel: LoggerLevel;
-    private stream: Console;
-    private noop = (): any => undefined;
-    private colorLabel: LoggerColors = DEFAULT_COLORS;
-    private configLabel: LoggerLabels = DEFAULT_LABELS;
+    private consoleInstance: Console;
+    private configColors: LoggerColors;
+    private configLabels: LoggerLabels;
+    private readonly noop: NoOperationFn;
+
+    public static getReferenceConsole(): Console {
+        return { ...{}, ...console };
+    }
 
     constructor(options: Partial<LoggerConfig> = {}) {
-        this.stream = options.consoleStream || (<any>Object).assign({}, console);
-        this.colorLabel = {...this.colorLabel, ...options.colorConfig};
-        this.configLabel = {...this.configLabel, ...options.labelConfig};
-        this.minLevel = options.logLevel || LoggerLevel.ALL;
+        this.noop = (): any => null;
+        this.configColors = { ...DEFAULT_COLORS, ...options.colors };
+        this.configLabels = { ...DEFAULT_LABELS, ...options.labels };
+        this.minLevel = options.level || LoggerLevel.ALL;
+        this.consoleInstance = options.console || ClientLogger.getReferenceConsole();
     }
 
     public get level(): LoggerLevel {
@@ -32,79 +39,94 @@ export class ClientLogger {
     }
 
     public get console(): Console {
-        return this.stream;
+        return this.consoleInstance;
     }
 
     public set console(console: Console) {
-        this.stream = console;
+        this.consoleInstance = console;
     }
 
     public get assert() {
-        return this.stream.assert.bind(this.stream);
+        return this.consoleInstance.assert.bind(this.consoleInstance);
     }
 
     public get trace() {
-        if (this.minLevel > LoggerLevel.TRACE) return this.noop;
-        return this.stream.debug.bind(this.stream, `%c${this.configLabel[LoggerLevel.TRACE]}`, this.getStyleForLabel(LoggerLevel.TRACE));
+        return this.loggerMethodsFactory(LoggerLevel.TRACE);
     }
 
     public get debug() {
-        if (this.minLevel > LoggerLevel.DEBUG) return this.noop;
-        return this.stream.info.bind(this.stream, `%c${this.configLabel[LoggerLevel.DEBUG]}`, this.getStyleForLabel(LoggerLevel.DEBUG));
+        return this.loggerMethodsFactory(LoggerLevel.DEBUG);
     }
 
     public get info() {
-        if (this.minLevel > LoggerLevel.INFO) return this.noop;
-        return this.stream.info.bind(this.stream, `%c${this.configLabel[LoggerLevel.INFO]}`, this.getStyleForLabel(LoggerLevel.INFO));
+        return this.loggerMethodsFactory(LoggerLevel.INFO);
     }
 
     public get warn() {
-        if (this.minLevel > LoggerLevel.WARN) return this.noop;
-        return this.stream.warn.bind(this.stream, `%c${this.configLabel[LoggerLevel.WARN]}`, this.getStyleForLabel(LoggerLevel.WARN));
+        return this.loggerMethodsFactory(LoggerLevel.WARN);
     }
 
     public get error() {
-        if (this.minLevel > LoggerLevel.ERROR) return this.noop;
-        return this.stream.error.bind(this.stream, `%c${this.configLabel[LoggerLevel.ERROR]}`, this.getStyleForLabel(LoggerLevel.ERROR));
+        return this.loggerMethodsFactory(LoggerLevel.ERROR);
     }
 
     public get table() {
         if (this.minLevel > LoggerLevel.DEBUG) return this.noop;
-        return this.stream.table.bind(this.stream);
+        return this.consoleInstance.table.bind(this.consoleInstance);
     }
 
     public get clear() {
-        return this.stream.clear.bind(this.stream);
+        return this.consoleInstance.clear.bind(this.consoleInstance);
     }
 
-    public setLabels(labelConfig: LoggerLabels) {
-        this.configLabel = {...this.configLabel, ...labelConfig};
+    public setLabels(labels: LoggerLabels) {
+        this.configLabels = { ...this.configLabels, ...labels };
     }
 
-    public setColors(colorConfig: LoggerColors) {
-        this.colorLabel = {...this.colorLabel, ...colorConfig};
+    public setColors(colors: LoggerColors) {
+        this.configColors = { ...this.configColors, ...colors };
     }
 
-    public group(label: string, callback: Function, open: boolean = false, prefix: string = this.configLabel[LoggerLevel.INFO]) {
+    public group(label: string, callback: CallbackGroupFn, open: boolean = false, prefix: string = this.configLabels[LoggerLevel.INFO]) {
         if (this.minLevel === LoggerLevel.OFF) return this.noop;
-        if (!this.stream.hasOwnProperty("groupEnd")) return callback();
-        const title = `${(prefix) ? (prefix + ' ') : ('')}${String(label).toUpperCase()}`;
-        this.showConsoleGroup({title, open, callback});
+        if (!this.consoleInstance.hasOwnProperty('groupEnd')) return callback();
+        const title = `${(prefix) ? (`${prefix} `) : ('')}${String(label).toUpperCase()}`;
+        this.showConsoleGroup({ title, open, callback });
     }
 
-    private showConsoleGroup(options: ConsoleGroupOptions) {
-        let {title, open, callback} = options;
-        let typeGroup = !open ? "groupCollapsed" : "group";
-        this.stream[typeGroup](title);
+    private loggerMethodsFactory(level: LoggerLevel) {
+        if (this.minLevel > level) {
+            return this.noop;
+        }
+
+        const consoleInstance = this.consoleInstance;
+        const label = `%c${this.configLabels[level]}`;
+        const style = this.getStyleForLabel(level);
+        const consoleMethods = {
+            [LoggerLevel.TRACE]: 'debug',
+            [LoggerLevel.DEBUG]: 'info',
+            [LoggerLevel.INFO]: 'info',
+            [LoggerLevel.WARN]: 'warn',
+            [LoggerLevel.ERROR]: 'error'
+        };
+
+        const consoleWorker = consoleInstance[consoleMethods[level]] || this.noop;
+        return consoleWorker.bind(consoleInstance, label, style);
+    }
+
+    private showConsoleGroup(options: ConsoleGroupOptions): void {
+        const { title, open, callback } = options;
+        const typeGroup = !open ? 'groupCollapsed' : 'group';
+        this.consoleInstance[typeGroup](title);
         callback();
-        this.stream.groupEnd();
+        this.consoleInstance.groupEnd();
     }
 
-    private getStyleForLabel(level: LoggerLevel) {
-        return `color: ${this.colorLabel[level]}; font-weight: bold;`;
+    private getStyleForLabel(level: LoggerLevel): string {
+        return `color: ${this.configColors[level]}; font-weight: bold;`;
     }
 
 }
 
 export const logger = new ClientLogger();
-export {LoggerLevel, LoggerColors, LoggerConfig, LoggerLabels} from "./logger.interfaces";
+export { LoggerLevel, LoggerColors, LoggerConfig, LoggerLabels } from './logger.interfaces';

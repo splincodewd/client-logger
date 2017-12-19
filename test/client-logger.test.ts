@@ -2,7 +2,6 @@ import {LoggerInjector, LoggerLineType} from "../helpers/converter";
 import {ClientLogger, LoggerLevel} from "../src/logger";
 import {expect} from 'chai';
 import 'mocha';
-import {COLORS, LABELS} from "../src/logger.interfaces";
 
 const myConsoleStream: Console = LoggerInjector.patch();
 
@@ -27,10 +26,10 @@ const clientLogger = new ClientLogger({
     // Since we are emulating the console
     // and do not want the data to be output
     // during testing, we make the monkey patching
-    consoleStream: myConsoleStream,
+    console: myConsoleStream,
 
     // If we want to set text our own label
-    labelConfig: {
+    labels: {
         [LoggerLevel.TRACE]: CUSTOM_LABELS.TRACE,
         [LoggerLevel.DEBUG]: CUSTOM_LABELS.DEBUG,
         [LoggerLevel.INFO]: CUSTOM_LABELS.INFO,
@@ -39,7 +38,7 @@ const clientLogger = new ClientLogger({
     },
 
     // Also you can set the color for your label
-    colorConfig: {
+    colors: {
         [LoggerLevel.TRACE]: CUSTOM_COLORS.TRACE,
         [LoggerLevel.DEBUG]: CUSTOM_COLORS.DEBUG,
         [LoggerLevel.INFO]: CUSTOM_COLORS.INFO,

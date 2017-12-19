@@ -1,17 +1,17 @@
 export enum LABELS {
-    TRACE = "[TRACE]:",
-    DEBUG = "[DEBUG]:",
-    INFO = "[INFO]:",
-    WARN = "[WARN]:",
-    ERROR = "[ERROR]:"
+    TRACE = '[TRACE]:',
+    DEBUG = '[DEBUG]:',
+    INFO = '[INFO]:',
+    WARN = '[WARN]:',
+    ERROR = '[ERROR]:'
 }
 
 export enum COLORS {
-    TRACE = "#000080",
-    DEBUG = "#00BFFE",
-    INFO = "#000000",
-    WARN = "#FF6419",
-    ERROR = "#F1062D"
+    TRACE = '#000080',
+    DEBUG = '#00BFFE',
+    INFO = '#000000',
+    WARN = '#FF6419',
+    ERROR = '#F1062D'
 }
 
 export enum LoggerLevel {
@@ -25,25 +25,27 @@ export enum LoggerLevel {
 }
 
 export interface LoggerConfig {
-    logLevel: LoggerLevel;
-    colorConfig: LoggerColors;
-    labelConfig: LoggerLabels;
-    consoleStream: Console;
-    showLevel: boolean;
+    level: LoggerLevel,
+    colors: LoggerColors,
+    labels: LoggerLabels,
+    console: Console
 }
 
 export interface LoggerLabels {
-    [loggerLevel: number]: string;
+    [level: number]: string
 }
 
 export interface LoggerColors {
-    [loggerLevel: number]: string;
+    [level: number]: string
 }
 
+export type CallbackGroupFn = (() => void);
+export type NoOperationFn = (() => void);
+
 export interface ConsoleGroupOptions {
-    title: string;
-    open: boolean;
-    callback: Function;
+    title: string,
+    open: boolean,
+    callback: CallbackGroupFn
 }
 
 export const DEFAULT_LABELS: LoggerLabels = {
