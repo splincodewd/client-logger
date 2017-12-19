@@ -59,7 +59,7 @@ describe('[TEST]: class initialization new ClientLogger({ .. })', () => {
 
     it(`Set minimal level: INFO`, () => {
         clientLogger.level = LoggerLevel.INFO;
-        expect(clientLogger.level).to.equal(LoggerLevel[LoggerLevel.INFO]);
+        expect(clientLogger.level).to.equal(LoggerLevel.INFO);
     });
 
     it(`All data must go to the console, minimal level: TRACE`, () => {

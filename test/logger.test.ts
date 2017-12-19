@@ -32,12 +32,12 @@ describe('[TEST]: invoke default instance logger', () => {
     });
 
     it(`Default minimal level is: ALL`, () => {
-        expect(logger.level).to.equal(LoggerLevel[LoggerLevel.ALL]);
+        expect(logger.level).to.equal(LoggerLevel.ALL);
     });
 
     it(`Set minimal level: INFO`, () => {
         logger.level = LoggerLevel.INFO;
-        expect(logger.level).to.equal(LoggerLevel[LoggerLevel.INFO]);
+        expect(logger.level).to.equal(LoggerLevel.INFO);
     });
 
     it(`All data must go to the console, minimal level: TRACE`, () => {

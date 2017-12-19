@@ -23,11 +23,11 @@ export class ClientLogger {
         this.minLevel = options.logLevel || LoggerLevel.ALL;
     }
 
-    public get level(): string | any {
-        return LoggerLevel[this.minLevel];
+    public get level(): LoggerLevel {
+        return this.minLevel;
     }
 
-    public set level(logLevel: LoggerLevel | any) {
+    public set level(logLevel: LoggerLevel) {
         this.minLevel = logLevel;
     }
 
