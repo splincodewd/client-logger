@@ -7,7 +7,7 @@
     "declaration": true,
     "strictNullChecks": false,
     "suppressImplicitAnyIndexErrors": false,
-    "outDir": "./dist",
+    "outDir": "./lib",
     "moduleResolution": "node"
   },
   "filesGlob": [
@@ -15,7 +15,7 @@
     "!./node_modules/**/*.ts"
   ],
   "files": [
-    "./src/logger.ts"
+    "./index.ts"
   ],
   "exclude": [
     "node_modules"

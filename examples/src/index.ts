@@ -13,6 +13,7 @@ window["showExample1"] = function showExample1() {
     logger.info("info is worked", 3, Object);
     logger.warn("warn is worked", 4, String);
     logger.error("error is worked", 5, (2.55).toFixed());
+
 };
 
 window["showExample2"] = function showExample2() {
@@ -67,13 +68,10 @@ window["showExample4"] = function showExample4() {
     const newLogger = new ClientLogger({
 
         // Drop-in replacement for console, if needed
-        consoleStream: <Console> new MyConsole(),
-
-        // The logging level is displayed in the console
-        showLevel: true,
+        console: <Console> new MyConsole(),
 
         // Custom color
-        colorConfig: {
+        colors: {
             [LoggerLevel.TRACE]: "Grey",
             [LoggerLevel.DEBUG]: "Blue",
             [LoggerLevel.INFO]: "Green",
@@ -82,7 +80,7 @@ window["showExample4"] = function showExample4() {
         },
 
         // Custom label
-        labelConfig: {
+        labels: {
             [LoggerLevel.TRACE]: "trace: ",
             [LoggerLevel.DEBUG]: "debug: ",
             [LoggerLevel.INFO]: "info: ",
@@ -92,6 +90,7 @@ window["showExample4"] = function showExample4() {
 
     });
 
+    // need fixed
     const _info = console.info;
     console.info = function () {
         console.log("\n\n\n");

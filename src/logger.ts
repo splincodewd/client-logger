@@ -127,6 +127,3 @@ export class ClientLogger {
     }
 
 }
-
-export const logger = new ClientLogger();
-export { LoggerLevel, LoggerColors, LoggerConfig, LoggerLabels } from './logger.interfaces';

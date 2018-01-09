@@ -1,64 +1,64 @@
 {
-  "name": "@splincode/client-logger",
-  "version": "0.0.31",
-  "description": "Simple logger for browser",
-  "main": "dist/logger.js",
-  "typings": "dist/logger",
-  "scripts": {
-    "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "test": "nyc --reporter=html --reporter=text mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "mocha": "mocha -r ts-node/register test/*.test.ts",
-    "compile": "ts-node src/logger.ts",
-    "prepublishOnly": "tsc"
-  },
-  "nyc": {
-    "include": [
-      "src/*.ts",
-      "src/**/*.ts"
+    "name": "@splincode/client-logger",
+    "version": "0.0.33",
+    "description": "Simple logger for browser",
+    "main": "lib/index.js",
+    "typings": "lib/index",
+    "scripts": {
+        "lint": "tslint -c tslint.json 'src/**/*.ts'",
+        "test": "nyc --reporter=html --reporter=text mocha",
+        "coverage": "nyc report --reporter=text-lcov | coveralls",
+        "mocha": "mocha -r ts-node/register test/*.test.ts",
+        "examples:build": "cd examples && npm run build:prod",
+        "compile": "ts-node src/logger.ts",
+        "prepublishOnly": "tsc"
+    },
+    "nyc": {
+        "include": [
+            "src/*.ts",
+            "src/**/*.ts"
+        ],
+        "extension": [
+            ".ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ],
+        "reporter": [
+            "text-summary",
+            "html"
+        ],
+        "sourceMap": true,
+        "instrument": true
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/splincodewd/client-logger.git"
+    },
+    "keywords": [
+        "console",
+        "logger",
+        "javascript",
+        "browser",
+        "typescript"
     ],
-    "extension": [
-      ".ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "text-summary",
-      "html"
-    ],
-    "sourceMap": true,
-    "instrument": true
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/splincodewd/client-logger.git"
-  },
-  "keywords": [
-    "console",
-    "logger",
-    "javascript",
-    "browser",
-    "typescript"
-  ],
-  "author": "splincodewd",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/splincodewd/client-logger/issues"
-  },
-  "homepage": "https://github.com/splincodewd/client-logger#readme",
-  "devDependencies": {
-    "@types/chai": "^4.0.8",
-    "@types/jasmine": "^2.8.2",
-    "@types/mocha": "^2.2.44",
-    "chai": "^4.1.2",
-    "coveralls": "^3.0.0",
-    "mocha": "^4.0.1",
-    "nyc": "^11.3.0",
-    "ts-node": "^4.0.1",
-    "tslint": "^5.8.0",
-    "tslint-config-standard": "^7.0.0",
-    "typescript": "^2.6.2",
-    "typings": "^2.1.1"
-  }
+    "author": "splincodewd",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/splincodewd/client-logger/issues"
+    },
+    "homepage": "https://github.com/splincodewd/client-logger#readme",
+    "devDependencies": {
+        "@types/chai": "^4.0.8",
+        "@types/mocha": "^2.2.44",
+        "chai": "^4.1.2",
+        "coveralls": "^3.0.0",
+        "mocha": "^4.0.1",
+        "nyc": "^11.3.0",
+        "ts-node": "^4.0.1",
+        "tslint": "^5.8.0",
+        "tslint-config-standard": "^7.0.0",
+        "typescript": "^2.6.2",
+        "typings": "^2.1.1"
+    }
 }
