@@ -9,7 +9,7 @@
         "test": "nyc --reporter=html --reporter=text mocha",
         "coverage": "nyc report --reporter=text-lcov | coveralls",
         "mocha": "mocha -r ts-node/register test/*.test.ts",
-        "examples:build": "cd examples && npm run build:prod",
+        "examples:build": "cd examples && npm install && npm run build:prod",
         "compile": "ts-node src/logger.ts",
         "prepublishOnly": "tsc"
     },
