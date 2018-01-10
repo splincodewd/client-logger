@@ -11,7 +11,8 @@
         "mocha": "mocha -r ts-node/register test/*.test.ts",
         "examples:build": "cd examples && npm install && npm run build:prod",
         "compile": "ts-node src/logger.ts",
-        "prepublishOnly": "tsc"
+        "prepublishOnly": "tsc",
+        "release": "changelog && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm publish && git push origin && git push origin --tags"
     },
     "nyc": {
         "include": [
