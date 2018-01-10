@@ -1,6 +1,6 @@
 {
     "name": "@splincode/client-logger",
-    "version": "0.0.34",
+    "version": "0.0.33",
     "description": "Simple logger for browser",
     "main": "lib/index.js",
     "typings": "lib/index",
@@ -12,7 +12,9 @@
         "examples:build": "cd examples && npm install && npm run build:prod",
         "compile": "ts-node src/logger.ts",
         "prepublishOnly": "tsc",
-        "release": "git fetch && changelog && git add CHANGELOG.md && git commit -m 'updated CHANGELOG.md' && npm publish && git push origin && git push origin --tags"
+        "release:major": "changelog -M && git commit -m 'updated CHANGELOG.md' && npm version major && npm publish && git push origin && git push origin --tags",
+        "release:minor": "changelog -m && git commit -m 'updated CHANGELOG.md' && npm version minor && npm publish && git push origin && git push origin --tags",
+        "release:patch": "changelog -p && git commit -m 'updated CHANGELOG.md' && npm version patch && npm publish && git push origin && git push origin --tags"
     },
     "nyc": {
         "include": [
