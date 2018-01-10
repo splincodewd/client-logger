@@ -15,4 +15,3 @@
 
 * **index.ts:**  export all interfaces ([d19a5630](https://github.com/splincodewd/client-logger/commit/d19a56303aa444c33e92d6d636003135297c5968))
 
-
