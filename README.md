@@ -12,11 +12,30 @@ Translations:
 npm i @splincode/client-logger --save-dev
 ```
 
+### Todo
+
+- [x] Override console
+- [x] Logger method (trace, debug, info, warning, error)
+- [ ] Format
+- [ ] Pre process output
+- [ ] Logger level groups (debug, info)
+- [ ] Logger group (default collapsible)
+- [ ] Logger pretty write object
+- [ ] Switch enable/disable default console output
+- [ ] Profiling (memory usage, sizeof, time execute)
+- [ ] Timers (decorator)
+- [ ] Set style by css
+- [ ] Cross-browser fixing
+- [ ] Dependency Injection 
+
 ## Usage
 
 You could easily use this Logger in the browser. 
 You only need to install the package and import it in your scripts before assembly.
-To see how to use the Logger please [follow the link](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8).
+To see how to use the Logger please 
+[follow the link](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8) 
+or follow that's [link](https://splincodewd.github.io/client-logger).
+
 You can also run the examples on webpack:
 
 ```bash
