@@ -1,4 +1,4 @@
-import {LoggerInjector, LoggerLineType} from "../helpers/converter";
+import {LoggerInjector, LoggerLineType} from "./helpers/converter";
 import {logger, LoggerLevel} from "../index";
 import {COLORS, LABELS} from "../src/logger.interfaces";
 import {expect} from 'chai';
