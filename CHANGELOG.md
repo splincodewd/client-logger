@@ -1,3 +1,9 @@
+#### 0.0.35 (2018-01-11)
+
+##### Tests
+
+* **helpers:**  move helpers class to test directory ([16de4c71](https://github.com/splincodewd/client-logger/commit/16de4c7129baf49687551737d4665fc8aaa96e13))
+
 #### 0.0.34 (2018-01-10)
 
 ##### Chores
