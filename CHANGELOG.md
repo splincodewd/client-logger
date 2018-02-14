@@ -1,3 +1,13 @@
+### 0.1.0 (2018-02-14)
+
+##### New Features
+
+* **logger:**  add entry point configuration ([f664be6c](https://github.com/splincodewd/client-logger/commit/f664be6cd6af0e72aed4e1a07ea0ae724c73488b))
+
+##### Other Changes
+
+* **README.md:**  add badget about npm statistics ([46558051](https://github.com/splincodewd/client-logger/commit/46558051a1440831f887a07350fd2694fbc93fa4))
+
 #### 0.0.35 (2018-01-11)
 
 ##### Tests
