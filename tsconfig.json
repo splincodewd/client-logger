@@ -1,23 +1,24 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
-    "noImplicitAny": false,
-    "sourceMap": false,
-    "declaration": true,
-    "strictNullChecks": false,
-    "suppressImplicitAnyIndexErrors": false,
-    "outDir": "./lib",
-    "moduleResolution": "node"
-  },
-  "filesGlob": [
-    "./**/*.ts",
-    "!./node_modules/**/*.ts"
-  ],
-  "files": [
-    "./index.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": false,
+        "declaration": true,
+        "strictNullChecks": false,
+        "suppressImplicitAnyIndexErrors": false,
+        "experimentalDecorators": true,
+        "outDir": "./lib",
+        "moduleResolution": "node"
+    },
+    "filesGlob": [
+        "./**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./index.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

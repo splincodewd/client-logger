@@ -24,29 +24,28 @@ export enum LoggerLevel {
     OFF
 }
 
-export interface LoggerConfig {
-    level: LoggerLevel,
-    colors: LoggerColors,
-    labels: LoggerLabels,
-    console: Console
-}
-
 export interface LoggerLabels {
-    [level: number]: string
+    [level: number]: string;
 }
 
 export interface LoggerColors {
-    [level: number]: string
+    [level: number]: string;
 }
 
-export type CallbackGroupFn = (() => void);
+export interface LoggerMethods {
+    [level: number]: string;
+}
+
+export interface ClientLoggerImpl {
+    trace(message?: any, ...optionalParams: any[]): void;
+    debug(message?: any, ...optionalParams: any[]): void;
+    info(message?: any, ...optionalParams: any[]): void;
+    warn(message?: any, ...optionalParams: any[]): void;
+    error(message?: any, ...optionalParams: any[]): void;
+}
+
+export type CallbackGroupFn = ((params: ClientLoggerImpl) => void);
 export type NoOperationFn = (() => void);
-
-export interface ConsoleGroupOptions {
-    title: string,
-    open: boolean,
-    callback: CallbackGroupFn
-}
 
 export const DEFAULT_LABELS: LoggerLabels = {
     [LoggerLevel.TRACE]: LABELS.TRACE,
@@ -62,4 +61,32 @@ export const DEFAULT_COLORS: LoggerColors = {
     [LoggerLevel.INFO]: COLORS.INFO,
     [LoggerLevel.WARN]: COLORS.WARN,
     [LoggerLevel.ERROR]: COLORS.ERROR
+};
+
+export const DEFAULT_METHODS: LoggerMethods = {
+    [LoggerLevel.TRACE]: 'debug',
+    [LoggerLevel.DEBUG]: 'info',
+    [LoggerLevel.INFO]: 'info',
+    [LoggerLevel.WARN]: 'warn',
+    [LoggerLevel.ERROR]: 'error'
+};
+
+export interface LoggerConfigImpl {
+    minLevel: LoggerLevel;
+    consoleInstance: Console;
+    noop: NoOperationFn;
+    labelUpperCase: boolean;
+    configLabel: LoggerLabels;
+    configColor: LoggerColors;
+    configMethods: LoggerMethods;
+}
+
+export const config: LoggerConfigImpl = {
+    minLevel: LoggerLevel.ALL,
+    consoleInstance: {...{}, ...(console || {})} as Console,
+    noop: () => {},
+    labelUpperCase: true,
+    configLabel: DEFAULT_LABELS,
+    configColor: DEFAULT_COLORS,
+    configMethods: DEFAULT_METHODS
 };

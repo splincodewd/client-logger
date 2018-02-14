@@ -1,51 +1,64 @@
-import {ClientLogger, logger, LoggerLevel} from "@splincode/client-logger";
-import {MyConsole} from "./MyConsole";
-declare const process: any;
+/*
 
-window["showExample1"] = function showExample1() {
+    import {ClientLogger, logger, LoggerLevel} from "@splincode/client-logger";
+    import {MyConsole} from "./MyConsole";
+    declare const process: any;
+
+ */
+
+import { ClientLogger } from '../../src/logger';
+import { LoggerLevel } from '../../src/logger.interfaces';
+import { MyConsole } from './MyConsole';
+
+window['showExample1'] = function showExample1() {
+
+    const logger = new ClientLogger();
 
     logger.clear();
     logger.level = LoggerLevel.ALL;
 
-    logger.info("EXAMPLE 1 (you need set level Verbose in console)");
-    logger.trace("trace is worked", 1, {a: 1});
-    logger.debug("debug is worked", 2, console);
-    logger.info("info is worked", 3, Object);
-    logger.warn("warn is worked", 4, String);
-    logger.error("error is worked", 5, (2.55).toFixed());
+    logger.info('EXAMPLE 1 (you need set level Verbose in console)');
+    logger.trace('trace is worked', 1, { a: 1 });
+    logger.debug('debug is worked', 2, console);
+    logger.info('info is worked', 3, Object);
+    logger.warn('warn is worked', 4, String);
+    logger.error('error is worked', 5, (2.55).toFixed());
 
 };
 
-window["showExample2"] = function showExample2() {
+window['showExample2'] = function showExample2() {
+
+    const logger = new ClientLogger();
 
     logger.clear();
     logger.level = LoggerLevel.ALL;
 
-    logger.group("EXAMPLE 2: show stack", () => {
-        logger.trace("trace is worked", 1, {a: 1});
-        logger.debug("debug is worked", 2, console);
-        logger.info("info is worked", 3, Object);
-        logger.warn("warn is worked", 4, String);
-        logger.error("error is worked", 5, (2.55).toFixed());
+    logger.group('EXAMPLE 2: show stack', () => {
+        logger.trace('trace is worked', 1, { a: 1 });
+        logger.debug('debug is worked', 2, console);
+        logger.info('info is worked', 3, Object);
+        logger.warn('warn is worked', 4, String);
+        logger.error('error is worked', 5, (2.55).toFixed());
     });
 
-    logger.group("Show trace", () => {
+    logger.group('Show trace in opened group', ({ trace }) => {
         for (let i = 0; i < 20; i++) {
-            logger.trace("trace is worked", i);
+            trace('trace is worked', i);
         }
     });
 
-    logger.group("Opened group", () => {
-        logger.debug("Level logger:", logger.level);
-    }, true);
+    logger.groupCollapsed('Show trace in collapsed group', ({ trace }) => {
+        for (let i = 0; i < 20; i++) {
+            trace('trace is worked', i);
+        }
+    });
 
-    logger.group("Custom prefix group", () => {
-        logger.assert(<any>1 === <any>"1", "Type check trusty");
-    }, true, "[TYPE CHECK]:");
 };
 
 
-window["showExample3"] = function showExample3() {
+window['showExample3'] = function showExample3() {
+
+    const logger = new ClientLogger();
 
     logger.clear();
     logger.level = LoggerLevel.ALL;
@@ -53,58 +66,93 @@ window["showExample3"] = function showExample3() {
     const isProd = process.env.production || true;
     logger.level = isProd ? LoggerLevel.INFO : LoggerLevel.ALL;
 
-    logger.trace("trace is worked", 1, {a: 1});
-    logger.debug("debug is worked", 2, console);
-    logger.info("info is worked", "current logger level", logger.level);
-    logger.warn("warn is worked", 4, String);
-    logger.error("error is worked", 5, (2.55).toFixed());
+    logger.trace('trace is worked', 1, { a: 1 });
+    logger.debug('debug is worked', 2, console);
+    logger.info('info is worked', 'current logger level', logger.level);
+    logger.warn('warn is worked', 4, String);
+    logger.error('error is worked', 5, (2.55).toFixed());
 };
 
-window["showExample4"] = function showExample4() {
+window['showExample4'] = function showExample4() {
 
-    logger.clear();
-    logger.level = LoggerLevel.ALL;
-
-    const newLogger = new ClientLogger({
+    const logger = new ClientLogger({
 
         // Drop-in replacement for console, if needed
-        console: <Console> new MyConsole(),
+        consoleInstance: <Console> new MyConsole(),
 
         // Custom color
-        colors: {
-            [LoggerLevel.TRACE]: "Grey",
-            [LoggerLevel.DEBUG]: "Blue",
-            [LoggerLevel.INFO]: "Green",
-            [LoggerLevel.WARN]: "Orange",
-            [LoggerLevel.ERROR]: "Red",
+        configColor: {
+            [LoggerLevel.TRACE]: 'Grey',
+            [LoggerLevel.DEBUG]: 'Blue',
+            [LoggerLevel.INFO]: 'Green',
+            [LoggerLevel.WARN]: 'Orange',
+            [LoggerLevel.ERROR]: 'Red',
         },
 
         // Custom label
-        labels: {
-            [LoggerLevel.TRACE]: "trace: ",
-            [LoggerLevel.DEBUG]: "debug: ",
-            [LoggerLevel.INFO]: "info: ",
-            [LoggerLevel.WARN]: "warn: ",
-            [LoggerLevel.ERROR]: "error: ",
+        configLabel: {
+            [LoggerLevel.TRACE]: 'trace: ',
+            [LoggerLevel.DEBUG]: 'debug: ',
+            [LoggerLevel.INFO]: 'info: ',
+            [LoggerLevel.WARN]: 'warn: ',
+            [LoggerLevel.ERROR]: 'error: ',
         }
 
     });
 
-    // need fixed
-    const _info = console.info;
-    console.info = function () {
-        console.log("\n\n\n");
-        console.log("before invoke method");
-        _info.apply(console, arguments);
-        console.log("after invoke method", "\n\n\n");
-    };
+    logger.clear();
+    logger.level = LoggerLevel.ALL;
 
-    console.info("monkey patching doesn't break anything ");
+    logger.trace('trace is worked', 1, { a: 1 });
+    logger.debug('debug is worked', 2, console);
+    logger.info('info is worked', 3, Object);
+    logger.warn('warn is worked', 4, String);
+    logger.error('error is worked', 5, (2.55).toFixed());
 
-    newLogger.trace("trace is worked", 1, {a: 1});
-    newLogger.debug("debug is worked", 2, console);
-    newLogger.info("info is worked", 3, Object);
-    newLogger.warn("warn is worked", 4, String);
-    newLogger.error("error is worked", 5, (2.55).toFixed());
+};
+
+
+window['showExample5'] = function showExample4() {
+
+    const logger = new ClientLogger();
+    logger.clear();
+
+    logger
+        .groupCollapsed('GROUP TEST')
+        .pipe(({ trace, debug, info, warn, error }) => {
+            trace('trace is worked');
+            debug('debug is worked');
+            info('info is worked');
+            warn('warn is worked');
+            error('error is worked');
+        })
+        .close();
+
+    logger
+        .group('A')
+        .pipe(
+            ({ trace }) => trace('trace is worked'),
+            ({ debug }) => debug('debug is worked'),
+            ({ info }) => info('info is worked'),
+            ({ warn }) => warn('warn is worked'),
+            ({ error }) => error('error is worked')
+        )
+        .groupCollapsed('B')
+        .pipe(
+            ({ trace }) => trace('trace is worked'),
+            ({ debug }) => debug('debug is worked'),
+            ({ info }) => info('info is worked'),
+            ({ warn }) => warn('warn is worked'),
+            ({ error }) => error('error is worked')
+        )
+        .group('C')
+        .pipe(
+            ({ trace }) => trace('trace is worked'),
+            ({ debug }) => debug('debug is worked'),
+            ({ info }) => info('info is worked'),
+            ({ warn }) => warn('warn is worked'),
+            ({ error }) => error('error is worked')
+        )
+        .close();
 
 };

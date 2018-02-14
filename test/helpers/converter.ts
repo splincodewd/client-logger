@@ -1,60 +1,81 @@
-enum LoggerLineType {
-    TRACE = "debug",
-    DEBUG = "info",
-    INFO = "info",
-    WARN = "warn",
-    ERROR = "error",
+export enum LoggerLineType {
+    TRACE = 'debug',
+    DEBUG = 'info',
+    INFO = 'info',
+    WARN = 'warn',
+    ERROR = 'error',
 }
 
-const LoggerInjector = {
+export enum LoggerGroupType {
+    GROUP_OPEN = 'group_open',
+    GROUP_COLLAPSED_OPEN = 'group_collapsed_open',
+    GROUP_END = 'group_end',
+}
+
+export const LoggerInjector = {
 
     referenceConsole: {},
 
-    patch: function () {
+    patch() {
 
         const that = this;
-        const consoleForTest = (<any>Object).assign({}, console);
+        const consoleForTest = (Object as any).assign({}, {});
         this.referenceConsole = consoleForTest;
-        consoleForTest["history"] = [];
+        consoleForTest['history'] = [];
 
         consoleForTest.debug = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole["history"].push({[LoggerLineType.TRACE]: args});
+            that.referenceConsole['history'].push({ [LoggerLineType.TRACE]: args });
         };
 
         consoleForTest.info = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole["history"].push({[LoggerLineType.INFO]: args});
+            that.referenceConsole['history'].push({ [LoggerLineType.INFO]: args });
         };
 
         consoleForTest.warn = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole["history"].push({[LoggerLineType.WARN]: args});
+            that.referenceConsole['history'].push({ [LoggerLineType.WARN]: args });
         };
 
         consoleForTest.error = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole["history"].push({[LoggerLineType.ERROR]: args});
+            that.referenceConsole['history'].push({ [LoggerLineType.ERROR]: args });
+        };
+
+        consoleForTest.group = function () {
+            const args = Array.prototype.slice.call(arguments);
+            that.referenceConsole['history'].push({ [LoggerGroupType.GROUP_OPEN]: args[0] });
+        };
+
+        consoleForTest.groupCollapsed = function () {
+            const args = Array.prototype.slice.call(arguments);
+            that.referenceConsole['history'].push({ [LoggerGroupType.GROUP_COLLAPSED_OPEN]: args[0] });
+        };
+
+        consoleForTest.groupEnd = function () {
+            const args = Array.prototype.slice.call(arguments);
+            that.referenceConsole['history'].push({ [LoggerGroupType.GROUP_END]: args });
         };
 
         consoleForTest.clear = function () {
-            that.referenceConsole["history"] = [];
+            that.referenceConsole['history'] = [];
         };
 
         return that.referenceConsole;
 
     },
 
-    createStack: function (...args: any[]) {
+    createStack(...args: any[]) {
         return JSON.stringify(args);
     },
 
-    stack: function (withoutLabel: number = 2) {
-        let history = (<any>Object).assign([], this.referenceConsole["history"]);
-        history.forEach((line: Object, index: number) => {
-            for (let arg in line) {
+    stack(withoutLabel: number = 2) {
+        const history = (Object as any).assign([], this.referenceConsole['history']);
+        history.forEach((line: object, index: number) => {
+            for (const arg in line) {
                 if (line.hasOwnProperty(arg)) {
-                    history[index] = {[arg]: line[arg].slice(withoutLabel)};
+                    history[index] = { [arg]: line[arg].slice(withoutLabel) };
                 }
             }
         });
@@ -62,12 +83,12 @@ const LoggerInjector = {
         return JSON.stringify(history);
     },
 
-    stackList: function (stack: string) {
+    stackList(stack: string) {
         const stackObject = JSON.parse(stack);
         const stackList = [];
 
-        stackObject.forEach(line => {
-            for (let levelLog in line) {
+        stackObject.forEach((line) => {
+            for (const levelLog in line) {
                 if (line.hasOwnProperty(levelLog)) {
                     stackList.push(line[levelLog]);
                 }
@@ -77,13 +98,13 @@ const LoggerInjector = {
         return stackList;
     },
 
-    stackOptionsList: function () {
+    stackOptionsList() {
         const stackList = this.stackList(this.stack(0));
         const stackOptionsList = [];
 
-        stackList.forEach(line => {
+        stackList.forEach((line) => {
             stackOptionsList.push({
-                label: String(line[0]).replace("%c", ""),
+                label: String(line[0]).replace('%c', ''),
                 styles: this.parseCssString(line[1])
             });
         });
@@ -91,19 +112,20 @@ const LoggerInjector = {
         return stackOptionsList;
     },
 
-    parseCssString: function (css: string) {
-        const result = {}, attributes = css.split(';');
+    parseCssString(css: string) {
+        const result = {};
+        const attributes = css.split(';');
 
         for (let i = 0; i < attributes.length; i++) {
-            let entry = attributes[i].split(':');
-            let property = String(entry.splice(0, 1)[0]).trim();
-            let options = entry.join(':').trim();
-            if (property.length) result[property] = options;
+            const entry = attributes[i].split(':');
+            const property = String(entry.splice(0, 1)[0]).trim();
+            const options = entry.join(':').trim();
+            if (property.length) {
+                result[property] = options;
+            }
         }
 
         return result;
     }
 
 };
-
-export {LoggerInjector, LoggerLineType};
