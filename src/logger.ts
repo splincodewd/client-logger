@@ -67,16 +67,23 @@ export class ClientLogger implements ClientLoggerImpl {
         this.options.configColor = { ...configColor, ...colors };
     }
 
-    public pipe(...stream: CallbackGroupFn[]) {
+    public pipe(...stream: CallbackGroupFn[]): ClientLogger {
         stream.forEach((line) => line(this));
         return this;
     }
 
-    public close() {
+    public close(): ClientLogger {
+        this.countOpenGroup--;
+        this.options.consoleInstance.groupEnd();
+        return this;
+    }
+
+    public closeAll(): ClientLogger {
         for (let i = this.countOpenGroup; i--; i > 0) {
             this.countOpenGroup = i;
             this.options.consoleInstance.groupEnd();
         }
+        return this;
     }
 
     public group(label: string, stream?: CallbackGroupFn): ClientLogger {
@@ -87,11 +94,9 @@ export class ClientLogger implements ClientLoggerImpl {
 
         if (this.options.minLevel !== LoggerLevel.OFF) {
             consoleInstance.group.call(consoleInstance, labelText, style);
-
             if (stream) {
                 stream(this);
-                this.countOpenGroup--;
-                this.options.consoleInstance.groupEnd();
+                this.close();
             }
         }
 
@@ -106,11 +111,9 @@ export class ClientLogger implements ClientLoggerImpl {
 
         if (this.options.minLevel !== LoggerLevel.OFF) {
             consoleInstance.groupCollapsed.call(consoleInstance, labelText, style);
-
             if (stream) {
                 stream(this);
-                this.countOpenGroup--;
-                this.options.consoleInstance.groupEnd();
+                this.close();
             }
         }
 
