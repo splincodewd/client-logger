@@ -29,7 +29,7 @@ npm i @splincode/client-logger --save-dev
 You could easily use this Logger in the browser. 
 You only need to install the package and import it in your scripts before assembly.
 To see how to use the Logger please 
-[follow the link](http://requirebin.com/?gist=a4b2a1b162037b736deaf0cbb2e886f8) 
+[follow the link](https://stackblitz.com/edit/typescript-ztspos?file=index.ts) 
 or follow that's [link](https://splincodewd.github.io/client-logger).
 
 You can also run the examples on webpack:
