@@ -312,17 +312,82 @@ describe('[TEST]: ClientLogger', () => {
 
     });
 
-    it(`Pipe collapsed without close`, () => {
+    it(`Pipe groups (with collapsed)`, () => {
 
         clientLogger.clear();
 
         clientLogger
-            .groupCollapsed('group collapsed name without close')
-            .pipe(({ trace }) => trace('trace is worked'));
+            .groupCollapsed('group A')
+            .pipe(({ trace }) => trace('trace is worked'))
+            .close()
+            .group('group B')
+            .pipe(({ trace }) => trace('trace is worked'))
+            .close();
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} group collapsed name without close` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] }
+            { [LoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} group A` },
+            { [LoggerLineType.TRACE]: ['trace is worked'] },
+            { [LoggerGroupType.GROUP_END]: [] },
+            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} group B` },
+            { [LoggerLineType.TRACE]: ['trace is worked'] },
+            { [LoggerGroupType.GROUP_END]: [] }
+        ));
+
+    });
+
+    it(`Great groups with group`, () => {
+
+        clientLogger.clear();
+
+        clientLogger
+            .group('A')
+            .pipe(
+                ({ trace }) => trace('trace is worked'),
+                ({ debug }) => debug('debug is worked'),
+                ({ info }) => info('info is worked'),
+                ({ warn }) => warn('warn is worked'),
+                ({ error }) => error('error is worked')
+            )
+            .groupCollapsed('B')
+            .pipe(
+                ({ trace }) => trace('trace is worked'),
+                ({ debug }) => debug('debug is worked'),
+                ({ info }) => info('info is worked'),
+                ({ warn }) => warn('warn is worked'),
+                ({ error }) => error('error is worked')
+            )
+            .group('C')
+            .pipe(
+                ({ trace }) => trace('trace is worked'),
+                ({ debug }) => debug('debug is worked'),
+                ({ info }) => info('info is worked'),
+                ({ warn }) => warn('warn is worked'),
+                ({ error }) => error('error is worked')
+            )
+            .closeAll();
+
+        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} A` },
+            { [LoggerLineType.TRACE]: ['trace is worked'] },
+            { [LoggerLineType.DEBUG]: ['debug is worked'] },
+            { [LoggerLineType.INFO]: ['info is worked'] },
+            { [LoggerLineType.WARN]: ['warn is worked'] },
+            { [LoggerLineType.ERROR]: ['error is worked'] },
+            { [LoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} B` },
+            { [LoggerLineType.TRACE]: ['trace is worked'] },
+            { [LoggerLineType.DEBUG]: ['debug is worked'] },
+            { [LoggerLineType.INFO]: ['info is worked'] },
+            { [LoggerLineType.WARN]: ['warn is worked'] },
+            { [LoggerLineType.ERROR]: ['error is worked'] },
+            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} C` },
+            { [LoggerLineType.TRACE]: ['trace is worked'] },
+            { [LoggerLineType.DEBUG]: ['debug is worked'] },
+            { [LoggerLineType.INFO]: ['info is worked'] },
+            { [LoggerLineType.WARN]: ['warn is worked'] },
+            { [LoggerLineType.ERROR]: ['error is worked'] },
+            { [LoggerGroupType.GROUP_END]: [] },
+            { [LoggerGroupType.GROUP_END]: [] },
+            { [LoggerGroupType.GROUP_END]: [] },
         ));
 
     });
