@@ -1,13 +1,4 @@
-/*
-
-    import {ClientLogger, logger, LoggerLevel} from "@splincode/client-logger";
-    import {MyConsole} from "./MyConsole";
-    declare const process: any;
-
- */
-
-import { ClientLogger } from '../../src/logger';
-import { LoggerLevel } from '../../src/logger.interfaces';
+import { ClientLogger, LoggerLevel } from '../../index';
 import { MyConsole } from './MyConsole';
 
 window['showExample1'] = function showExample1() {
@@ -33,7 +24,7 @@ window['showExample2'] = function showExample2() {
     logger.clear();
     logger.level = LoggerLevel.ALL;
 
-    logger.group('EXAMPLE 2: show stack', () => {
+    logger.groupCollapsed('EXAMPLE 2: show stack', () => {
         logger.trace('trace is worked', 1, { a: 1 });
         logger.debug('debug is worked', 2, console);
         logger.info('info is worked', 3, Object);
@@ -71,6 +62,7 @@ window['showExample3'] = function showExample3() {
     logger.info('info is worked', 'current logger level', logger.level);
     logger.warn('warn is worked', 4, String);
     logger.error('error is worked', 5, (2.55).toFixed());
+
 };
 
 window['showExample4'] = function showExample4() {
@@ -153,6 +145,25 @@ window['showExample5'] = function showExample4() {
             ({ warn }) => warn('warn is worked'),
             ({ error }) => error('error is worked')
         )
-        .close();
+        .closeAll(); // closed all opened group
+
+};
+
+window['showExample6'] = function showExample4() {
+
+    const logger = new ClientLogger();
+    logger.clear();
+
+    logger
+        .css({ textTransform: 'uppercase', fontWeight: 'bold' })
+        .debug('window current ', window);
+
+    logger
+        .css('color: red; text-decoration: underline; font-weight: bold')
+        .info('It\'s awesome');
+
+    logger.warn('logger.css(...) does not define a global format!');
+
+    logger.info('For global configuration, use the constructor parameters');
 
 };

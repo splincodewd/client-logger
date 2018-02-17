@@ -1,6 +1,5 @@
 import { LoggerGroupType, LoggerInjector, LoggerLineType } from './helpers/converter';
-import { ClientLogger, LoggerLevel } from '../index';
-import { COLORS, LABELS } from '../src/logger.interfaces';
+import { ClientLogger, LoggerLevel, LABELS, COLORS } from '../index';
 import { expect } from 'chai';
 import 'mocha';
 

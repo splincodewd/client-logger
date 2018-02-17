@@ -1,8 +1,11 @@
-import { CallbackGroupFn, ClientLoggerImpl, config, LoggerColors, LoggerConfigImpl, LoggerLabels, LoggerLevel } from './logger.interfaces';
+import { CallbackGroupFn, ClientLoggerImpl, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
+import { config, FormatLine, LoggerLevel } from './logger.config';
+import { CssParser } from './logger.style';
 
 export class ClientLogger implements ClientLoggerImpl {
 
     private options: LoggerConfigImpl;
+    private lineStyle: Partial<LineStyle> = {};
     private countOpenGroup: number = 0;
 
     constructor(options: Partial<LoggerConfigImpl> = {}) {
@@ -67,6 +70,12 @@ export class ClientLogger implements ClientLoggerImpl {
         this.options.configColor = { ...configColor, ...colors };
     }
 
+    public css(styleFormat: object | string, format: FormatLine = FormatLine.STRING): ClientLogger {
+        const style = (typeof styleFormat === 'string') ? styleFormat : CssParser.toString(styleFormat);
+        this.lineStyle = { style, format };
+        return this;
+    }
+
     public pipe(...stream: CallbackGroupFn[]): ClientLogger {
         stream.forEach((line) => line(this));
         return this;
@@ -120,19 +129,40 @@ export class ClientLogger implements ClientLoggerImpl {
         return this;
     }
 
+    private clearCssCurrentLine() {
+        this.lineStyle = {};
+    }
+
     private loggerMethodsFactory(level: LoggerLevel) {
-        const noop = this.options.noop;
-        if (this.options.minLevel > level) {
-            return noop;
+        const canExecute = !(this.options.minLevel > level);
+        let operation = this.options.noop;
+
+        if (canExecute) {
+            const label = this.getLabelText(level);
+            const style = this.getStyleForLabel(level);
+            const methodName = this.getConsoleMethodName(level);
+            const consoleInstance = this.options.consoleInstance;
+            const consoleMethod = consoleInstance[methodName] || operation;
+            const { style: lineStyle, format: lineFormat } = this.getCurrentLineStyle();
+
+            if (lineStyle) {
+                this.clearCssCurrentLine();
+                const labelLine = `${label} %c${lineFormat}`;
+                operation = consoleMethod.bind(consoleInstance, labelLine, style, lineStyle);
+            } else {
+                operation = consoleMethod.bind(consoleInstance, label, style);
+            }
         }
 
-        const consoleInstance = this.options.consoleInstance;
-        const label = this.getLabelText(level);
-        const style = this.getStyleForLabel(level);
-        const methodName = this.getConsoleMethodName(level);
-        const consoleMethod = consoleInstance[methodName] || noop;
+        return operation;
+    }
 
-        return consoleMethod.bind(consoleInstance, label, style);
+    private getCurrentLineStyle(): LineStyle {
+        const defaultLineStyle = this.options.lineStyle;
+        const currentLineOption = this.lineStyle || defaultLineStyle;
+        const lineStyle = currentLineOption.style;
+        const lineFormat = currentLineOption.format;
+        return { style: lineStyle, format: lineFormat };
     }
 
     private getConsoleMethodName(level: LoggerLevel): string {

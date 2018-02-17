@@ -19,7 +19,7 @@ export const LoggerInjector = {
     patch() {
 
         const that = this;
-        const consoleForTest = (Object as any).assign({}, {});
+        const consoleForTest = {} as any;
         this.referenceConsole = consoleForTest;
         consoleForTest['history'] = [];
 
@@ -71,7 +71,7 @@ export const LoggerInjector = {
     },
 
     stack(withoutLabel: number = 2) {
-        const history = (Object as any).assign([], this.referenceConsole['history']);
+        const history = Object.assign([], this.referenceConsole['history']);
         history.forEach((line: object, index: number) => {
             for (const arg in line) {
                 if (line.hasOwnProperty(arg)) {
