@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const DashboardPlugin = require("webpack-dashboard/plugin");
 const nodeEnv = process.env.NODE_ENV || "development";
 const isProd = nodeEnv === "production";
+const productionDirectory = isProd ? "./output" : "./dist";
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = {
     devtool: !isProd ? 'inline-sourcemap' : false,
@@ -14,9 +16,9 @@ const config = {
         vendor: "./vendor.ts"
     },
     output: {
-        path: path.resolve("./dist"),
-        filename: "[name].bundle.js",
-        sourceMapFilename: "[name].bundle.map"
+        path: path.resolve(productionDirectory),
+        filename: "[name].js?ver=[chunkhash]",
+        sourceMapFilename: "[name].map"
     },
     module: {
         rules: [
@@ -33,12 +35,13 @@ const config = {
     resolve: {
         extensions: [".ts", ".js"]
     },
-    plugins: push(isProd, [
+    plugins: resolvePluginsForProduction(isProd, [
+        new CleanWebpackPlugin(productionDirectory),
         new webpack.DefinePlugin({
             "process.env": {
                 // eslint-disable-line quote-props
                 NODE_ENV: JSON.stringify(nodeEnv),
-                "process.env": { NODE_ENV: JSON.stringify(nodeEnv) }
+                "process.env": {NODE_ENV: JSON.stringify(nodeEnv)}
             }
         }),
         new HtmlWebpackPlugin({
@@ -48,7 +51,7 @@ const config = {
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             minChunks: Infinity,
-            filename: "vendor.bundle.js"
+            filename: "vendor.js?ver=[chunkhash]"
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {warnings: false},
@@ -89,10 +92,10 @@ const config = {
 
 module.exports = config;
 
-function push(isProd, array1, array2) {
+function resolvePluginsForProduction(isProd, commonPlugins, productionPlugins) {
     if (!isProd) {
-        return [ ...array1, ...array2 ];
+        return [...commonPlugins, ...productionPlugins];
     } else {
-        return array1;
+        return commonPlugins;
     }
 }

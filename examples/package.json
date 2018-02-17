@@ -21,6 +21,7 @@
         "@types/lodash": "^4.14.70",
         "awesome-typescript-loader": "^3.2.1",
         "better-console": "^1.0.1",
+        "clean-webpack-plugin": "^0.1.18",
         "cross-env": "^5.0.1",
         "css-loader": "^0.28.4",
         "ejs-loader": "^0.3.0",

@@ -13,6 +13,7 @@ npm i @splincode/client-logger --save-dev
 - [x] Override console
 - [x] Logger method (trace, debug, info, warning, error)
 - [x] Logger group + groupCollapsible (pipes)
+- [x] Set style by css
 - [ ] Logger level groups (debug, info, warn, error)
 - [ ] Format
 - [ ] Pre process output
@@ -20,7 +21,6 @@ npm i @splincode/client-logger --save-dev
 - [ ] Switch enable/disable default console output
 - [ ] Profiling (memory usage, sizeof, time execute)
 - [ ] Timers (decorator)
-- [ ] Set style by css
 - [ ] Cross-browser fixing
 - [ ] Dependency Injection for Angular
 
@@ -121,17 +121,19 @@ logger
         ({ warn }) => warn('warn is worked'),
         ({ error }) => error('error is worked')
     )
-    .close(); // closed all opened group
+    .closeAll(); // closed all opened group
 ```
 
-* **Logger groups (with auto closed):**
+![](https://habrastorage.org/webt/77/vi/gm/77vigmltfbdmxhiruv8xgxwjdrg.gif)
+
+* **Logger groups with auto closed (usage callback):**
 
 ```typescript
 import { ClientLogger } from "@splincode/client-logger";
 
 const logger = new ClientLogger();
 
-logger.group('EXAMPLE: show stack', () => {
+logger.groupCollapsed('EXAMPLE 2: show stack', () => {
     logger.trace('trace is worked', 1, { a: 1 });
     logger.debug('debug is worked', 2, console);
     logger.info('info is worked', 3, Object);
@@ -152,30 +154,16 @@ logger.groupCollapsed('Show trace in collapsed group', ({ trace }) => {
 });
 ```
 
-![](https://habrastorage.org/webt/jg/ak/st/jgakstdrpkdyh02ml3akfxachcu.png)
+![](https://habrastorage.org/webt/zs/hv/fz/zshvfzrcslnsqo3dvyeiskrkwik.png)
 
 ### Example: Set minimal signature (Prod / Dev)
-
-```typescript
-import {LoggerLevel} from "@splincode/client-logger/dist/logger.interfaces";
-import {logger} from "@splincode/client-logger";
-
-const isProd = process.env.production || true;
-logger.level = isProd ? LoggerLevel.INFO : LoggerLevel.ALL;
-
-logger.trace("trace is worked", 1, {a: 1});
-logger.debug("debug is worked", 2, console);
-logger.info("info is worked", 3, Object);
-logger.warn("warn is worked", 4, String);
-logger.error("error is worked", 5, (2.55).toFixed());
-```
 
 ```typescript
 import { ClientLogger, LoggerLevel } from "@splincode/client-logger";
 const isProd = process.env.production || true;
 
 const minLevel = isProd ? LoggerLevel.ERROR : LoggerLevel.ALL
-
+const logger = new ClientLogger({ logLevel: minLevel });
 /**
 * OR:
 * const logger = new ClientLogger();
@@ -183,14 +171,36 @@ const minLevel = isProd ? LoggerLevel.ERROR : LoggerLevel.ALL
 * 
 */
 
-const logger = new ClientLogger({ logLevel: minLevel });
-
 logger.trace("trace is worked", 1, {a: 1}); // not execute
 logger.debug("debug is worked", 2, console); // not execute
 logger.info("info is worked", 3, Object); // not execute
 logger.warn("warn is worked", 4, String); // not execute
 logger.error("error is worked", 5, (2.55).toFixed());
 ```
+
+### Example: Set style for console line
+
+```typescript
+import { ClientLogger } from "@splincode/client-logger";
+
+const logger = new ClientLogger();
+
+logger
+    .css({ textTransform: 'uppercase', fontWeight: 'bold' })
+    .debug("window current ", window);
+
+logger
+    .css('color: red; text-decoration: underline; font-weight: bold')
+    .info("It's awesome");
+
+logger
+    .css('font-weight: bold')
+    .warn("logger.css(...) does not define a global format!");
+
+logger.info('For global configuration, use the constructor parameters');
+````
+
+![](https://habrastorage.org/webt/4s/co/wh/4scowhxaxdl8ikcmxpyjtko269m.png)
 
 ### Example: Full configurations
 
@@ -201,41 +211,41 @@ import { MyConsole } from "node_modules/custom-logger";
 
 const logger = new ClientLogger({
 
-        // Drop-in replacement for console, if needed
-        consoleInstance: <Console> new MyConsole(),
+    // Drop-in replacement for console, if needed
+    consoleInstance: <Console> new MyConsole(),
 
-        // Custom color
-        configColor: {
-            [LoggerLevel.TRACE]: 'Grey',
-            [LoggerLevel.DEBUG]: 'Blue',
-            [LoggerLevel.INFO]: 'Green',
-            [LoggerLevel.WARN]: 'Orange',
-            [LoggerLevel.ERROR]: 'Red',
-        },
+    // Custom color
+    configColor: {
+        [LoggerLevel.TRACE]: 'Grey',
+        [LoggerLevel.DEBUG]: 'Blue',
+        [LoggerLevel.INFO]: 'Green',
+        [LoggerLevel.WARN]: 'Orange',
+        [LoggerLevel.ERROR]: 'Red',
+    },
 
-        // Custom label
-        configLabel: {
-            [LoggerLevel.TRACE]: 'trace: ',
-            [LoggerLevel.DEBUG]: 'debug: ',
-            [LoggerLevel.INFO]: 'info: ',
-            [LoggerLevel.WARN]: 'warn: ',
-            [LoggerLevel.ERROR]: 'error: ',
-        }
+    // Custom label
+    configLabel: {
+        [LoggerLevel.TRACE]: 'trace: ',
+        [LoggerLevel.DEBUG]: 'debug: ',
+        [LoggerLevel.INFO]: 'info: ',
+        [LoggerLevel.WARN]: 'warn: ',
+        [LoggerLevel.ERROR]: 'error: ',
+    }
 
-    });
+});
 
-    logger.clear();
-    logger.level = LoggerLevel.ALL;
+logger.clear();
+logger.level = LoggerLevel.ALL;
 
-    logger.trace('trace is worked', 1, { a: 1 });
-    logger.debug('debug is worked', 2, console);
-    logger.info('info is worked', 3, Object);
-    logger.warn('warn is worked', 4, String);
-    logger.error('error is worked', 5, (2.55).toFixed());
+logger.trace('trace is worked', 1, { a: 1 });
+logger.debug('debug is worked', 2, console);
+logger.info('info is worked', 3, Object);
+logger.warn('warn is worked', 4, String);
+logger.error('error is worked', 5, (2.55).toFixed());
 ```
 
 ## Run Tests
-All Сlient Logger tests are written with mocha, chai.
+All logger tests are written with mocha, chai.
 
 ```bash
 npm test
