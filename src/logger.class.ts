@@ -1,6 +1,6 @@
-import { CallbackGroupFn, ClientLoggerImpl, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
+import { CallbackGroupFn, ClientLoggerImpl, ConsoleOperationFn, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
 import { config, FormatLine, LoggerLevel } from './logger.config';
-import { CssParser } from './logger.style';
+import { CssParser } from './css-parser.class';
 
 export class ClientLogger implements ClientLoggerImpl {
 
@@ -60,12 +60,12 @@ export class ClientLogger implements ClientLoggerImpl {
         return this.console.clear.bind(this.console);
     }
 
-    public setLabels(labels: LoggerLabels) {
+    public setLabels(labels: LoggerLabels): void {
         const configLabel = this.options.configLabel;
         this.options.configLabel = { ...configLabel, ...labels };
     }
 
-    public setColors(colors: LoggerColors) {
+    public setColors(colors: LoggerColors): void {
         const configColor = this.options.configColor;
         this.options.configColor = { ...configColor, ...colors };
     }
@@ -129,11 +129,11 @@ export class ClientLogger implements ClientLoggerImpl {
         return this;
     }
 
-    private clearCssCurrentLine() {
+    private clearCssCurrentLine(): void {
         this.lineStyle = {};
     }
 
-    private loggerMethodsFactory(level: LoggerLevel) {
+    private loggerMethodsFactory(level: LoggerLevel): ConsoleOperationFn {
         const canExecute = !(this.options.minLevel > level);
         let operation = this.options.noop;
 

@@ -98,14 +98,14 @@ export const LoggerInjector = {
         return stackList;
     },
 
-    stackOptionsList() {
+    stackOptionsList(usageNext: boolean = false) {
         const stackList = this.stackList(this.stack(0));
         const stackOptionsList = [];
 
         stackList.forEach((line) => {
             stackOptionsList.push({
                 label: String(line[0]).replace('%c', ''),
-                styles: this.parseCssString(line[1])
+                styles: this.parseCssString(line[ usageNext ? 2 : 1])
             });
         });
 

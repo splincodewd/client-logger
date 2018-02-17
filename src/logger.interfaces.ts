@@ -3,7 +3,7 @@ import { FormatLine, LoggerLevel } from './logger.config';
 export interface LoggerConfigImpl {
     minLevel: LoggerLevel;
     consoleInstance: Console;
-    noop: NoOperationFn;
+    noop: ConsoleOperationFn;
     labelUpperCase: boolean;
     lineStyle: LineStyle;
     configLabel: LoggerLabels;
@@ -37,4 +37,4 @@ export interface ClientLoggerImpl {
 }
 
 export type CallbackGroupFn = ((params: ClientLoggerImpl) => void);
-export type NoOperationFn = ((...params: any[]) => void);
+export type ConsoleOperationFn = ((...params: any[]) => void);
