@@ -49,13 +49,17 @@ window['showExample2'] = function showExample2() {
 
 window['showExample3'] = function showExample3() {
 
-    const logger = new ClientLogger();
-
+    const production = true;
+    const level = production ? LoggerLevel.INFO : LoggerLevel.ALL;
+    const logger = new ClientLogger({ minLevel: level });
     logger.clear();
-    logger.level = LoggerLevel.ALL;
 
-    const isProd = process.env.production || true;
-    logger.level = isProd ? LoggerLevel.INFO : LoggerLevel.ALL;
+    /**
+     * OR:
+     * const logger = new ClientLogger();
+     * logger.level = minLevel;
+     *
+     */
 
     logger.trace('trace is worked', 1, { a: 1 });
     logger.debug('debug is worked', 2, console);

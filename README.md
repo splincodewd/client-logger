@@ -29,7 +29,7 @@ npm i @splincode/client-logger --save-dev
 You could easily use this Logger in the browser. 
 You only need to install the package and import it in your scripts before assembly.
 To see how to use the Logger please 
-[follow the link](https://stackblitz.com/edit/typescript-ztspos?file=index.ts) 
+[follow the link](https://stackblitz.com/edit/typescript-m8n8tj?file=index.ts) 
 or follow that's [link](https://splincodewd.github.io/client-logger).
 
 You can also run the examples on webpack:
@@ -160,22 +160,24 @@ logger.groupCollapsed('Show trace in collapsed group', ({ trace }) => {
 
 ```typescript
 import { ClientLogger, LoggerLevel } from "@splincode/client-logger";
-const isProd = process.env.production || true;
 
-const minLevel = isProd ? LoggerLevel.ERROR : LoggerLevel.ALL
-const logger = new ClientLogger({ logLevel: minLevel });
+const production = true;
+const level = production ? LoggerLevel.INFO : LoggerLevel.ALL;
+const logger = new ClientLogger({ minLevel: level });
+logger.clear();
+
 /**
-* OR:
-* const logger = new ClientLogger();
-* logger.level = minLevel;
-* 
-*/
+ * OR:
+ * const logger = new ClientLogger();
+ * logger.level = minLevel;
+ *
+ */
 
-logger.trace("trace is worked", 1, {a: 1}); // not execute
-logger.debug("debug is worked", 2, console); // not execute
-logger.info("info is worked", 3, Object); // not execute
-logger.warn("warn is worked", 4, String); // not execute
-logger.error("error is worked", 5, (2.55).toFixed());
+logger.trace('trace is worked', 1, { a: 1 });
+logger.debug('debug is worked', 2, console);
+logger.info('info is worked', 'current logger level', logger.level);
+logger.warn('warn is worked', 4, String);
+logger.error('error is worked', 5, (2.55).toFixed());
 ```
 
 ### Example: Set style for console line
