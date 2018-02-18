@@ -13,11 +13,11 @@ npm i @splincode/client-logger --save-dev
 - [x] Override console
 - [x] Logger method (trace, debug, info, warning, error)
 - [x] Logger group + groupCollapsible (pipes)
+- [x] Logger pretty write object
 - [x] Set style by css
 - [ ] Logger level groups (trace, debug, info, warn, error)
 - [ ] Format
 - [ ] Pre process output
-- [ ] Logger pretty write object
 - [ ] Switch enable/disable default console output
 - [ ] Profiling (memory usage, sizeof, time execute)
 - [ ] Timers (decorator)
@@ -215,6 +215,26 @@ logger.info('For global configuration, use the constructor parameters');
 ````
 
 ![](https://habrastorage.org/webt/4s/co/wh/4scowhxaxdl8ikcmxpyjtko269m.png)
+
+### Example: pretty json
+
+```typescript
+import { ClientLogger } from '@splincode/client-logger';
+const logger = new ClientLogger();
+
+fetch("http://data.io").then((greatBigJSON) => {
+    // default browser print json
+    logger.debug("Classic output json", greatBigJSON);
+    
+    // for pretty json usage logger.log method
+    logger.log(...logger.stringify(greatBigJSON));
+    
+    // or minimal usage (but not working source map)
+    logger.printJSON(greatBigJSON);
+});
+```
+
+![](https://habrastorage.org/webt/cp/yo/no/cpyonombmaemgbpdsqjallxjhuq.png)
 
 ### Example: full configurations
 

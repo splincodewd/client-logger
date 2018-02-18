@@ -1,6 +1,7 @@
 import { CallbackGroupFn, ClientLoggerImpl, ConsoleOperationFn, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
 import { config, FormatLine, LoggerLevel } from './logger.config';
 import { CssParser } from './css-parser.class';
+import { ParseJson } from './parse-json.class';
 
 export class ClientLogger implements ClientLoggerImpl {
 
@@ -84,6 +85,14 @@ export class ClientLogger implements ClientLoggerImpl {
         const style = (typeof styleFormat === 'string') ? styleFormat : CssParser.toString(styleFormat);
         this.lineStyle = { style, format };
         return this;
+    }
+
+    public printJSON(json: any): void {
+        this.console.log.apply(this.console, this.stringify(json));
+    }
+
+    public stringify(json: any): string[] {
+        return ParseJson.stringify(json);
     }
 
     public pipe(...stream: CallbackGroupFn[]): ClientLogger {

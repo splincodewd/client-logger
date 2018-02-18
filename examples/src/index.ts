@@ -1,5 +1,6 @@
 import { ClientLogger, LoggerLevel } from '../../index';
 import { MyConsole } from './MyConsole';
+import { greatBigJSON } from './big.json';
 
 // Basic method (trace, debug, info, ..)
 window['showExample1'] = function showExample1() {
@@ -106,6 +107,7 @@ window['showExample4'] = function showExample4() {
 
     const logger = new ClientLogger();
     logger.clear();
+
     logger.log('Set current logger level: ', LoggerLevel[level]);
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-production';
@@ -125,9 +127,10 @@ window['showExample4'] = function showExample4() {
 window['showExample5'] = function showExample5() {
 
     const logger = new ClientLogger();
+    logger.clear();
+
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-set-style-line';
     logger.log(`See how usage: ${urlDocumentation}`);
-    logger.clear();
 
     logger
         .css({ textTransform: 'uppercase', fontWeight: 'bold' })
@@ -143,8 +146,27 @@ window['showExample5'] = function showExample5() {
 
 };
 
-// Full configuration (change labels, colors)
+// Pretty json output
 window['showExample6'] = function showExample6() {
+
+    const logger = new ClientLogger();
+    logger.clear();
+
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-pretty-json';
+    logger.log(`See how usage: ${urlDocumentation}`);
+
+    logger
+        .group('Classic output json:')
+        .pipe(({ debug }) => debug('Classic output json: ', greatBigJSON))
+        .close()
+        .group('Pretty output json:')
+        .pipe(({ log, stringify }) => log(...stringify(greatBigJSON)))
+        .close();
+
+};
+
+// Full configuration (change labels, colors)
+window['showExampleEnd'] = function showExampleEnd() {
 
     const logger = new ClientLogger({
 
@@ -181,3 +203,5 @@ window['showExample6'] = function showExample6() {
     logger.error('error is worked', 5, (2.55).toFixed());
 
 };
+
+
