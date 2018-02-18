@@ -3,4 +3,3 @@
 --full-trace
 --bail
 test/*/*.test.ts
-test/*.test.ts

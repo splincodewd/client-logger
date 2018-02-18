@@ -52,10 +52,7 @@ const logger = new ClientLogger();
 
 logger.trace('trace is worked', 1, { a: 1 });
 logger.debug('debug is worked', 2, console);
-
-logger.log('log is worked', 'output without labels');
 logger.info('info is worked', 3, Object);
-
 logger.warn('warn is worked', 4, String);
 logger.error('error is worked', 5, (2.55).toFixed());
 ```
@@ -229,8 +226,27 @@ fetch("http://data.io").then((greatBigJSON) => {
     // for pretty json usage logger.log method
     logger.log(...logger.stringify(greatBigJSON));
     
-    // or minimal usage (but not working source map)
+    // or minimal usage (but does not work source map)
     logger.printJSON(greatBigJSON);
+});
+```
+
+![](https://habrastorage.org/webt/zq/f9/wk/zqf9wkjej7gcpwmu-wa-nvpoosw.png)
+
+```typescript
+import { ClientLogger } from '@splincode/client-logger';
+const logger = new ClientLogger();
+
+fetch("http://data.io").then((greatBigJSON) => {
+    
+    logger
+        .group('Classic output json:')
+        .pipe(({ debug }) => debug('Classic output json: ', greatBigJSON))
+        .close()
+        .group('Pretty output json:')
+        .pipe(({ log, stringify }) => log(...stringify(greatBigJSON)))
+        .close();
+    
 });
 ```
 
