@@ -111,9 +111,9 @@ logger.groupCollapsed('Show trace in collapsed group', ({ trace }) => {
 
 ![](https://habrastorage.org/webt/zs/hv/fz/zshvfzrcslnsqo3dvyeiskrkwik.png)
 
-### Example: pipe groups
+### Example: nested groups
 
-* **Logger groups (by pipe):**
+* **Logger nested groups (with pipe):**
 
 ```typescript
 import { ClientLogger } from '@splincode/client-logger';
@@ -264,7 +264,8 @@ const logger = new ClientLogger({
     // Drop-in replacement for console, if needed
     consoleInstance: <Console> new MyConsole(),
     
-    minLevel: LoggerLevel.DEBUG,
+    // Minimal execute signature
+    minLevel: LoggerLevel.INFO,
 
     // Custom color
     configColor: {
@@ -287,7 +288,7 @@ const logger = new ClientLogger({
 });
 
 logger.trace('trace is worked', 1, { a: 1 }); // not execute
-logger.debug('debug is worked', 2, console);
+logger.debug('debug is worked', 2, console); // not execute
 logger.info('info is worked', 3, Object);
 logger.warn('warn is worked', 4, String);
 logger.error('error is worked', 5, (2.55).toFixed());
@@ -320,22 +321,19 @@ type(category): description [flags]
 ```
 
 Where type is one of the following:
-
-```
-breaking
-build
-ci
-chore
-docs
-feat
-fix
-other
-perf
-refactor
-revert
-style
-test
-```
+* breaking
+* build
+* ci
+* chore
+* docs
+* feat
+* fix
+* other
+* perf
+* refactor
+* revert
+* style
+* test
 
 ## Run Tests
 All logger tests are written with mocha, chai.

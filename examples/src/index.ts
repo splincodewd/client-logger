@@ -56,7 +56,7 @@ window['showExample3'] = function showExample3() {
     const logger = new ClientLogger();
     logger.clear();
 
-    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-pipe-groups';
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-nested-groups';
     logger.log(`See how usage: ${urlDocumentation}`);
 
     logger
@@ -108,10 +108,9 @@ window['showExample4'] = function showExample4() {
     const logger = new ClientLogger();
     logger.clear();
 
-    logger.log('Set current logger level: ', LoggerLevel[level]);
-
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-production';
     logger.log(`See how usage: ${urlDocumentation}`);
+    logger.log('Set current logger level: ', LoggerLevel[level]);
     logger.level = level;
 
     logger.log('custom output'); // not execute
@@ -173,6 +172,9 @@ window['showExampleEnd'] = function showExampleEnd() {
         // Drop-in replacement for console, if needed
         consoleInstance: <Console> new MyConsole(),
 
+        // Minimal execute signature
+        minLevel: LoggerLevel.INFO,
+
         // Custom color
         configColor: {
             [LoggerLevel.TRACE]: 'Grey',
@@ -194,10 +196,12 @@ window['showExampleEnd'] = function showExampleEnd() {
     });
 
     logger.clear();
-    logger.level = LoggerLevel.ALL;
 
-    logger.trace('trace is worked', 1, { a: 1 });
-    logger.debug('debug is worked', 2, console);
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-full-configurations';
+    logger.log(`See how usage: ${urlDocumentation}`);
+
+    logger.trace('trace is worked', 1, { a: 1 }); // not execute
+    logger.debug('debug is worked', 2, console); // not execute
     logger.info('info is worked', 3, Object);
     logger.warn('warn is worked', 4, String);
     logger.error('error is worked', 5, (2.55).toFixed());
