@@ -16,7 +16,8 @@ npm i @splincode/client-logger --save-dev
 - [x] Logger pretty write object
 - [x] Set style by css
 - [x] Logger level groups (trace, debug, info, warn, error)
-- [ ] Light format output console
+- [ ] Set global style + add another css class
+- [ ] Format output console
 - [ ] Dependency Injection for Angular
 - [ ] Switch enable/disable default console output
 - [ ] Profiling (memory usage, sizeof, time execute)
