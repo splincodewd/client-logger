@@ -1,6 +1,7 @@
 export enum LoggerLineType {
     TRACE = 'debug',
     DEBUG = 'info',
+    LOG = 'log',
     INFO = 'info',
     WARN = 'warn',
     ERROR = 'error',
@@ -26,6 +27,12 @@ export const LoggerInjector = {
         consoleForTest.debug = function () {
             const args = Array.prototype.slice.call(arguments);
             that.referenceConsole['history'].push({ [LoggerLineType.TRACE]: args });
+        };
+
+        consoleForTest.log = function () {
+            const args = Array.prototype.slice.call(arguments);
+            args.unshift(null, null);
+            that.referenceConsole['history'].push({ [LoggerLineType.LOG]: args });
         };
 
         consoleForTest.info = function () {
@@ -105,7 +112,7 @@ export const LoggerInjector = {
         stackList.forEach((line) => {
             stackOptionsList.push({
                 label: String(line[0]).replace('%c', ''),
-                styles: this.parseCssString(line[ usageNext ? 2 : 1])
+                styles: this.parseCssString(line[usageNext ? 2 : 1])
             });
         });
 

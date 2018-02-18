@@ -44,6 +44,16 @@ export class ClientLogger implements ClientLoggerImpl {
         return this.loggerMethodsFactory(LoggerLevel.DEBUG);
     }
 
+    public get log() {
+        let operation = this.options.noop;
+        const canExecute: boolean = !(this.options.minLevel > LoggerLevel.INFO);
+        if (canExecute) {
+            operation = this.console.log.bind(this.console);
+        }
+
+        return operation;
+    }
+
     public get info() {
         return this.loggerMethodsFactory(LoggerLevel.INFO);
     }

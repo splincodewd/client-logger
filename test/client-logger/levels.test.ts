@@ -21,6 +21,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.level = LoggerLevel.TRACE;
         clientLogger.clear();
 
+        clientLogger.log('custom log output');
         clientLogger.trace('trace is worked', 1, { a: 1 });
         clientLogger.debug('debug is worked', 2, console);
         clientLogger.info('info is worked', 3, Object);
@@ -28,6 +29,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            { [LoggerLineType.LOG]: ['custom log output'] },
             { [LoggerLineType.TRACE]: ['trace is worked', 1, { a: 1 }] },
             { [LoggerLineType.DEBUG]: ['debug is worked', 2, console] },
             { [LoggerLineType.INFO]: ['info is worked', 3, Object] },
@@ -42,6 +44,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.level = LoggerLevel.DEBUG;
         clientLogger.clear();
 
+        clientLogger.log('custom log output');
         clientLogger.trace('trace is worked', 1, { a: 1 });
         clientLogger.debug('debug is worked', 2, console);
         clientLogger.info('info is worked', 3, Object);
@@ -49,6 +52,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            { [LoggerLineType.LOG]: ['custom log output'] },
             { [LoggerLineType.DEBUG]: ['debug is worked', 2, console] },
             { [LoggerLineType.INFO]: ['info is worked', 3, Object] },
             { [LoggerLineType.WARN]: ['warn is worked', 4, String] },
@@ -62,6 +66,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.level = LoggerLevel.INFO;
         clientLogger.clear();
 
+        clientLogger.log('custom log output');
         clientLogger.trace('trace is worked', 1, { a: 1 });
         clientLogger.debug('debug is worked', 2, console);
         clientLogger.info('info is worked', 3, Object);
@@ -69,6 +74,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            { [LoggerLineType.LOG]: ['custom log output'] },
             { [LoggerLineType.INFO]: ['info is worked', 3, Object] },
             { [LoggerLineType.WARN]: ['warn is worked', 4, String] },
             { [LoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
@@ -81,6 +87,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.level = LoggerLevel.WARN;
         clientLogger.clear();
 
+        clientLogger.log('custom log output');
         clientLogger.trace('trace is worked', 1, { a: 1 });
         clientLogger.debug('debug is worked', 2, console);
         clientLogger.info('info is worked', 3, Object);
@@ -99,6 +106,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.level = LoggerLevel.ERROR;
         clientLogger.clear();
 
+        clientLogger.log('custom log output');
         clientLogger.trace('trace is worked', 1, { a: 1 });
         clientLogger.debug('debug is worked', 2, console);
         clientLogger.info('info is worked', 3, Object);
@@ -116,6 +124,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.level = LoggerLevel.OFF;
         clientLogger.clear();
 
+        clientLogger.log('custom log output');
         clientLogger.trace('trace is worked', 1, { a: 1 });
         clientLogger.debug('debug is worked', 2, console);
         clientLogger.info('info is worked', 3, Object);
