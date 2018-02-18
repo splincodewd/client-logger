@@ -1,4 +1,6 @@
 export enum LoggerLineType {
+    TABLE = 'table',
+    ASSERT = 'assert',
     TRACE = 'debug',
     DEBUG = 'info',
     LOG = 'log',
@@ -23,6 +25,16 @@ export const LoggerInjector = {
         const consoleForTest = {} as any;
         this.referenceConsole = consoleForTest;
         consoleForTest['history'] = [];
+
+        consoleForTest.assert = function (condition, output) {
+            if (!condition) {
+                that.referenceConsole['history'].push({ [LoggerLineType.ASSERT]: [output] });
+            }
+        };
+
+        consoleForTest.table = function (data) {
+            that.referenceConsole['history'].push({ [LoggerLineType.TABLE]: [data] });
+        };
 
         consoleForTest.debug = function () {
             const args = Array.prototype.slice.call(arguments);
