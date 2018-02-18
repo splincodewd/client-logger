@@ -270,6 +270,37 @@ Run the dev server
 npm start
 ```
 
+Run the dev server
+
+```bash
+npm start
+```
+
+## Contributing 
+Your commit messages have to be in this format:
+
+```bash
+type(category): description [flags]
+```
+
+Where type is one of the following:
+
+```
+breaking
+build
+ci
+chore
+docs
+feat
+fix
+other
+perf
+refactor
+revert
+style
+test
+```
+
 ## Run Tests
 All logger tests are written with mocha, chai.
 
