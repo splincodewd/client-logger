@@ -1,3 +1,7 @@
+.idea/
+.nyc_output/
+
+.editorconfig
 gulpfile.js
 tsconfig.json
 tslint.json
@@ -8,9 +12,14 @@ typings
 *.tgz
 *.yml
 
-src/
-test/
-.idea/
-dist/test
+# directories
 node_modules/
+coverage/
+test/
+dist/
+src/
 examples/
+
+# others
+index.html
+CHANGELOG.md

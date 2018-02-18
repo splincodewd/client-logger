@@ -204,10 +204,7 @@ logger
     .css('color: red; text-decoration: underline; font-weight: bold')
     .info('It is awesome logger');
 
-logger
-    .css('font-weight: bold')
-    .warn('logger.css(...) does not define a global format!');
-
+logger.warn('logger.css(...) does not define a global format!');
 logger.info('For global configuration, use the constructor parameters');
 ````
 

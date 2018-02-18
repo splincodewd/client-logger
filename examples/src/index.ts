@@ -140,7 +140,6 @@ window['showExample5'] = function showExample5() {
         .info('It is awesome logger');
 
     logger.warn('logger.css(...) does not define a global format!');
-
     logger.info('For global configuration, use the constructor parameters');
 
 };
