@@ -1,4 +1,4 @@
-export enum LoggerLineType {
+export enum TestLoggerLineType {
     TABLE = 'table',
     ASSERT = 'assert',
     TRACE = 'debug',
@@ -9,7 +9,7 @@ export enum LoggerLineType {
     ERROR = 'error',
 }
 
-export enum LoggerGroupType {
+export enum TestLoggerGroupType {
     GROUP_OPEN = 'group_open',
     GROUP_COLLAPSED_OPEN = 'group_collapsed_open',
     GROUP_END = 'group_end',
@@ -28,53 +28,53 @@ export const LoggerInjector = {
 
         consoleForTest.assert = function (condition, output) {
             if (!condition) {
-                that.referenceConsole['history'].push({ [LoggerLineType.ASSERT]: [output] });
+                that.referenceConsole['history'].push({ [TestLoggerLineType.ASSERT]: [output] });
             }
         };
 
         consoleForTest.table = function (data) {
-            that.referenceConsole['history'].push({ [LoggerLineType.TABLE]: [data] });
+            that.referenceConsole['history'].push({ [TestLoggerLineType.TABLE]: [data] });
         };
 
         consoleForTest.debug = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole['history'].push({ [LoggerLineType.TRACE]: args });
+            that.referenceConsole['history'].push({ [TestLoggerLineType.TRACE]: args });
         };
 
         consoleForTest.log = function () {
             const args = Array.prototype.slice.call(arguments);
             args.unshift(null, null);
-            that.referenceConsole['history'].push({ [LoggerLineType.LOG]: args });
+            that.referenceConsole['history'].push({ [TestLoggerLineType.LOG]: args });
         };
 
         consoleForTest.info = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole['history'].push({ [LoggerLineType.INFO]: args });
+            that.referenceConsole['history'].push({ [TestLoggerLineType.INFO]: args });
         };
 
         consoleForTest.warn = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole['history'].push({ [LoggerLineType.WARN]: args });
+            that.referenceConsole['history'].push({ [TestLoggerLineType.WARN]: args });
         };
 
         consoleForTest.error = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole['history'].push({ [LoggerLineType.ERROR]: args });
+            that.referenceConsole['history'].push({ [TestLoggerLineType.ERROR]: args });
         };
 
         consoleForTest.group = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole['history'].push({ [LoggerGroupType.GROUP_OPEN]: args[0] });
+            that.referenceConsole['history'].push({ [TestLoggerGroupType.GROUP_OPEN]: args[0] });
         };
 
         consoleForTest.groupCollapsed = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole['history'].push({ [LoggerGroupType.GROUP_COLLAPSED_OPEN]: args[0] });
+            that.referenceConsole['history'].push({ [TestLoggerGroupType.GROUP_COLLAPSED_OPEN]: args[0] });
         };
 
         consoleForTest.groupEnd = function () {
             const args = Array.prototype.slice.call(arguments);
-            that.referenceConsole['history'].push({ [LoggerGroupType.GROUP_END]: args });
+            that.referenceConsole['history'].push({ [TestLoggerGroupType.GROUP_END]: args });
         };
 
         consoleForTest.clear = function () {

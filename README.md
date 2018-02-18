@@ -15,14 +15,14 @@ npm i @splincode/client-logger --save-dev
 - [x] Logger group + groupCollapsible (pipes)
 - [x] Logger pretty write object
 - [x] Set style by css
-- [ ] Logger level groups (trace, debug, info, warn, error)
-- [ ] Format
-- [ ] Pre process output
+- [x] Logger level groups (trace, debug, info, warn, error)
+- [ ] Light format output console
+- [ ] Dependency Injection for Angular
 - [ ] Switch enable/disable default console output
 - [ ] Profiling (memory usage, sizeof, time execute)
 - [ ] Timers (decorator)
+- [ ] Pre process output
 - [ ] Cross-browser fixing
-- [ ] Dependency Injection for Angular
 
 ## Usage
 
@@ -160,6 +160,118 @@ logger
 ```
 
 ![](https://habrastorage.org/webt/77/vi/gm/77vigmltfbdmxhiruv8xgxwjdrg.gif)
+
+### Example: level groups
+
+Basic parameterization
+
+```typescript
+import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
+
+const logger = new ClientLogger();
+
+logger.group({ label: 'A opened', level: LoggerLevel.TRACE }, ({ trace }) => {
+    trace('trace group is worked');
+});
+
+logger.group({ label: 'B opened', level: LoggerLevel.DEBUG }, ({ debug }) => {
+    debug('debug group is worked');
+});
+
+logger.group({ label: 'C opened', level: LoggerLevel.INFO }, ({ info }) => {
+    info('info group is worked');
+});
+
+logger.group({ label: 'D opened', level: LoggerLevel.WARN }, ({ warn }) => {
+    warn('warn group is worked');
+});
+
+logger.group({ label: 'E opened', level: LoggerLevel.ERROR }, ({ error }) => {
+    error('error group is worked');
+});
+
+const level = LoggerLevel.INFO;
+logger.log('Set new logger level', LoggerLevel[level]);
+logger.level = level;
+
+logger.groupCollapsed({ label: 'A collapsed', level: LoggerLevel.TRACE }, ({ trace }) => {
+    trace('trace group is worked');
+});
+
+logger.groupCollapsed({ label: 'B collapsed', level: LoggerLevel.DEBUG }, ({ debug }) => {
+    debug('debug group is worked');
+});
+
+logger.groupCollapsed({ label: 'C collapsed', level: LoggerLevel.INFO }, ({ info }) => {
+    info('info group is worked');
+});
+
+logger.groupCollapsed({ label: 'D collapsed', level: LoggerLevel.WARN }, ({ warn }) => {
+    warn('warn group is worked');
+});
+
+logger.groupCollapsed({ label: 'E collapsed', level: LoggerLevel.ERROR }, ({ error }) => {
+    error('error group is worked');
+});
+
+```
+
+![](https://habrastorage.org/webt/bc/zc/dc/bczcdc_vicubrqr30jq3prg7no4.png)
+
+* **Logger level groups (with pipe):**
+
+```typescript
+import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
+
+const logger = new ClientLogger();
+
+const level = LoggerLevel.INFO;
+logger.log('Set new logger level', LoggerLevel[level]);
+logger.level = level;
+
+logger.group({ label: 'A', level: LoggerLevel.TRACE })
+    .pipe(({ trace }) => trace('trace is worked from A'))
+    .pipe(({ debug }) => debug('debug is worked from A'))
+    .pipe(({ info }) => info('info is worked from A'))
+    .pipe(({ warn }) => warn('warn is worked from A'))
+    .pipe(({ error }) => error('error is worked from A'))
+    .close()
+
+    .group({ label: 'B', level: LoggerLevel.DEBUG })
+    .pipe(({ trace }) => trace('trace is worked from B'))
+    .pipe(({ debug }) => debug('debug is worked from B'))
+    .pipe(({ info }) => info('info is worked from B'))
+    .pipe(({ warn }) => warn('warn is worked from B'))
+    .pipe(({ error }) => error('error is worked from B'))
+    .close()
+
+    .group({ label: 'C', level: LoggerLevel.INFO })
+    .pipe(({ trace }) => trace('trace is worked from C'))
+    .pipe(({ debug }) => debug('debug is worked from C'))
+    .pipe(({ info }) => info('info is worked from C'))
+    .pipe(({ warn }) => warn('warn is worked from C'))
+    .pipe(({ error }) => error('error is worked from C'))
+    .close()
+
+    .group({ label: 'D', level: LoggerLevel.WARN })
+    .pipe(({ trace }) => trace('trace is worked from D'))
+    .pipe(({ debug }) => debug('debug is worked from D'))
+    .pipe(({ info }) => info('info is worked from D'))
+    .pipe(({ warn }) => warn('warn is worked from D'))
+    .pipe(({ error }) => error('error is worked from D'))
+    .close()
+
+    .group({ label: 'E', level: LoggerLevel.ERROR })
+    .pipe(({ trace }) => trace('trace is worked from E'))
+    .pipe(({ debug }) => debug('debug is worked from E'))
+    .pipe(({ info }) => info('info is worked from E'))
+    .pipe(({ warn }) => warn('warn is worked from E'))
+    .pipe(({ error }) => error('error is worked from E'))
+    .close();
+
+```
+
+![](https://habrastorage.org/webt/ca/rb/ub/carbube17g4h42ye2fjcvstcw_c.png)
 
 ### Example: production
 

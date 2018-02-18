@@ -1,4 +1,4 @@
-import { LoggerColors, LoggerConfigImpl, LoggerLabels, LoggerMethods } from './logger.interfaces';
+import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from './logger.interfaces';
 
 export enum FormatLine {
     STRING = '%s',
@@ -21,6 +21,11 @@ export enum COLORS {
     INFO = '#000000',
     WARN = '#FF6419',
     ERROR = '#F1062D'
+}
+
+export enum LoggerGroupType {
+    OPENED = 'group',
+    CLOSED = 'groupCollapsed'
 }
 
 export enum LoggerLevel {
@@ -57,12 +62,26 @@ export const DEFAULT_METHODS: LoggerMethods = {
     [LoggerLevel.ERROR]: 'error'
 };
 
+export const DEFAULT_GROUPS_CONFIG: LoggerGroupsMethods = {
+    [LoggerGroupType.OPENED]: {
+        label: '',
+        level: LoggerLevel.INFO,
+        type: LoggerGroupType.OPENED
+    },
+    [LoggerGroupType.CLOSED]: {
+        label: '',
+        level: LoggerLevel.INFO,
+        type: LoggerGroupType.CLOSED
+    }
+};
+
 export const config: LoggerConfigImpl = {
     minLevel: LoggerLevel.ALL,
-    consoleInstance: {...{}, ...(console || {})} as Console,
+    consoleInstance: { ...{}, ...(console || {}) } as Console,
     configLabel: DEFAULT_LABELS,
     configColor: DEFAULT_COLORS,
     configMethods: DEFAULT_METHODS,
+    configGroups: DEFAULT_GROUPS_CONFIG,
     noop: () => {},
     labelUpperCase: true,
     lineStyle: {

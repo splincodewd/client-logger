@@ -1,5 +1,5 @@
-import { CallbackGroupFn, ClientLoggerImpl, ConsoleOperationFn, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
-import { config, FormatLine, LoggerLevel } from './logger.config';
+import { PipelineFn, ClientLoggerImpl, ConsoleOperationFn, GroupParams, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
+import { config, FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
 import { CssParser } from './css-parser.class';
 import { ParseJson } from './parse-json.class';
 
@@ -8,6 +8,7 @@ export class ClientLogger implements ClientLoggerImpl {
     private options: LoggerConfigImpl;
     private lineStyle: Partial<LineStyle> = {};
     private countOpenGroup: number = 0;
+    private executePipesGroup: boolean = true;
 
     constructor(options: Partial<LoggerConfigImpl> = {}) {
         this.options = { ...config, ...options };
@@ -95,14 +96,20 @@ export class ClientLogger implements ClientLoggerImpl {
         return ParseJson.stringify(json);
     }
 
-    public pipe(...stream: CallbackGroupFn[]): ClientLogger {
-        stream.forEach((line) => line(this));
+    public pipe(...pipelines: PipelineFn[]): ClientLogger {
+        if (this.executePipesGroup) {
+            pipelines.forEach((line) => line(this));
+        }
+
         return this;
     }
 
     public close(): ClientLogger {
-        this.countOpenGroup--;
-        this.options.consoleInstance.groupEnd();
+        if (this.executePipesGroup) {
+            this.countOpenGroup--;
+            this.options.consoleInstance.groupEnd();
+        }
+
         return this;
     }
 
@@ -114,35 +121,46 @@ export class ClientLogger implements ClientLoggerImpl {
         return this;
     }
 
-    public group(label: string, stream?: CallbackGroupFn): ClientLogger {
-        this.countOpenGroup++;
-        const labelText = this.getLabelText(LoggerLevel.INFO, ` ${label}`);
-        const style = this.getStyleForLabel(LoggerLevel.INFO);
-        const consoleInstance = this.options.consoleInstance;
-
-        if (this.options.minLevel !== LoggerLevel.OFF) {
-            consoleInstance.group.call(consoleInstance, labelText, style);
-            if (stream) {
-                stream(this);
-                this.close();
-            }
-        }
-
-        return this;
+    public group(options: string | Partial<GroupParams>, pipeline?: PipelineFn): ClientLogger {
+        const configuration = this.getGroupParams(options, LoggerGroupType.OPENED);
+        return this.generateGroup(configuration, pipeline);
     }
 
-    public groupCollapsed(label: string, stream?: CallbackGroupFn): ClientLogger {
-        this.countOpenGroup++;
-        const labelText = this.getLabelText(LoggerLevel.INFO, ` ${label}`);
-        const style = this.getStyleForLabel(LoggerLevel.INFO);
-        const consoleInstance = this.options.consoleInstance;
+    public groupCollapsed(options: string | Partial<GroupParams>, pipeline?: PipelineFn): ClientLogger {
+        const configuration = this.getGroupParams(options, LoggerGroupType.CLOSED);
+        return this.generateGroup(configuration, pipeline);
+    }
 
-        if (this.options.minLevel !== LoggerLevel.OFF) {
-            consoleInstance.groupCollapsed.call(consoleInstance, labelText, style);
-            if (stream) {
-                stream(this);
+    private getGroupParams(options: string | Partial<GroupParams>, type: LoggerGroupType): GroupParams {
+        let configuration: GroupParams = this.options.configGroups[type];
+
+        if (typeof options === 'string') {
+            configuration.label = options;
+        } else {
+            configuration = { ...configuration, ...options };
+        }
+
+        return configuration;
+    }
+
+    private generateGroup(configuration: GroupParams, pipeLine?: PipelineFn) {
+        const { label, level, type } = configuration;
+        const canExecute = !(this.options.minLevel > level);
+
+        if (canExecute) {
+            this.executePipesGroup = true;
+            this.countOpenGroup++;
+            const labelText = this.getLabelText(level, ` ${label}`);
+            const style = this.getStyleForLabel(level);
+            const consoleInstance = this.options.consoleInstance;
+            consoleInstance[type].call(consoleInstance, labelText, style);
+
+            if (pipeLine) {
+                pipeLine(this);
                 this.close();
             }
+        } else {
+            this.executePipesGroup = false;
         }
 
         return this;

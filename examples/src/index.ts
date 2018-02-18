@@ -163,6 +163,61 @@ window['showExample6'] = function showExample6() {
 
 };
 
+// Level groups
+window['showExample7'] = function showExample7() {
+
+    const logger = new ClientLogger();
+    logger.clear();
+
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-level-groups';
+    logger.log(`See how usage: ${urlDocumentation}`);
+
+    const level = LoggerLevel.INFO;
+    logger.log('Set new logger level', LoggerLevel[level]);
+    logger.level = level;
+
+    logger.group({ label: 'A', level: LoggerLevel.TRACE })
+        .pipe(({ trace }) => trace('trace is worked from A'))
+        .pipe(({ debug }) => debug('debug is worked from A'))
+        .pipe(({ info }) => info('info is worked from A'))
+        .pipe(({ warn }) => warn('warn is worked from A'))
+        .pipe(({ error }) => error('error is worked from A'))
+        .close()
+
+        .group({ label: 'B', level: LoggerLevel.DEBUG })
+        .pipe(({ trace }) => trace('trace is worked from B'))
+        .pipe(({ debug }) => debug('debug is worked from B'))
+        .pipe(({ info }) => info('info is worked from B'))
+        .pipe(({ warn }) => warn('warn is worked from B'))
+        .pipe(({ error }) => error('error is worked from B'))
+        .close()
+
+        .group({ label: 'C', level: LoggerLevel.INFO })
+        .pipe(({ trace }) => trace('trace is worked from C'))
+        .pipe(({ debug }) => debug('debug is worked from C'))
+        .pipe(({ info }) => info('info is worked from C'))
+        .pipe(({ warn }) => warn('warn is worked from C'))
+        .pipe(({ error }) => error('error is worked from C'))
+        .close()
+
+        .group({ label: 'D', level: LoggerLevel.WARN })
+        .pipe(({ trace }) => trace('trace is worked from D'))
+        .pipe(({ debug }) => debug('debug is worked from D'))
+        .pipe(({ info }) => info('info is worked from D'))
+        .pipe(({ warn }) => warn('warn is worked from D'))
+        .pipe(({ error }) => error('error is worked from D'))
+        .close()
+
+        .group({ label: 'E', level: LoggerLevel.ERROR })
+        .pipe(({ trace }) => trace('trace is worked from E'))
+        .pipe(({ debug }) => debug('debug is worked from E'))
+        .pipe(({ info }) => info('info is worked from E'))
+        .pipe(({ warn }) => warn('warn is worked from E'))
+        .pipe(({ error }) => error('error is worked from E'))
+        .close();
+
+};
+
 // Full configuration (change labels, colors)
 window['showExampleEnd'] = function showExampleEnd() {
 

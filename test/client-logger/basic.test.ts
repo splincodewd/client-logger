@@ -1,5 +1,5 @@
 import { ClientLogger, LoggerLevel } from '../../index';
-import { LoggerInjector, LoggerLineType } from '../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../helpers/converter';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -31,7 +31,7 @@ describe('[TEST]: Basic methods', () => {
         clientLogger.clear();
         clientLogger.assert(5 > 6, '5 is not grater than 6');
         expect(LoggerInjector.stack(0)).to.equal(LoggerInjector.createStack(
-            { [LoggerLineType.ASSERT]: ['5 is not grater than 6'] }
+            { [TestLoggerLineType.ASSERT]: ['5 is not grater than 6'] }
         ));
     });
 
@@ -52,7 +52,7 @@ describe('[TEST]: Basic methods', () => {
 
         clientLogger.table(data);
         expect(LoggerInjector.stack(0)).to.equal(LoggerInjector.createStack(
-            { [LoggerLineType.TABLE]: [data] }
+            { [TestLoggerLineType.TABLE]: [data] }
         ));
     });
 

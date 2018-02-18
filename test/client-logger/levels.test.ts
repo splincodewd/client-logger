@@ -1,4 +1,4 @@
-import { LoggerInjector, LoggerLineType } from '../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../helpers/converter';
 import { ClientLogger, LoggerLevel } from '../../index';
 import { expect } from 'chai';
 import 'mocha';
@@ -29,12 +29,12 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerLineType.LOG]: ['custom log output'] },
-            { [LoggerLineType.TRACE]: ['trace is worked', 1, { a: 1 }] },
-            { [LoggerLineType.DEBUG]: ['debug is worked', 2, console] },
-            { [LoggerLineType.INFO]: ['info is worked', 3, Object] },
-            { [LoggerLineType.WARN]: ['warn is worked', 4, String] },
-            { [LoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
+            { [TestLoggerLineType.LOG]: ['custom log output'] },
+            { [TestLoggerLineType.TRACE]: ['trace is worked', 1, { a: 1 }] },
+            { [TestLoggerLineType.DEBUG]: ['debug is worked', 2, console] },
+            { [TestLoggerLineType.INFO]: ['info is worked', 3, Object] },
+            { [TestLoggerLineType.WARN]: ['warn is worked', 4, String] },
+            { [TestLoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
         ));
 
     });
@@ -52,11 +52,11 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerLineType.LOG]: ['custom log output'] },
-            { [LoggerLineType.DEBUG]: ['debug is worked', 2, console] },
-            { [LoggerLineType.INFO]: ['info is worked', 3, Object] },
-            { [LoggerLineType.WARN]: ['warn is worked', 4, String] },
-            { [LoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
+            { [TestLoggerLineType.LOG]: ['custom log output'] },
+            { [TestLoggerLineType.DEBUG]: ['debug is worked', 2, console] },
+            { [TestLoggerLineType.INFO]: ['info is worked', 3, Object] },
+            { [TestLoggerLineType.WARN]: ['warn is worked', 4, String] },
+            { [TestLoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
         ));
 
     });
@@ -74,10 +74,10 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerLineType.LOG]: ['custom log output'] },
-            { [LoggerLineType.INFO]: ['info is worked', 3, Object] },
-            { [LoggerLineType.WARN]: ['warn is worked', 4, String] },
-            { [LoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
+            { [TestLoggerLineType.LOG]: ['custom log output'] },
+            { [TestLoggerLineType.INFO]: ['info is worked', 3, Object] },
+            { [TestLoggerLineType.WARN]: ['warn is worked', 4, String] },
+            { [TestLoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
         ));
 
     });
@@ -95,8 +95,8 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerLineType.WARN]: ['warn is worked', 4, String] },
-            { [LoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
+            { [TestLoggerLineType.WARN]: ['warn is worked', 4, String] },
+            { [TestLoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
         ));
 
     });
@@ -114,7 +114,7 @@ describe('[TEST]: Execute method by Level', () => {
         clientLogger.error('error is worked', 5, (2.55).toFixed());
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
+            { [TestLoggerLineType.ERROR]: ['error is worked', 5, (2.55).toFixed()] }
         ));
 
     });

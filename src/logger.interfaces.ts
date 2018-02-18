@@ -1,4 +1,4 @@
-import { FormatLine, LoggerLevel } from './logger.config';
+import { FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
 
 export interface LoggerConfigImpl {
     minLevel: LoggerLevel;
@@ -9,6 +9,7 @@ export interface LoggerConfigImpl {
     configLabel: LoggerLabels;
     configColor: LoggerColors;
     configMethods: LoggerMethods;
+    configGroups: LoggerGroupsMethods;
 }
 
 export interface LineStyle {
@@ -28,6 +29,10 @@ export interface LoggerMethods {
     [level: number]: string;
 }
 
+export interface LoggerGroupsMethods {
+    [name: string]: GroupParams;
+}
+
 export interface ClientLoggerImpl {
     stringify(message?: any, ...optionalParams: any[]): string[];
     trace(message?: any, ...optionalParams: any[]): void;
@@ -38,5 +43,11 @@ export interface ClientLoggerImpl {
     error(message?: any, ...optionalParams: any[]): void;
 }
 
-export type CallbackGroupFn = ((params: ClientLoggerImpl) => void);
+export interface GroupParams {
+    label: string;
+    level: LoggerLevel;
+    type?: LoggerGroupType;
+}
+
+export type PipelineFn = ((instance: ClientLoggerImpl) => void);
 export type ConsoleOperationFn = ((...params: any[]) => void);

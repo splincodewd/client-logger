@@ -1,5 +1,5 @@
 import { ClientLogger } from '../../index';
-import { LoggerInjector, LoggerLineType } from '../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../helpers/converter';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -30,13 +30,13 @@ describe('[TEST]: Parse json', () => {
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
             {
-                [LoggerLineType.LOG]: [
+                [TestLoggerLineType.LOG]: [
                     '{\n\t%c"a":%c %c1%c,\n\t%c"b":%c [\n\t\t%c1%c,\n\t\t%c2%c\n\t]\n}',
                     'color:red', '', 'color:darkorange', '', 'color:red', '', 'color:darkorange', '', 'color:darkorange', ''
                 ]
             },
             {
-                [LoggerLineType.LOG]: [
+                [TestLoggerLineType.LOG]: [
                     '{\n\t%c"a":%c %c1%c,\n\t%c"b":%c [\n\t\t%c1%c,\n\t\t%c2%c\n\t]\n}',
                     'color:red', '', 'color:darkorange', '', 'color:red', '', 'color:darkorange', '', 'color:darkorange', ''
                 ]

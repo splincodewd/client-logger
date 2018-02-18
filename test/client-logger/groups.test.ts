@@ -1,4 +1,4 @@
-import { LoggerGroupType, LoggerInjector, LoggerLineType } from '../helpers/converter';
+import { TestLoggerGroupType, LoggerInjector, TestLoggerLineType } from '../helpers/converter';
 import { CUSTOM_COLORS, CUSTOM_LABELS } from '../helpers/custom-colors.enum';
 import { ClientLogger, LoggerLevel } from '../../index';
 import { expect } from 'chai';
@@ -47,9 +47,9 @@ describe('[TEST]: Correct work in groups', () => {
         });
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} group label` },
-            { [LoggerLineType.TRACE]: ['trace is worked', 1, { a: 1 }] },
-            { [LoggerGroupType.GROUP_END]: [] },
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} group label` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked', 1, { a: 1 }] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
         ));
 
     });
@@ -68,13 +68,13 @@ describe('[TEST]: Correct work in groups', () => {
             .close();
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} group name` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] },
-            { [LoggerLineType.DEBUG]: ['debug is worked'] },
-            { [LoggerLineType.INFO]: ['info is worked'] },
-            { [LoggerLineType.WARN]: ['warn is worked'] },
-            { [LoggerLineType.ERROR]: ['error is worked'] },
-            { [LoggerGroupType.GROUP_END]: [] },
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} group name` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked'] },
+            { [TestLoggerLineType.DEBUG]: ['debug is worked'] },
+            { [TestLoggerLineType.INFO]: ['info is worked'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
         ));
 
     });
@@ -93,13 +93,13 @@ describe('[TEST]: Correct work in groups', () => {
             .close();
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} group collapsed name` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] },
-            { [LoggerLineType.DEBUG]: ['debug is worked'] },
-            { [LoggerLineType.INFO]: ['info is worked'] },
-            { [LoggerLineType.WARN]: ['warn is worked'] },
-            { [LoggerLineType.ERROR]: ['error is worked'] },
-            { [LoggerGroupType.GROUP_END]: [] },
+            { [TestLoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} group collapsed name` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked'] },
+            { [TestLoggerLineType.DEBUG]: ['debug is worked'] },
+            { [TestLoggerLineType.INFO]: ['info is worked'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
         ));
 
     });
@@ -117,12 +117,12 @@ describe('[TEST]: Correct work in groups', () => {
             .close();
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} group A` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] },
-            { [LoggerGroupType.GROUP_END]: [] },
-            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} group B` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] },
-            { [LoggerGroupType.GROUP_END]: [] }
+            { [TestLoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} group A` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} group B` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] }
         ));
 
     });
@@ -159,27 +159,176 @@ describe('[TEST]: Correct work in groups', () => {
             .closeAll();
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
-            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} A` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] },
-            { [LoggerLineType.DEBUG]: ['debug is worked'] },
-            { [LoggerLineType.INFO]: ['info is worked'] },
-            { [LoggerLineType.WARN]: ['warn is worked'] },
-            { [LoggerLineType.ERROR]: ['error is worked'] },
-            { [LoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} B` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] },
-            { [LoggerLineType.DEBUG]: ['debug is worked'] },
-            { [LoggerLineType.INFO]: ['info is worked'] },
-            { [LoggerLineType.WARN]: ['warn is worked'] },
-            { [LoggerLineType.ERROR]: ['error is worked'] },
-            { [LoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} C` },
-            { [LoggerLineType.TRACE]: ['trace is worked'] },
-            { [LoggerLineType.DEBUG]: ['debug is worked'] },
-            { [LoggerLineType.INFO]: ['info is worked'] },
-            { [LoggerLineType.WARN]: ['warn is worked'] },
-            { [LoggerLineType.ERROR]: ['error is worked'] },
-            { [LoggerGroupType.GROUP_END]: [] },
-            { [LoggerGroupType.GROUP_END]: [] },
-            { [LoggerGroupType.GROUP_END]: [] },
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} A` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked'] },
+            { [TestLoggerLineType.DEBUG]: ['debug is worked'] },
+            { [TestLoggerLineType.INFO]: ['info is worked'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked'] },
+            { [TestLoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} B` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked'] },
+            { [TestLoggerLineType.DEBUG]: ['debug is worked'] },
+            { [TestLoggerLineType.INFO]: ['info is worked'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked'] },
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} C` },
+            { [TestLoggerLineType.TRACE]: ['trace is worked'] },
+            { [TestLoggerLineType.DEBUG]: ['debug is worked'] },
+            { [TestLoggerLineType.INFO]: ['info is worked'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+        ));
+
+    });
+
+    it(`Level groups`, () => {
+
+        clientLogger.clear();
+
+        clientLogger.group({ label: 'A opened', level: LoggerLevel.TRACE }, ({ trace }) => {
+            trace('trace group is worked');
+        });
+
+        clientLogger.group({ label: 'B opened', level: LoggerLevel.DEBUG }, ({ debug }) => {
+            debug('debug group is worked');
+        });
+
+        clientLogger.group({ label: 'C opened', level: LoggerLevel.INFO }, ({ info }) => {
+            info('info group is worked');
+        });
+
+        clientLogger.group({ label: 'D opened', level: LoggerLevel.WARN }, ({ warn }) => {
+            warn('warn group is worked');
+        });
+
+        clientLogger.group({ label: 'E opened', level: LoggerLevel.ERROR }, ({ error }) => {
+            error('error group is worked');
+        });
+
+        clientLogger.level = LoggerLevel.INFO;
+
+        clientLogger.groupCollapsed({ label: 'A collapsed', level: LoggerLevel.TRACE }, ({ trace }) => {
+            trace('trace group is worked');
+        });
+
+        clientLogger.groupCollapsed({ label: 'B collapsed', level: LoggerLevel.DEBUG }, ({ debug }) => {
+            debug('debug group is worked');
+        });
+
+        clientLogger.groupCollapsed({ label: 'C collapsed', level: LoggerLevel.INFO }, ({ info }) => {
+            info('info group is worked');
+        });
+
+        clientLogger.groupCollapsed({ label: 'D collapsed', level: LoggerLevel.WARN }, ({ warn }) => {
+            warn('warn group is worked');
+        });
+
+        clientLogger.groupCollapsed({ label: 'E collapsed', level: LoggerLevel.ERROR }, ({ error }) => {
+            error('error group is worked');
+        });
+
+        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.TRACE} A opened` },
+            { [TestLoggerLineType.TRACE]: ['trace group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.DEBUG} B opened` },
+            { [TestLoggerLineType.DEBUG]: ['debug group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} C opened` },
+            { [TestLoggerLineType.INFO]: ['info group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.WARN} D opened` },
+            { [TestLoggerLineType.WARN]: ['warn group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.ERROR} E opened` },
+            { [TestLoggerLineType.ERROR]: ['error group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.INFO} C collapsed` },
+            { [TestLoggerLineType.INFO]: ['info group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.WARN} D collapsed` },
+            { [TestLoggerLineType.WARN]: ['warn group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_COLLAPSED_OPEN]: `${CUSTOM_LABELS.ERROR} E collapsed` },
+            { [TestLoggerLineType.ERROR]: ['error group is worked'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+        ));
+
+    });
+
+    it(`Level groups with pipes`, () => {
+
+        clientLogger.clear();
+        clientLogger.level = LoggerLevel.INFO;
+
+        clientLogger.group({ label: 'A', level: LoggerLevel.TRACE })
+            .pipe(({ trace }) => trace('trace is worked from A'))
+            .pipe(({ debug }) => debug('debug is worked from A'))
+            .pipe(({ info }) => info('info is worked from A'))
+            .pipe(({ warn }) => warn('warn is worked from A'))
+            .pipe(({ error }) => error('error is worked from A'))
+            .close()
+
+            .group({ label: 'B', level: LoggerLevel.DEBUG })
+            .pipe(({ trace }) => trace('trace is worked from B'))
+            .pipe(({ debug }) => debug('debug is worked from B'))
+            .pipe(({ info }) => info('info is worked from B'))
+            .pipe(({ warn }) => warn('warn is worked from B'))
+            .pipe(({ error }) => error('error is worked from B'))
+            .close()
+
+            .group({ label: 'C', level: LoggerLevel.INFO })
+            .pipe(({ trace }) => trace('trace is worked from C'))
+            .pipe(({ debug }) => debug('debug is worked from C'))
+            .pipe(({ info }) => info('info is worked from C'))
+            .pipe(({ warn }) => warn('warn is worked from C'))
+            .pipe(({ error }) => error('error is worked from C'))
+            .close()
+
+            .group({ label: 'D', level: LoggerLevel.WARN })
+            .pipe(({ trace }) => trace('trace is worked from D'))
+            .pipe(({ debug }) => debug('debug is worked from D'))
+            .pipe(({ info }) => info('info is worked from D'))
+            .pipe(({ warn }) => warn('warn is worked from D'))
+            .pipe(({ error }) => error('error is worked from D'))
+            .close()
+
+            .group({ label: 'E', level: LoggerLevel.ERROR })
+            .pipe(({ trace }) => trace('trace is worked from E'))
+            .pipe(({ debug }) => debug('debug is worked from E'))
+            .pipe(({ info }) => info('info is worked from E'))
+            .pipe(({ warn }) => warn('warn is worked from E'))
+            .pipe(({ error }) => error('error is worked from E'))
+            .close();
+
+        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.INFO} C` },
+            { [TestLoggerLineType.INFO]: ['info is worked from C'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked from C'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked from C'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.WARN} D` },
+            { [TestLoggerLineType.INFO]: ['info is worked from D'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked from D'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked from D'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
+
+            { [TestLoggerGroupType.GROUP_OPEN]: `${CUSTOM_LABELS.ERROR} E` },
+            { [TestLoggerLineType.INFO]: ['info is worked from E'] },
+            { [TestLoggerLineType.WARN]: ['warn is worked from E'] },
+            { [TestLoggerLineType.ERROR]: ['error is worked from E'] },
+            { [TestLoggerGroupType.GROUP_END]: [] },
         ));
 
     });
