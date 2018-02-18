@@ -1,3 +1,19 @@
+### 0.3.0 (2018-02-18)
+
+##### New Features
+
+* **logger:**  add logger parametrization for groups (set level) ([ce7b80f2](https://github.com/splincodewd/client-logger/commit/ce7b80f25390131302fa7193366743ec9dd172d6))
+
+##### Other Changes
+
+* **logger:**  update examples ([da077208](https://github.com/splincodewd/client-logger/commit/da077208d7ffa3bdde2c54620e542469f82156e6))
+* **npm:**  update .npmignore ([057f47a4](https://github.com/splincodewd/client-logger/commit/057f47a4490a03844557a48dc1930c1364cf2f5a))
+* **README.md:**  update ([3d49b2d1](https://github.com/splincodewd/client-logger/commit/3d49b2d1953c8c2b6e5844ca2edd0706e534b991))
+
+##### Tests
+
+* **logger:**  assert, table ([a07fdade](https://github.com/splincodewd/client-logger/commit/a07fdade1fe23a3585d34feba712991e870d1808))
+
 ### 0.2.0 (2018-02-18)
 
 ##### New Features
