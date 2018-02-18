@@ -5,6 +5,7 @@
     "main": "lib/index.js",
     "typings": "lib/index",
     "scripts": {
+        "start": "cd examples && npm install && npm run start",
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "test": "nyc --reporter=html --reporter=text mocha",
         "coverage": "nyc report --reporter=text-lcov | coveralls",

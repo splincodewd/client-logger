@@ -17,7 +17,7 @@ const config = {
     },
     output: {
         path: path.resolve(productionDirectory),
-        filename: "[name].js?ver=[chunkhash]",
+        filename: isProd ? "[name].js?ver=[chunkhash]" : "[name].[hash].js",
         sourceMapFilename: "[name].map"
     },
     module: {
@@ -51,7 +51,7 @@ const config = {
         new webpack.optimize.CommonsChunkPlugin({
             name: "vendor",
             minChunks: Infinity,
-            filename: "vendor.js?ver=[chunkhash]"
+            filename: isProd ? "vendor.js?ver=[chunkhash]" : "vendor.[hash].js"
         }),
         new webpack.optimize.UglifyJsPlugin({
             compress: {warnings: false},

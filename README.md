@@ -14,7 +14,7 @@ npm i @splincode/client-logger --save-dev
 - [x] Logger method (trace, debug, info, warning, error)
 - [x] Logger group + groupCollapsible (pipes)
 - [x] Set style by css
-- [ ] Logger level groups (debug, info, warn, error)
+- [ ] Logger level groups (trace, debug, info, warn, error)
 - [ ] Format
 - [ ] Pre process output
 - [ ] Logger pretty write object
@@ -43,15 +43,19 @@ $ npm start # open http://localhost:3000/
 
 ![](https://habrastorage.org/webt/jf/zn/_9/jfzn_9ir8zkns2gqhp6brzoztws.gif)
 
-### Example: basic method, groups
+### Example: basic methods
 
 ```typescript
-import { ClientLogger } from "@splincode/client-logger";
+import { ClientLogger } from '@splincode/client-logger';
 
 const logger = new ClientLogger();
+
 logger.trace('trace is worked', 1, { a: 1 });
 logger.debug('debug is worked', 2, console);
+
+logger.log('log is worked', 'output without labels');
 logger.info('info is worked', 3, Object);
+
 logger.warn('warn is worked', 4, String);
 logger.error('error is worked', 5, (2.55).toFixed());
 ```
@@ -67,21 +71,55 @@ logger.error('error is worked', 5, (2.55).toFixed());
 * **Disable trace on console:**
 
 ```typescript
-import { ClientLogger } from "@splincode/client-logger";
+import { ClientLogger } from '@splincode/client-logger';
 
 const logger = new ClientLogger();
 
 for (let i = 0; i < 20; i++) {
-    logger.trace("trace is worked", i);
+    logger.trace('trace is worked', i);
 }
 ```
 
 ![](https://habrastorage.org/webt/un/fl/81/unfl81h_wjnltr184of-vx1skio.gif)
 
+### Example: groups
+
+* **Logger groups with auto closed (usage callback):**
+
+```typescript
+import { ClientLogger } from '@splincode/client-logger';
+
+const logger = new ClientLogger();
+
+logger.groupCollapsed('EXAMPLE 2: show stack', () => {
+    logger.trace('trace is worked', 1, { a: 1 });
+    logger.debug('debug is worked', 2, console);
+    logger.info('info is worked', 3, Object);
+    logger.warn('warn is worked', 4, String);
+    logger.error('error is worked', 5, (2.55).toFixed());
+});
+
+logger.group('Show trace in opened group', ({ trace }) => {
+    for (let i = 0; i < 20; i++) {
+        trace('trace is worked', i);
+    }
+});
+
+logger.groupCollapsed('Show trace in collapsed group', ({ trace }) => {
+    for (let i = 0; i < 20; i++) {
+        trace('trace is worked', i);
+    }
+});
+```
+
+![](https://habrastorage.org/webt/zs/hv/fz/zshvfzrcslnsqo3dvyeiskrkwik.png)
+
+### Example: pipe groups
+
 * **Logger groups (by pipe):**
 
 ```typescript
-import { ClientLogger } from "@splincode/client-logger";
+import { ClientLogger } from '@splincode/client-logger';
 
 const logger = new ClientLogger();
 
@@ -126,45 +164,18 @@ logger
 
 ![](https://habrastorage.org/webt/77/vi/gm/77vigmltfbdmxhiruv8xgxwjdrg.gif)
 
-* **Logger groups with auto closed (usage callback):**
+### Example: production
+
+Configuration by prod/dev:
 
 ```typescript
-import { ClientLogger } from "@splincode/client-logger";
-
-const logger = new ClientLogger();
-
-logger.groupCollapsed('EXAMPLE 2: show stack', () => {
-    logger.trace('trace is worked', 1, { a: 1 });
-    logger.debug('debug is worked', 2, console);
-    logger.info('info is worked', 3, Object);
-    logger.warn('warn is worked', 4, String);
-    logger.error('error is worked', 5, (2.55).toFixed());
-});
-
-logger.group('Show trace in opened group', ({ trace }) => {
-    for (let i = 0; i < 20; i++) {
-        trace('trace is worked', i);
-    }
-});
-
-logger.groupCollapsed('Show trace in collapsed group', ({ trace }) => {
-    for (let i = 0; i < 20; i++) {
-        trace('trace is worked', i);
-    }
-});
-```
-
-![](https://habrastorage.org/webt/zs/hv/fz/zshvfzrcslnsqo3dvyeiskrkwik.png)
-
-### Example: Set minimal signature (Prod / Dev)
-
-```typescript
-import { ClientLogger, LoggerLevel } from "@splincode/client-logger";
+import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
 
 const production = true;
 const level = production ? LoggerLevel.INFO : LoggerLevel.ALL;
+
 const logger = new ClientLogger({ minLevel: level });
-logger.clear();
+logger.log('Set current logger level: ', LoggerLevel[level]);
 
 /**
  * OR:
@@ -173,48 +184,51 @@ logger.clear();
  *
  */
 
-logger.trace('trace is worked', 1, { a: 1 });
-logger.debug('debug is worked', 2, console);
-logger.info('info is worked', 'current logger level', logger.level);
-logger.warn('warn is worked', 4, String);
-logger.error('error is worked', 5, (2.55).toFixed());
+logger.log('custom output'); // not execute
+logger.trace('trace is worked'); // not execute
+logger.debug('debug is worked'); // not execute
+logger.info('info is worked'); // not execute
+logger.warn('warn is worked');
+logger.error('error is worked');
 ```
 
-### Example: Set style for console line
+### Example: set style line
 
 ```typescript
-import { ClientLogger } from "@splincode/client-logger";
+import { ClientLogger } from '@splincode/client-logger';
 
 const logger = new ClientLogger();
 
 logger
     .css({ textTransform: 'uppercase', fontWeight: 'bold' })
-    .debug("window current ", window);
+    .debug('window current ', window);
 
 logger
     .css('color: red; text-decoration: underline; font-weight: bold')
-    .info("It's awesome");
+    .info('It is awesome logger');
 
 logger
     .css('font-weight: bold')
-    .warn("logger.css(...) does not define a global format!");
+    .warn('logger.css(...) does not define a global format!');
 
 logger.info('For global configuration, use the constructor parameters');
 ````
 
 ![](https://habrastorage.org/webt/4s/co/wh/4scowhxaxdl8ikcmxpyjtko269m.png)
 
-### Example: Full configurations
+### Example: full configurations
 
 ```typescript
-import { ClientLogger, LoggerLevel } from "@splincode/client-logger";
-import { MyConsole } from "node_modules/custom-logger";
+import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
+import { MyConsole } from 'node_modules/custom-logger';
 // ..
 
 const logger = new ClientLogger({
 
     // Drop-in replacement for console, if needed
     consoleInstance: <Console> new MyConsole(),
+    
+    minLevel: LoggerLevel.DEBUG,
 
     // Custom color
     configColor: {
@@ -236,14 +250,24 @@ const logger = new ClientLogger({
 
 });
 
-logger.clear();
-logger.level = LoggerLevel.ALL;
-
-logger.trace('trace is worked', 1, { a: 1 });
+logger.trace('trace is worked', 1, { a: 1 }); // not execute
 logger.debug('debug is worked', 2, console);
 logger.info('info is worked', 3, Object);
 logger.warn('warn is worked', 4, String);
 logger.error('error is worked', 5, (2.55).toFixed());
+```
+
+## Development
+Install the dependencies:
+
+```bash
+npm install
+```
+
+Run the dev server
+
+```bash
+npm start
 ```
 
 ## Run Tests
