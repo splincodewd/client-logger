@@ -1,3 +1,23 @@
+### 0.4.0 (2018-02-19)
+
+##### New Features
+
+* **logger:**  pretty groups level ([2b1a6a81](https://github.com/splincodewd/client-logger/commit/2b1a6a81029e82a555a199e8d87b86bdb36b3e39))
+
+##### Other Changes
+
+* **REAMDE.md:**  update example groups level ([77e445c9](https://github.com/splincodewd/client-logger/commit/77e445c9c8f55c92c0e39781e24d7d63df49e881))
+* **README.md:**  remove unusage block ([d47fb723](https://github.com/splincodewd/client-logger/commit/d47fb723217127ef1ab6c6c3d6d92d14e272bb7b))
+* **logger:**  update examples ([38df7f6f](https://github.com/splincodewd/client-logger/commit/38df7f6fb72d36495cbff3843e5151069f1aa138))
+
+##### Refactors
+
+* **logger:**  rename file json parser ([389c6c5e](https://github.com/splincodewd/client-logger/commit/389c6c5e24381bbab3eeeaa796be24c5f7cf90a0))
+
+##### Tests
+
+* **logger:**  pretty groups level ([7571dd8b](https://github.com/splincodewd/client-logger/commit/7571dd8b4ba7c8d72df00e391929c77e4f295ca7))
+
 ### 0.3.0 (2018-02-18)
 
 ##### New Features
