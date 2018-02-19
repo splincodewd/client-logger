@@ -417,12 +417,6 @@ Run the dev server
 npm start
 ```
 
-Run the dev server
-
-```bash
-npm start
-```
-
 ## Contributing 
 Your commit messages have to be in this format:
 
