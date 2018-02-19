@@ -171,11 +171,11 @@ import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
 
 const logger = new ClientLogger();
 
-logger.group('A opened', ({ trace }) => trace('trace group is worked'));
-logger.group('B opened', ({ debug }) => debug('debug group is worked'));
-logger.group('C opened', ({ info }) => info('info group is worked'));
-logger.group('D opened', ({ warn }) =>  warn('warn group is worked'));
-logger.group('E opened', ({ error }) => error('error group is worked'));
+logger.trace.group('A opened', ({ trace }) => trace('trace group is worked'));
+logger.debug.group('B opened', ({ debug }) => debug('debug group is worked'));
+logger.info.group('C opened', ({ info }) => info('info group is worked'));
+logger.warn.group('D opened', ({ warn }) =>  warn('warn group is worked'));
+logger.error.group('E opened', ({ error }) => error('error group is worked'));
 
 const level = LoggerLevel.INFO;
 logger.log('Set new logger level', LoggerLevel[level]);
