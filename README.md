@@ -171,55 +171,27 @@ import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
 
 const logger = new ClientLogger();
 
-logger.group({ label: 'A opened', level: LoggerLevel.TRACE }, ({ trace }) => {
-    trace('trace group is worked');
-});
-
-logger.group({ label: 'B opened', level: LoggerLevel.DEBUG }, ({ debug }) => {
-    debug('debug group is worked');
-});
-
-logger.group({ label: 'C opened', level: LoggerLevel.INFO }, ({ info }) => {
-    info('info group is worked');
-});
-
-logger.group({ label: 'D opened', level: LoggerLevel.WARN }, ({ warn }) => {
-    warn('warn group is worked');
-});
-
-logger.group({ label: 'E opened', level: LoggerLevel.ERROR }, ({ error }) => {
-    error('error group is worked');
-});
+logger.group('A opened', ({ trace }) => trace('trace group is worked'));
+logger.group('B opened', ({ debug }) => debug('debug group is worked'));
+logger.group('C opened', ({ info }) => info('info group is worked'));
+logger.group('D opened', ({ warn }) =>  warn('warn group is worked'));
+logger.group('E opened', ({ error }) => error('error group is worked'));
 
 const level = LoggerLevel.INFO;
 logger.log('Set new logger level', LoggerLevel[level]);
 logger.level = level;
 
-logger.groupCollapsed({ label: 'A collapsed', level: LoggerLevel.TRACE }, ({ trace }) => {
-    trace('trace group is worked');
-});
-
-logger.groupCollapsed({ label: 'B collapsed', level: LoggerLevel.DEBUG }, ({ debug }) => {
-    debug('debug group is worked');
-});
-
-logger.groupCollapsed({ label: 'C collapsed', level: LoggerLevel.INFO }, ({ info }) => {
-    info('info group is worked');
-});
-
-logger.groupCollapsed({ label: 'D collapsed', level: LoggerLevel.WARN }, ({ warn }) => {
-    warn('warn group is worked');
-});
-
-logger.groupCollapsed({ label: 'E collapsed', level: LoggerLevel.ERROR }, ({ error }) => {
-    error('error group is worked');
-});
+logger.trace.groupCollapsed('A collapsed', ({ trace }) => trace('trace group is worked'));
+logger.debug.groupCollapsed('B collapsed', ({ debug }) => debug('debug group is worked'));
+logger.info.groupCollapsed('C collapsed', ({ info }) => info('info group is worked'));
+logger.warn.groupCollapsed('D collapsed', ({ warn }) => warn('warn group is worked'));
+logger.error.groupCollapsed('E collapsed', ({ error }) => error('error group is worked'));
 
 ```
 
 ![](https://habrastorage.org/webt/bc/zc/dc/bczcdc_vicubrqr30jq3prg7no4.png)
 
-* **Logger level groups (with pipe):**
+* **Logger level groups (pretty usage API):**
 
 ```typescript
 import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
@@ -230,7 +202,7 @@ const level = LoggerLevel.INFO;
 logger.log('Set new logger level', LoggerLevel[level]);
 logger.level = level;
 
-logger.group({ label: 'A', level: LoggerLevel.TRACE })
+logger.trace.group('A')
     .pipe(({ trace }) => trace('trace is worked from A'))
     .pipe(({ debug }) => debug('debug is worked from A'))
     .pipe(({ info }) => info('info is worked from A'))
@@ -238,7 +210,7 @@ logger.group({ label: 'A', level: LoggerLevel.TRACE })
     .pipe(({ error }) => error('error is worked from A'))
     .close()
 
-    .group({ label: 'B', level: LoggerLevel.DEBUG })
+    .debug.group('B')
     .pipe(({ trace }) => trace('trace is worked from B'))
     .pipe(({ debug }) => debug('debug is worked from B'))
     .pipe(({ info }) => info('info is worked from B'))
@@ -246,7 +218,7 @@ logger.group({ label: 'A', level: LoggerLevel.TRACE })
     .pipe(({ error }) => error('error is worked from B'))
     .close()
 
-    .group({ label: 'C', level: LoggerLevel.INFO })
+    .info.group('C')
     .pipe(({ trace }) => trace('trace is worked from C'))
     .pipe(({ debug }) => debug('debug is worked from C'))
     .pipe(({ info }) => info('info is worked from C'))
@@ -254,7 +226,7 @@ logger.group({ label: 'A', level: LoggerLevel.TRACE })
     .pipe(({ error }) => error('error is worked from C'))
     .close()
 
-    .group({ label: 'D', level: LoggerLevel.WARN })
+    .warn.group('D')
     .pipe(({ trace }) => trace('trace is worked from D'))
     .pipe(({ debug }) => debug('debug is worked from D'))
     .pipe(({ info }) => info('info is worked from D'))
@@ -262,7 +234,7 @@ logger.group({ label: 'A', level: LoggerLevel.TRACE })
     .pipe(({ error }) => error('error is worked from D'))
     .close()
 
-    .group({ label: 'E', level: LoggerLevel.ERROR })
+    .error.group('E')
     .pipe(({ trace }) => trace('trace is worked from E'))
     .pipe(({ debug }) => debug('debug is worked from E'))
     .pipe(({ info }) => info('info is worked from E'))
