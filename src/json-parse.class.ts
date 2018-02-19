@@ -1,4 +1,4 @@
-export class ParseJson {
+export class JsonParse {
 
     private static objectHash: RegExp = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
 

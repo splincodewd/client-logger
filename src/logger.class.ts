@@ -1,7 +1,7 @@
 import { PipelineFn, ClientLoggerImpl, ConsoleOperationFn, GroupParams, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
 import { config, FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
 import { CssParser } from './css-parser.class';
-import { ParseJson } from './parse-json.class';
+import { JsonParse } from './json-parse.class';
 
 export class ClientLogger implements ClientLoggerImpl {
 
@@ -93,7 +93,7 @@ export class ClientLogger implements ClientLoggerImpl {
     }
 
     public stringify(json: any): string[] {
-        return ParseJson.stringify(json);
+        return JsonParse.stringify(json);
     }
 
     public pipe(...pipelines: PipelineFn[]): ClientLogger {
