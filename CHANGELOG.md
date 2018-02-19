@@ -1,3 +1,9 @@
+#### 0.4.1 (2018-02-19)
+
+##### Other Changes
+
+* **REAMDE.md:**  fix example groups level ([67e5a107](https://github.com/splincodewd/client-logger/commit/67e5a107af99f9c3911e83121890943d13a5d0e2))
+
 ### 0.4.0 (2018-02-19)
 
 ##### New Features
