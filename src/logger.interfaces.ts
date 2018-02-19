@@ -1,9 +1,10 @@
 import { FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
+import { ClientLogger } from './logger.class';
 
 export interface LoggerConfigImpl {
     minLevel: LoggerLevel;
     consoleInstance: Console;
-    noop: ConsoleOperationFn;
+    noop: ConsoleOperationPipe | ConsoleOperation | any;
     labelUpperCase: boolean;
     lineStyle: LineStyle;
     configLabel: LoggerLabels;
@@ -33,21 +34,17 @@ export interface LoggerGroupsMethods {
     [name: string]: GroupParams;
 }
 
-export interface ClientLoggerImpl {
-    stringify(message?: any, ...optionalParams: any[]): string[];
-    trace(message?: any, ...optionalParams: any[]): void;
-    debug(message?: any, ...optionalParams: any[]): void;
-    log(message?: any, ...optionalParams: any[]): void;
-    info(message?: any, ...optionalParams: any[]): void;
-    warn(message?: any, ...optionalParams: any[]): void;
-    error(message?: any, ...optionalParams: any[]): void;
-}
-
 export interface GroupParams {
     label: string;
     level: LoggerLevel;
     type?: LoggerGroupType;
 }
 
-export type PipelineFn = ((instance: ClientLoggerImpl) => void);
-export type ConsoleOperationFn = ((...params: any[]) => void);
+export interface LoggerGroupsPipeImpl extends Function {
+    group(label: string, pipeline?: PipelineFn): ClientLogger;
+    groupCollapsed(label: string, pipeline?: PipelineFn): ClientLogger;
+}
+
+export type PipelineFn = ((instance: ClientLogger) => void);
+export type ConsoleOperation = ((...params: any[]) => void);
+export type ConsoleOperationPipe = LoggerGroupsPipeImpl;

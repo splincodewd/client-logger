@@ -1,9 +1,9 @@
-import { PipelineFn, ClientLoggerImpl, ConsoleOperationFn, GroupParams, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels } from './logger.interfaces';
+import { PipelineFn, ConsoleOperationPipe, GroupParams, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels, ConsoleOperation } from './logger.interfaces';
 import { config, FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
 import { CssParser } from './css-parser.class';
 import { JsonParse } from './json-parse.class';
 
-export class ClientLogger implements ClientLoggerImpl {
+export class ClientLogger {
 
     private options: LoggerConfigImpl;
     private lineStyle: Partial<LineStyle> = {};
@@ -38,15 +38,15 @@ export class ClientLogger implements ClientLoggerImpl {
         return this.console.assert.bind(this.console);
     }
 
-    public get trace() {
+    public get trace(): ConsoleOperationPipe {
         return this.loggerMethodsFactory(LoggerLevel.TRACE);
     }
 
-    public get debug() {
-        return this.loggerMethodsFactory(LoggerLevel.DEBUG);
+    public get debug(): ConsoleOperationPipe {
+        return this.loggerMethodsFactory<ConsoleOperationPipe>(LoggerLevel.DEBUG);
     }
 
-    public get log() {
+    public get log(): ConsoleOperation {
         let operation = this.options.noop;
         const canExecute: boolean = !(this.options.minLevel > LoggerLevel.INFO);
         if (canExecute) {
@@ -56,16 +56,16 @@ export class ClientLogger implements ClientLoggerImpl {
         return operation;
     }
 
-    public get info() {
-        return this.loggerMethodsFactory(LoggerLevel.INFO);
+    public get info(): ConsoleOperationPipe {
+        return this.loggerMethodsFactory<ConsoleOperationPipe>(LoggerLevel.INFO);
     }
 
-    public get warn() {
-        return this.loggerMethodsFactory(LoggerLevel.WARN);
+    public get warn(): ConsoleOperationPipe {
+        return this.loggerMethodsFactory<ConsoleOperationPipe>(LoggerLevel.WARN);
     }
 
-    public get error() {
-        return this.loggerMethodsFactory(LoggerLevel.ERROR);
+    public get error(): ConsoleOperationPipe {
+        return this.loggerMethodsFactory<ConsoleOperationPipe>(LoggerLevel.ERROR);
     }
 
     public get clear() {
@@ -170,7 +170,7 @@ export class ClientLogger implements ClientLoggerImpl {
         this.lineStyle = {};
     }
 
-    private loggerMethodsFactory(level: LoggerLevel): ConsoleOperationFn {
+    private loggerMethodsFactory<T>(level: LoggerLevel): T {
         const canExecute = !(this.options.minLevel > level);
         let operation = this.options.noop;
 
@@ -178,7 +178,7 @@ export class ClientLogger implements ClientLoggerImpl {
             const label = this.getLabelText(level);
             const style = this.getStyleForLabel(level);
             const methodName = this.getConsoleMethodName(level);
-            const consoleInstance = this.options.consoleInstance;
+            const consoleInstance = this.console;
             const consoleMethod = consoleInstance[methodName] || operation;
             const { style: lineStyle, format: lineFormat } = this.getCurrentLineStyle();
 
@@ -188,6 +188,26 @@ export class ClientLogger implements ClientLoggerImpl {
                 operation = consoleMethod.bind(consoleInstance, labelLine, style, lineStyle);
             } else {
                 operation = consoleMethod.bind(consoleInstance, label, style);
+            }
+        }
+
+        return this.defineProperties(level, operation);
+    }
+
+    private defineProperties<T>(level: LoggerLevel, operation: T): T {
+        const configGroups = this.options.configGroups;
+        for (const index in configGroups) {
+            if (configGroups.hasOwnProperty(index)) {
+                const group = configGroups[index];
+                const type = group.type;
+
+                Object.defineProperty(operation, type, {
+                    enumerable: true,
+                    configurable: true,
+                    value: (label: string, pipeLine?: PipelineFn) => {
+                        return this.generateGroup({ label, level, type }, pipeLine);
+                    }
+                });
             }
         }
 

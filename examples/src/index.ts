@@ -176,7 +176,7 @@ window['showExample7'] = function showExample7() {
     logger.log('Set new logger level', LoggerLevel[level]);
     logger.level = level;
 
-    logger.group({ label: 'A', level: LoggerLevel.TRACE })
+    logger.trace.group('A')
         .pipe(({ trace }) => trace('trace is worked from A'))
         .pipe(({ debug }) => debug('debug is worked from A'))
         .pipe(({ info }) => info('info is worked from A'))
@@ -184,7 +184,7 @@ window['showExample7'] = function showExample7() {
         .pipe(({ error }) => error('error is worked from A'))
         .close()
 
-        .group({ label: 'B', level: LoggerLevel.DEBUG })
+        .debug.group('B')
         .pipe(({ trace }) => trace('trace is worked from B'))
         .pipe(({ debug }) => debug('debug is worked from B'))
         .pipe(({ info }) => info('info is worked from B'))
@@ -192,7 +192,7 @@ window['showExample7'] = function showExample7() {
         .pipe(({ error }) => error('error is worked from B'))
         .close()
 
-        .group({ label: 'C', level: LoggerLevel.INFO })
+        .info.group('C')
         .pipe(({ trace }) => trace('trace is worked from C'))
         .pipe(({ debug }) => debug('debug is worked from C'))
         .pipe(({ info }) => info('info is worked from C'))
@@ -200,7 +200,7 @@ window['showExample7'] = function showExample7() {
         .pipe(({ error }) => error('error is worked from C'))
         .close()
 
-        .group({ label: 'D', level: LoggerLevel.WARN })
+        .warn.group('D')
         .pipe(({ trace }) => trace('trace is worked from D'))
         .pipe(({ debug }) => debug('debug is worked from D'))
         .pipe(({ info }) => info('info is worked from D'))
@@ -208,7 +208,7 @@ window['showExample7'] = function showExample7() {
         .pipe(({ error }) => error('error is worked from D'))
         .close()
 
-        .group({ label: 'E', level: LoggerLevel.ERROR })
+        .error.group('E')
         .pipe(({ trace }) => trace('trace is worked from E'))
         .pipe(({ debug }) => debug('debug is worked from E'))
         .pipe(({ info }) => info('info is worked from E'))
