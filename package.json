@@ -14,10 +14,10 @@
         "compile": "ts-node src/logger.ts",
         "prepublishOnly": "tsc",
         "ts:doc": "typedoc --out doc/ src/logger.class.ts",
-        "npm:release": "npm run ts:doc && changelog -M && git add . && git commit -m \"updated CHANGELOG.md\"",
-        "release:major": "npm run npm:release && npm version major && npm publish && npm run git:release",
-        "release:minor": "npm run npm:release && npm version minor && npm publish && npm run git:release",
-        "release:patch": "npm run npm:release && npm version patch && npm publish && npm run git:release",
+        "npm:release": "npm run ts:doc && git add . && git commit -m \"updated CHANGELOG.md\"",
+        "release:major": "changelog -M && npm run npm:release && npm version major && npm publish && npm run git:release",
+        "release:minor": "changelog -m && npm run npm:release && npm version minor && npm publish && npm run git:release",
+        "release:patch": "changelog -p && npm run npm:release && npm version patch && npm publish && npm run git:release",
         "git:release": "git push origin && git push origin --tags"
     },
     "nyc": {
