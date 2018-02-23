@@ -1,3 +1,9 @@
+## 1.0.0 (2018-02-23)
+
+##### Other Changes
+
+* **REAMDE.md:**  update ([6175e6ff](https://github.com/splincodewd/client-logger/commit/6175e6ffb32934569b40ce02692d8c9c353ada44))
+
 #### 0.4.1 (2018-02-19)
 
 ##### Other Changes

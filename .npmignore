@@ -16,6 +16,7 @@ typings
 node_modules/
 coverage/
 test/
+doc/
 dist/
 src/
 examples/
