@@ -1,3 +1,15 @@
+### 0.5.0 (2018-02-24)
+
+##### New Features
+
+* **logger:**  clipboard feature ([022e3719](https://github.com/splincodewd/client-logger/commit/022e3719fe876a6cc45d3578ddcfe9cf56f1565a))
+
+##### Other Changes
+
+* **REAMDE.md:**
+  *  update ([fbc63e1d](https://github.com/splincodewd/client-logger/commit/fbc63e1dcfe7c86f134f0a0aa745c6173a926ad5))
+  *  update ([5e1216ad](https://github.com/splincodewd/client-logger/commit/5e1216addb756b379f2854fd16a17cd4501ab1bc))
+
 #### 0.4.3 (2018-02-23)
 
 ##### Other Changes

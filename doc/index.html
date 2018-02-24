@@ -80,6 +80,7 @@
 					<li>[x] Logger pretty write object</li>
 					<li>[x] Set style by css</li>
 					<li>[x] Logger level groups (trace, debug, info, warn, error)</li>
+					<li>[x] Clipboard data</li>
 					<li>[ ] Set global style + add another css class</li>
 					<li>[ ] Format output console</li>
 					<li>[ ] Dependency Injection for Angular</li>
@@ -360,6 +361,21 @@ fetch(<span class="hljs-string">"http://data.io"</span>).then(<span class="hljs-
 });
 </code></pre>
 				<p><img src="https://habrastorage.org/webt/cp/yo/no/cpyonombmaemgbpdsqjallxjhuq.png" alt=""></p>
+				<h3 id="example-clipboard">Example: clipboard</h3>
+				<pre><code class="lang-typescript">
+<span class="hljs-keyword">import</span> { ClientLogger, LoggerLevel } <span class="hljs-keyword">from</span> <span class="hljs-string">'@splincode/client-logger'</span>;
+
+<span class="hljs-keyword">const</span> logger = <span class="hljs-keyword">new</span> ClientLogger();
+<span class="hljs-keyword">const</span> JsonValue = { a: <span class="hljs-number">1</span>, b: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>] };
+
+logger.group(<span class="hljs-string">'copy JSON'</span>, <span class="hljs-function">(<span class="hljs-params">{ log, stringify, clipboard }</span>) =&gt;</span> {
+    log(...stringify(clipboard.copy(JsonValue)));
+    log(<span class="hljs-string">'The object you have on the clipboard ...'</span>);
+});
+
+<span class="hljs-string">`</span>
+</code></pre>
+				<p><img src="https://habrastorage.org/webt/nq/uo/0z/nquo0zs2_tbvpxkaut4eavh-qeq.gif" alt=""></p>
 				<h3 id="example-full-configurations">Example: full configurations</h3>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { ClientLogger, LoggerLevel } <span class="hljs-keyword">from</span> <span class="hljs-string">'@splincode/client-logger'</span>;
 <span class="hljs-keyword">import</span> { MyConsole } <span class="hljs-keyword">from</span> <span class="hljs-string">'node_modules/custom-logger'</span>;
@@ -448,6 +464,9 @@ logger.error(<span class="hljs-string">'error is worked'</span>, <span class="hl
 					</li>
 					<li class="label tsd-is-external">
 						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_clipboard_class_.html">"clipboard.class"</a>
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="modules/_css_parser_class_.html">"css-<wbr>parser.class"</a>
