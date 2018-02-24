@@ -218,6 +218,25 @@ window['showExample7'] = function showExample7() {
 
 };
 
+// Level groups
+window['showExample8'] = function showExample8() {
+
+    const logger = new ClientLogger();
+    logger.clear();
+
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-clipboard';
+    logger.log(`See how usage: ${urlDocumentation}`);
+    logger.level = LoggerLevel.ALL;
+
+    const JsonValue = { a: 1, b: [1, 2, 3] };
+
+    logger.group('copy JSON', ({ log, stringify, clipboard }) => {
+        log(...stringify(clipboard.copy(JsonValue)));
+        log('The object you have on the clipboard ...');
+    });
+
+};
+
 // Full configuration (change labels, colors)
 window['showExampleEnd'] = function showExampleEnd() {
 

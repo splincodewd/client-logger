@@ -19,6 +19,7 @@ npm i @splincode/client-logger --save-dev
 - [x] Logger pretty write object
 - [x] Set style by css
 - [x] Logger level groups (trace, debug, info, warn, error)
+- [x] Clipboard data
 - [ ] Set global style + add another css class
 - [ ] Format output console
 - [ ] Dependency Injection for Angular
@@ -336,6 +337,24 @@ fetch("http://data.io").then((greatBigJSON) => {
 ```
 
 ![](https://habrastorage.org/webt/cp/yo/no/cpyonombmaemgbpdsqjallxjhuq.png)
+
+### Example: clipboard
+
+```typescript
+
+import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
+
+const logger = new ClientLogger();
+const JsonValue = { a: 1, b: [1, 2, 3] };
+
+logger.group('copy JSON', ({ log, stringify, clipboard }) => {
+    log(...stringify(clipboard.copy(JsonValue)));
+    log('The object you have on the clipboard ...');
+});
+
+````
+
+![](https://habrastorage.org/webt/nq/uo/0z/nquo0zs2_tbvpxkaut4eavh-qeq.gif)
 
 ### Example: full configurations
 

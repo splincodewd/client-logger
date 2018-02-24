@@ -2,9 +2,11 @@ import { PipelineFn, ConsoleOperationPipe, GroupParams, LineStyle, LoggerColors,
 import { config, FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
 import { CssParser } from './css-parser.class';
 import { JsonParse } from './json-parse.class';
+import { Clipboard } from './clipboard.class';
 
 export class ClientLogger {
 
+    public clipboard: Clipboard = new Clipboard();
     private options: LoggerConfigImpl;
     private lineStyle: Partial<LineStyle> = {};
     private countOpenGroup: number = 0;
