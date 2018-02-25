@@ -40,9 +40,8 @@ or follow that's [link](https://splincodewd.github.io/client-logger).
 You can also run the examples on webpack:
 
 ```bash
-$ git clone https://github.com/splincodewd/client-logger 
-$ cd client-logger/examples/
-$ npm install
+$ git clone https://github.com/splincodewd/client-logger && cd client-logger
+$ npm install # install dependencies 
 $ npm start # open http://localhost:3000/
 ```
 
