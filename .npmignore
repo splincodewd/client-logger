@@ -11,6 +11,7 @@ typings
 *.log
 *.tgz
 *.yml
+*.iml
 
 # directories
 node_modules/

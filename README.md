@@ -11,23 +11,12 @@
 npm i @splincode/client-logger --save-dev
 ```
 
-### Todo
+## Motivation
 
-- [x] Override console
-- [x] Logger method (trace, debug, info, warning, error)
-- [x] Logger group + groupCollapsible (pipes)
-- [x] Logger pretty write object
-- [x] Set style by css
-- [x] Logger level groups (trace, debug, info, warn, error)
-- [x] Clipboard data
-- [ ] Set global style + add another css class
-- [ ] Format output console
-- [ ] Dependency Injection for Angular
-- [ ] Switch enable/disable default console output
-- [ ] Profiling (memory usage, sizeof, time execute)
-- [ ] Timers (decorator)
-- [ ] Pre process output
-- [ ] Cross-browser fixing
+This logger is a handy tool that can be useful 
+in the design and development of the enterprise application level.
+Easy setting of logging levels and convenient work with groups.
+Among other things, you can use meta programming (decorators).
 
 ## Usage
 
@@ -40,10 +29,28 @@ or follow that's [link](https://splincodewd.github.io/client-logger).
 You can also run the examples on webpack:
 
 ```bash
-$ git clone https://github.com/splincodewd/client-logger && cd client-logger
-$ npm install # install dependencies 
-$ npm start # open http://localhost:3000/
+import { ClientLogger } from '@splincode/client-logger';
+
+const logger = new ClientLogger(); // very simple
 ```
+
+## Table of contents
+
+* [Logging](#)
+  * [Basic usage API `trace`, `debug`, `info`, `warn`. `error`](#example-basic-methods)
+  * [Groups, `groupCollapsed`, `collapsible`](#example-groups)
+  * [Nested groups (usage pipe method)](#example-nested-groups)
+  * [Set logging level (worked in single or groups)](#example-set-minimal-logging-level)
+  * [Customization style line](#example-set-style-line)
+  * [Output pretty json `stringify`, `printJSON`](#example-pretty-json)
+  * [Copy `json, object, text` to clipboard](#example-clipboard)
+  * [Configuration `ClientLogger`](#example-full-configurations)
+* [Development](#development)
+* [Contributing](#contributing)
+* [Run Tests](#run-tests)
+* [Todo](#todo)
+
+## Logging
 
 ![](https://habrastorage.org/webt/xi/ku/d9/xikud9fkxwng2ndu66f_c8yolag.gif)
 
@@ -69,7 +76,7 @@ logger.error('error is worked', 5, (2.55).toFixed());
 
 ![](https://habrastorage.org/webt/1i/lj/rh/1iljrhzeiw_3mvbaji5gcx2adnm.gif)
 
-* **Disable trace on console:**
+* **Disable trace on console (filter):**
 
 ```typescript
 import { ClientLogger } from '@splincode/client-logger';
@@ -165,7 +172,7 @@ logger
 
 ![](https://habrastorage.org/webt/77/vi/gm/77vigmltfbdmxhiruv8xgxwjdrg.gif)
 
-### Example: level groups
+### Example: set minimal logging level
 
 Basic parameterization
 
@@ -249,9 +256,7 @@ logger.trace.group('A')
 
 ![](https://habrastorage.org/webt/ca/rb/ub/carbube17g4h42ye2fjcvstcw_c.png)
 
-### Example: production
-
-Configuration by prod/dev:
+Set level in constructor ClientLogger
 
 ```typescript
 import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
@@ -438,6 +443,24 @@ All logger tests are written with mocha, chai.
 ```bash
 npm test
 ```
+
+## Todo
+
+- [x] Override console
+- [x] Logger method (trace, debug, info, warning, error)
+- [x] Logger group + groupCollapsible (pipes)
+- [x] Logger pretty write object
+- [x] Set style by css
+- [x] Logger level groups (trace, debug, info, warn, error)
+- [x] Clipboard data
+- [ ] Set global style + add another css class
+- [ ] Format output console
+- [ ] Dependency Injection for Angular
+- [ ] Switch enable/disable default console output
+- [ ] Profiling (memory usage, sizeof, time execute)
+- [ ] Timers (decorator)
+- [ ] Pre process output
+- [ ] Cross-browser fixing
 
 ## About
 

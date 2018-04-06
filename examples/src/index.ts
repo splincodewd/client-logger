@@ -108,7 +108,7 @@ window['showExample4'] = function showExample4() {
     const logger = new ClientLogger();
     logger.clear();
 
-    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-production';
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-set-minimal-logging-level';
     logger.log(`See how usage: ${urlDocumentation}`);
     logger.log('Set current logger level: ', LoggerLevel[level]);
     logger.level = level;
@@ -218,7 +218,7 @@ window['showExample7'] = function showExample7() {
 
 };
 
-// Level groups
+// Clipboard
 window['showExample8'] = function showExample8() {
 
     const logger = new ClientLogger();
