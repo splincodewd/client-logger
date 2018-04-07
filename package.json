@@ -5,19 +5,20 @@
     "main": "./lib/index.js",
     "typings": "./lib/index.d.ts",
     "scripts": {
-        "start": "cd examples && npm install && npm run start",
-        "lint": "tslint -c tslint.json 'src/**/*.ts'",
-        "test": "nyc --reporter=html --reporter=text mocha",
-        "coverage": "nyc report --reporter=text-lcov | coveralls",
-        "mocha": "mocha -r ts-node/register test/*/*.test.ts",
-        "examples:build": "cd examples && npm install && npm run build:prod",
-        "compile": "ts-node src/logger.ts",
         "prepublishOnly": "tsc",
-        "npm:release": "npm run examples:build && git add . && git commit -m \"updated CHANGELOG.md\"",
+        "compile": "ts-node src/logger.ts",
+        "lint": "tslint -c tslint.json 'src/**/*.ts'",
+        "start": "cd aio && npm install && npm run start",
+        "test": "nyc --reporter=html --reporter=text mocha",
+        "mocha": "mocha -r ts-node/register test/*/*.test.ts",
+        "coverage": "nyc report --reporter=text-lcov | coveralls",
+        "git:release": "git push origin && git push origin --tags",
+        "aio:build": "cd aio && npm install && npm run build:prod",
+        "aio:deploy": "./aio/deploy-ghpages.sh",
+        "npm:release": "git add . && git commit -m \"chore(repo): updated CHANGELOG.md\"",
         "release:major": "changelog -M && npm run npm:release && npm version major && npm publish && npm run git:release",
         "release:minor": "changelog -m && npm run npm:release && npm version minor && npm publish && npm run git:release",
-        "release:patch": "changelog -p && npm run npm:release && npm version patch && npm publish && npm run git:release",
-        "git:release": "git push origin && git push origin --tags"
+        "release:patch": "changelog -p && npm run npm:release && npm version patch && npm publish && npm run git:release"
     },
     "nyc": {
         "include": [
