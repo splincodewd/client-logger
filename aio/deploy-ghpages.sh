@@ -1,5 +1,4 @@
 #!/bin/bash
-set -o errexit
 
 # config
 echo 'GIT CONFIGURATION...'
