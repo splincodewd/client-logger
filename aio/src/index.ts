@@ -2,6 +2,9 @@ import { ClientLogger, LoggerLevel } from '../../index';
 import { MyConsole } from './MyConsole';
 import { greatBigJSON } from './big.json';
 
+// for testable in console
+window['testLogger'] = new ClientLogger();
+
 // Basic method (trace, debug, info, ..)
 window['showExample1'] = function showExample1() {
 
