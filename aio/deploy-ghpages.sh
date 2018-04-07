@@ -1,12 +1,14 @@
 #!/bin/bash
 
+echo 'Deploy run...'
+
 # config
-echo 'GIT CONFIGURATION...'
+echo 'Configuration...'
 git config --global user.email "omaxphp@yandex.ru"
 git config --global user.name "Travis CI"
 
 # deploy
-echo 'DEPLOY...'
+echo 'Publishing...'
 cd aio && cd output
 git init
 git add .
