@@ -10,4 +10,5 @@ script:
   - npm run aio:build
 after_success:
   - npm run coverage
-  - chmod +x bash ./aio/deploy.sh
+  - chmod +x aio/deploy.sh
+  - bash aio/deploy.sh
