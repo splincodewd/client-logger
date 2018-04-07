@@ -4,7 +4,7 @@ export class JsonParse {
 
     public static stringify(json: object | string | any): string[] {
         if (typeof json !== 'string') {
-            json = JSON.stringify(json, null, 2);
+            json = JSON.stringify(json, null, '\t');
         }
 
         const arr: string[] = [];
