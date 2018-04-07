@@ -10,4 +10,4 @@ script:
   - npm run aio:build
 after_success:
   - npm run coverage
-  - npm run aio:deploy
+  - chmod +x aio/deploy-ghpages.sh

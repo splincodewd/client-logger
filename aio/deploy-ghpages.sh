@@ -2,10 +2,12 @@
 set -o errexit
 
 # config
+echo 'GIT CONFIGURATION...'
 git config --global user.email "omaxphp@yandex.ru"
 git config --global user.name "Travis CI"
 
 # deploy
+echo 'DEPLOY...'
 cd aio && cd output
 git init
 git add .
