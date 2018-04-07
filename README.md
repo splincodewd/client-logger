@@ -28,7 +28,7 @@ or follow that's [link](https://splincodewd.github.io/client-logger).
 
 You can also run the examples on webpack:
 
-```bash
+```ts
 import { ClientLogger } from '@splincode/client-logger';
 
 const logger = new ClientLogger(); // very simple
