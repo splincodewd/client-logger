@@ -4,8 +4,8 @@ echo 'Deploy run...'
 
 # config
 echo 'Configuration...'
-#git config --global user.email "omaxphp@yandex.ru"
-#git config --global user.name "Travis CI"
+git config --global user.email "omaxphp@yandex.ru"
+git config --global user.name "Travis CI"
 
 # deploy
 echo 'Publishing...'
