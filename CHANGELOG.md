@@ -1,3 +1,33 @@
+#### 0.5.1 (2018-04-08)
+
+##### Chores
+
+* **repo:**
+  *  remove unusage index.html, update README.md ([19483a1d](https://github.com/splincodewd/client-logger/commit/19483a1d96df9c67f2d4a175415d9b70fb4128e5))
+  *  deploy shell rename ([bc6856e4](https://github.com/splincodewd/client-logger/commit/bc6856e4998b1d33a9cdc676040929922e4afd22))
+  *  remove generated files ([d22ead4f](https://github.com/splincodewd/client-logger/commit/d22ead4fe0425bcd8a22f91abf47bd8005d9e883))
+* **README.md:**  fix typo ([953ff192](https://github.com/splincodewd/client-logger/commit/953ff19234bef5abec7d3a8705dbc9456521443f))
+
+##### Continuous Integration
+
+* **repo:**
+  *  fix problem builds for github-pages ([a333b6c5](https://github.com/splincodewd/client-logger/commit/a333b6c5c95a7703bc64f9e9d0567d4a04a150c7))
+  *  build.sh fix ([ee7ecb6e](https://github.com/splincodewd/client-logger/commit/ee7ecb6e02d82104e017388225ff8dea15ce1bdb))
+  *  auto deploy github pages ([76ac5f18](https://github.com/splincodewd/client-logger/commit/76ac5f18f1610abdba64e5cdc4fd75b08fd95b13))
+
+##### Bug Fixes
+
+* **json-parser:**
+  *  workaround Chrome 65 bug ([e8a358f3](https://github.com/splincodewd/client-logger/commit/e8a358f32f4b4c36e5afa82f156bd665dc5bea7a))
+  *  switch to null ([0955b7c8](https://github.com/splincodewd/client-logger/commit/0955b7c86f0cd627174eae433a7c8df93a3cd119))
+
+##### Other Changes
+
+* **json-parser:**  switch to null ([936f5d84](https://github.com/splincodewd/client-logger/commit/936f5d841a999a21cb5e176809e7e896f8611445))
+* **README.md:**
+  *  update informations ([a8f868ee](https://github.com/splincodewd/client-logger/commit/a8f868ee610bc91859b6251f52cc3dfa3d18b6f2))
+  *  update intro ([509ee637](https://github.com/splincodewd/client-logger/commit/509ee637f2a88d69cb3d4ab73ae52abe07d5efe9))
+
 ### 0.5.0 (2018-02-24)
 
 ##### New Features
