@@ -317,6 +317,7 @@ fetch("http://data.io").then((greatBigJSON) => {
     
     // or minimal usage (but does not work source map)
     logger.printJSON(greatBigJSON);
+    
 });
 ```
 

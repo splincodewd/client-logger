@@ -161,7 +161,8 @@ window['showExample6'] = function showExample6() {
         .pipe(({ debug }) => debug('Classic output json: ', greatBigJSON))
         .close()
         .group('Pretty output json:')
-        .pipe(({ log, stringify }) => log(...stringify(greatBigJSON)))
+        // TODO: stringify catch bug Chrome 65+
+        .pipe(({ log, stringify }) => log(...stringify(greatBigJSON, false)))
         .close();
 
 };

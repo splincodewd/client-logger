@@ -90,12 +90,12 @@ export class ClientLogger {
         return this;
     }
 
-    public printJSON(json: any): void {
-        this.console.log.apply(this.console, this.stringify(json));
+    public printJSON(json: any, color: boolean = true): void {
+        this.console.log.apply(this.console, this.stringify(json, color));
     }
 
-    public stringify(json: any): string[] {
-        return JsonParse.stringify(json);
+    public stringify(json: any, color: boolean = true): string[] {
+        return JsonParse.stringify(json, color);
     }
 
     public pipe(...pipelines: PipelineFn[]): ClientLogger {
