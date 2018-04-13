@@ -1,4 +1,5 @@
 import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from './logger.interfaces';
+import { JsonStringifyConfig } from './plugins/json-stringify.class';
 
 export enum FormatLine {
     STRING = '%s',
@@ -77,15 +78,19 @@ export const DEFAULT_GROUPS_CONFIG: LoggerGroupsMethods = {
 
 export const config: LoggerConfigImpl = {
     minLevel: LoggerLevel.ALL,
-    consoleInstance: { ...{}, ...(console || {}) } as Console,
+    consoleInstance: {...{}, ...(console || {})} as Console,
     configLabel: DEFAULT_LABELS,
     configColor: DEFAULT_COLORS,
     configMethods: DEFAULT_METHODS,
     configGroups: DEFAULT_GROUPS_CONFIG,
-    noop: () => {},
+    noop: () => {
+    },
     labelUpperCase: true,
     lineStyle: {
         style: null,
         format: FormatLine.STRING
-    }
+    },
+
+    // JsonStringify plugin options
+    stringify: JsonStringifyConfig
 };

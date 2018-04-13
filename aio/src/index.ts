@@ -247,7 +247,7 @@ window['showExampleEnd'] = function showExampleEnd() {
     const logger = new ClientLogger({
 
         // Drop-in replacement for console, if needed
-        consoleInstance: <Console> new MyConsole(),
+        consoleInstance: new MyConsole() as Console,
 
         // Minimal execute signature
         minLevel: LoggerLevel.INFO,
@@ -284,5 +284,3 @@ window['showExampleEnd'] = function showExampleEnd() {
     logger.error('error is worked', 5, (2.55).toFixed());
 
 };
-
-

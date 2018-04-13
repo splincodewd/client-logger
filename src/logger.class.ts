@@ -1,19 +1,22 @@
-import { PipelineFn, ConsoleOperationPipe, GroupParams, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels, ConsoleOperation } from './logger.interfaces';
+import { ConsoleOperation, ConsoleOperationPipe, GroupParams, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.interfaces';
 import { config, FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
-import { CssParser } from './css-parser.class';
-import { JsonParse } from './json-parse.class';
-import { Clipboard } from './clipboard.class';
+import { CssParser } from './plugins/css-parser.class';
+import { Clipboard } from './plugins/clipboard.class';
+import { PluginMixin } from './logger.mixins';
+import { JsonStringify, JsonStringifyImpl } from './plugins/json-stringify.class';
 
-export class ClientLogger {
+@PluginMixin([JsonStringify])
+export class ClientLogger implements JsonStringifyImpl {
 
     public clipboard: Clipboard = new Clipboard();
+    public stringify: (json: object | string, color?: boolean) => string[];
     private options: LoggerConfigImpl;
     private lineStyle: Partial<LineStyle> = {};
     private countOpenGroup: number = 0;
     private executePipesGroup: boolean = true;
 
     constructor(options: Partial<LoggerConfigImpl> = {}) {
-        this.options = { ...config, ...options };
+        this.options = {...config, ...options};
     }
 
     public get level(): LoggerLevel {
@@ -76,26 +79,18 @@ export class ClientLogger {
 
     public setLabels(labels: LoggerLabels): void {
         const configLabel = this.options.configLabel;
-        this.options.configLabel = { ...configLabel, ...labels };
+        this.options.configLabel = {...configLabel, ...labels};
     }
 
     public setColors(colors: LoggerColors): void {
         const configColor = this.options.configColor;
-        this.options.configColor = { ...configColor, ...colors };
+        this.options.configColor = {...configColor, ...colors};
     }
 
     public css(styleFormat: object | string, format: FormatLine = FormatLine.STRING): ClientLogger {
         const style = (typeof styleFormat === 'string') ? styleFormat : CssParser.toString(styleFormat);
-        this.lineStyle = { style, format };
+        this.lineStyle = {style, format};
         return this;
-    }
-
-    public printJSON(json: any, color: boolean = true): void {
-        this.console.log.apply(this.console, this.stringify(json, color));
-    }
-
-    public stringify(json: any, color: boolean = true): string[] {
-        return JsonParse.stringify(json, color);
     }
 
     public pipe(...pipelines: PipelineFn[]): ClientLogger {
@@ -139,14 +134,14 @@ export class ClientLogger {
         if (typeof options === 'string') {
             configuration.label = options;
         } else {
-            configuration = { ...configuration, ...options };
+            configuration = {...configuration, ...options};
         }
 
         return configuration;
     }
 
     private generateGroup(configuration: GroupParams, pipeLine?: PipelineFn) {
-        const { label, level, type } = configuration;
+        const {label, level, type} = configuration;
         const canExecute = !(this.options.minLevel > level);
 
         if (canExecute) {
@@ -182,7 +177,7 @@ export class ClientLogger {
             const methodName = this.getConsoleMethodName(level);
             const consoleInstance = this.console;
             const consoleMethod = consoleInstance[methodName] || operation;
-            const { style: lineStyle, format: lineFormat } = this.getCurrentLineStyle();
+            const {style: lineStyle, format: lineFormat} = this.getCurrentLineStyle();
 
             if (lineStyle) {
                 this.clearCssCurrentLine();
@@ -207,7 +202,7 @@ export class ClientLogger {
                     enumerable: true,
                     configurable: true,
                     value: (label: string, pipeLine?: PipelineFn) => {
-                        return this.generateGroup({ label, level, type }, pipeLine);
+                        return this.generateGroup({label, level, type}, pipeLine);
                     }
                 });
             }
@@ -221,7 +216,7 @@ export class ClientLogger {
         const currentLineOption = this.lineStyle || defaultLineStyle;
         const lineStyle = currentLineOption.style;
         const lineFormat = currentLineOption.format;
-        return { style: lineStyle, format: lineFormat };
+        return {style: lineStyle, format: lineFormat};
     }
 
     private getConsoleMethodName(level: LoggerLevel): string {

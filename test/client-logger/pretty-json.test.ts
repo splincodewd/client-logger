@@ -2,6 +2,10 @@ import { ClientLogger } from '../../index';
 import { LoggerInjector, TestLoggerLineType } from '../helpers/converter';
 import { expect } from 'chai';
 import 'mocha';
+import { BaseType, JsonStringifyConfig } from '../../src/plugins/json-stringify.class';
+
+const KEY = JsonStringifyConfig.styles[BaseType.KEY];
+const NUMBER = JsonStringifyConfig.styles[BaseType.NUMBER];
 
 const myConsoleStream: Console = LoggerInjector.patch();
 
@@ -20,25 +24,20 @@ describe('[TEST]: Parse json', () => {
 
         clientLogger.clear();
 
-        const json = { a: 1, b: [1, 2] };
+        const json = {a: 1, b: [1, 2]};
 
         // for pretty json usage logger.log method
         clientLogger.log(...clientLogger.stringify(json));
-
-        // or minimal usage (but not working source map)
-        clientLogger.printJSON(json);
 
         expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
             {
                 [TestLoggerLineType.LOG]: [
                     '{\n\t%c"a":%c %c1%c,\n\t%c"b":%c [\n\t\t%c1%c,\n\t\t%c2%c\n\t]\n}',
-                    'color:red', '', 'color:darkorange', '', 'color:red', '', 'color:darkorange', '', 'color:darkorange', ''
-                ]
-            },
-            {
-                [TestLoggerLineType.LOG]: [
-                    '{\n\t%c"a":%c %c1%c,\n\t%c"b":%c [\n\t\t%c1%c,\n\t\t%c2%c\n\t]\n}',
-                    'color:red', '', 'color:darkorange', '', 'color:red', '', 'color:darkorange', '', 'color:darkorange', ''
+                    KEY, '',
+                    NUMBER, '',
+                    KEY, '',
+                    NUMBER, '',
+                    NUMBER, ''
                 ]
             }
         ));

@@ -1,5 +1,6 @@
 import { FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
 import { ClientLogger } from './logger.class';
+import { JsonParseConfig } from './plugins/json-stringify.class';
 
 export interface LoggerConfigImpl {
     minLevel: LoggerLevel;
@@ -11,6 +12,7 @@ export interface LoggerConfigImpl {
     configColor: LoggerColors;
     configMethods: LoggerMethods;
     configGroups: LoggerGroupsMethods;
+    stringify: JsonParseConfig;
 }
 
 export interface LineStyle {

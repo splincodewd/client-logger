@@ -41,7 +41,7 @@ const logger = new ClientLogger();
   * [Nested groups (usage pipe method)](#example-nested-groups)
   * [Set logging level (worked in single or groups)](#example-set-minimal-logging-level)
   * [Customization style line](#example-set-style-line)
-  * [Output pretty json `stringify`, `printJSON`](#example-pretty-json)
+  * [Output pretty json `stringify`](#example-pretty-json)
   * [Copy `json, object, text` to clipboard](#example-clipboard)
   * [Configuration `ClientLogger`](#example-full-configurations)
 * [Development](#development)
@@ -309,15 +309,13 @@ import { ClientLogger } from '@splincode/client-logger';
 const logger = new ClientLogger();
 
 fetch("http://data.io").then((greatBigJSON) => {
+
     // default browser print json
     logger.debug("Classic output json", greatBigJSON);
     
     // for pretty json usage logger.log method
     logger.log(...logger.stringify(greatBigJSON));
-    
-    // or minimal usage (but does not work source map)
-    logger.printJSON(greatBigJSON);
-    
+
 });
 ```
 
@@ -453,6 +451,7 @@ npm test
 - [x] Set style by css
 - [x] Logger level groups (trace, debug, info, warn, error)
 - [x] Clipboard data
+- [ ] Plugin system architecture (mixins)
 - [ ] Set global style + add another css class
 - [ ] Format output console
 - [ ] Dependency Injection for Angular
