@@ -303,7 +303,7 @@ logger.info('For global configuration, use the constructor parameters');
 
 ![](https://habrastorage.org/webt/4s/co/wh/4scowhxaxdl8ikcmxpyjtko269m.png)
 
-### Example: set style line
+### Example: set global style line
 
 ```typescript
 import { ClientLogger } from '@splincode/client-logger';
