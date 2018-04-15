@@ -316,7 +316,7 @@ const logger = new ClientLogger({
 });
 
 logger
-    .css('font-weight: normal; text-decoration: none;', FormatLine.NUMBER)
+    .css('font-weight: normal; text-decoration: none;', FormatLine.INT)
     .info(3.14); // 3
 
 logger
