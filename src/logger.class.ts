@@ -3,13 +3,21 @@ import { config, FormatLine, LoggerGroupType, LoggerLevel } from './logger.confi
 import { CssParser } from './plugins/css-parser.class';
 import { Clipboard } from './plugins/clipboard.class';
 import { PluginMixin } from './logger.mixins';
-import { JsonStringify, JsonStringifyImpl } from './plugins/json-stringify.class';
+import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
+import { JsonStringifyConfigImpl, JsonStringifyImpl } from './plugins/json-stringify/json-stringify.impl';
 
 @PluginMixin([JsonStringify])
 export class ClientLogger implements JsonStringifyImpl {
 
+    /**
+     * @param {object} object | string - JSON by string or object structure
+     * @param {options} Partial<JsonStringifyConfigImpl> - option for print
+     * @return {string[]} - The method returns an array of strings to output to the console.
+     * @description - Improved JSON.stringify with color palette
+     */
+    public stringify: (json: object | string, options?: Partial<JsonStringifyConfigImpl>) => string[];
+
     public clipboard: Clipboard = new Clipboard();
-    public stringify: (json: object | string, color?: boolean) => string[];
     private options: LoggerConfigImpl;
     private lineStyle: Partial<LineStyle> = {};
     private countOpenGroup: number = 0;

@@ -11,11 +11,11 @@ export function PluginMixin<T>(plugins: Constructor[]) {
         const original = target;
 
         // a utility function to generate instances of a class
-        function construct(constructor: Constructor, args: any) {
+        function construct(constructor: Constructor, args: any[]) {
             let newInstance: T = null;
             const c: any = function () {
                 plugins.forEach((plugin: Constructor) => {
-                    const pluginInstance = new plugin(args);
+                    const pluginInstance = new plugin(...args);
                     Object.getOwnPropertyNames(plugin.prototype).forEach((name) => {
                         target.prototype[name] = plugin.prototype[name];
                     });

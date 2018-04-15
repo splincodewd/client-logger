@@ -1,4 +1,4 @@
-import { LoggerInjector, TestLoggerLineType } from '../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../../helpers/4spec/converter';
 import { ClientLogger, LoggerLevel } from '../../index';
 import { expect } from 'chai';
 import 'mocha';

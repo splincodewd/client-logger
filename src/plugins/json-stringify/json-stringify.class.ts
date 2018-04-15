@@ -1,54 +1,28 @@
-import { LoggerConfigImpl } from '../logger.interfaces';
-import { config } from '../logger.config';
-
-export enum BaseType {
-    STRING,
-    NUMBER,
-    BOOLEAN,
-    NULL,
-    KEY
-}
-
-export interface JsonParseConfig {
-    enableColor: boolean;
-    styles: { [key: number]: string };
-}
-
-export interface JsonStringifyImpl {
-    stringify(json: object | string, color?: boolean): string[];
-}
-
-export const JsonStringifyConfig = {
-    enableColor: false,
-    styles: {
-        [BaseType.STRING]: 'color:green;',
-        [BaseType.NUMBER]: 'color:darkorange;',
-        [BaseType.BOOLEAN]: 'color:blue;',
-        [BaseType.NULL]: 'color:magenta;',
-        [BaseType.KEY]: 'color:red;'
-    }
-};
+import { LoggerConfigImpl } from '../../logger.interfaces';
+import { config } from '../../logger.config';
+import { BaseType, JsonStringifyConfigImpl } from './json-stringify.impl';
 
 export class JsonStringify {
 
     private readonly searchPattern: RegExp;
-    private options: LoggerConfigImpl;
+    private readonly options: LoggerConfigImpl;
 
     constructor(options: Partial<LoggerConfigImpl> = {}) {
-        this.options = {...config, ...options};
+        this.options = { ...config, ...options };
         this.searchPattern = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
     }
 
-    public stringify = (json: object | string, color: boolean = true): string[] => {
+    public stringify = (json: object | string, options: Partial<JsonStringifyConfigImpl> = {}): string[] => {
+        const stringifyConfig = { ...this.options.stringify, ...options };
+        const { spaces, styles, enableColor, replacer } = stringifyConfig;
 
         if (typeof json !== 'string') {
-            json = JSON.stringify(json, null, '\t');
+            json = JSON.stringify(json, replacer, spaces);
         }
 
         const arr: string[] = [];
 
-        if (color) {
-            const styles = this.options.stringify.styles;
+        if (enableColor) {
             const _string = styles[BaseType.STRING];
             const _number = styles[BaseType.NUMBER];
             const _boolean = styles[BaseType.BOOLEAN];

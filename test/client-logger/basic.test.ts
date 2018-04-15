@@ -1,5 +1,5 @@
 import { ClientLogger, LoggerLevel } from '../../index';
-import { LoggerInjector, TestLoggerLineType } from '../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../../helpers/4spec/converter';
 import { expect } from 'chai';
 import 'mocha';
 

@@ -1,5 +1,5 @@
 import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from './logger.interfaces';
-import { JsonStringifyConfig } from './plugins/json-stringify.class';
+import { JsonStringifyConfig } from './plugins/json-stringify/json-stringify.config';
 
 export enum FormatLine {
     STRING = '%s',
