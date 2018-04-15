@@ -260,7 +260,7 @@ window['showExample9'] = function showExample8() {
     logger.log(`See how usage: ${urlDocumentation}`);
 
     logger
-        .css('font-weight: normal; text-decoration: none;', FormatLine.NUMBER)
+        .css('font-weight: normal; text-decoration: none;', FormatLine.INT)
         .info(3.14); // 3
 
     logger

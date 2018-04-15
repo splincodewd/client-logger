@@ -1,6 +1,6 @@
 export enum FormatLine {
     STRING = '%s',
-    NUMBER = '%d',
+    INT = '%d',
     FLOAT = '%f',
     OBJECT = '%O',
     DOM = '%o'
