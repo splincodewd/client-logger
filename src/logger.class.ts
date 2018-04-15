@@ -22,8 +22,8 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     public stringify: (json: JSONKeyValue, options?: Partial<JsonStringifyConfigImpl>) => string[];
 
     /**
-     * @param {StyleKeyValue) styleFormat - css structure as an object or string
-     * @param {FormatLine) format - way to format the string (%s, %d, %f, %o, %O)
+     * @param {StyleKeyValue} styleFormat - css structure as an object or string
+     * @param {FormatLine} format - way to format the string (%s, %d, %f, %o, %O)
      * @return {this} - returns the current instance
      * @description - Setting styles for the current output line
      */
