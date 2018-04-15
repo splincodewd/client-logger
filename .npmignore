@@ -16,6 +16,7 @@ typings
 # directories
 node_modules/
 coverage/
+helpers/
 test/
 doc/
 dist/

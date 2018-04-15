@@ -41,6 +41,7 @@ const logger = new ClientLogger();
   * [Nested groups (usage pipe method)](#example-nested-groups)
   * [Set logging level (worked in single or groups)](#example-set-minimal-logging-level)
   * [Customization style line](#example-set-style-line)
+  * [Customization global style line](#example-set-global-style-line)
   * [Output pretty json `stringify`](#example-pretty-json)
   * [Copy `json, object, text` to clipboard](#example-clipboard)
   * [Configuration `ClientLogger`](#example-full-configurations)
@@ -302,6 +303,32 @@ logger.info('For global configuration, use the constructor parameters');
 
 ![](https://habrastorage.org/webt/4s/co/wh/4scowhxaxdl8ikcmxpyjtko269m.png)
 
+### Example: set style line
+
+```typescript
+import { ClientLogger } from '@splincode/client-logger';
+
+const logger = new ClientLogger({
+    lineStyle: {
+        style: 'color: red; text-decoration: underline; font-weight: bold; font-size: 15px',
+        format: FormatLine.STRING
+    }
+});
+
+logger
+    .css('font-weight: normal; text-decoration: none;', FormatLine.NUMBER)
+    .info(3.14); // 3
+
+logger
+    .css('font-weight: normal;', FormatLine.FLOAT)
+    .info(3.14); // 3.14
+
+logger.warn('global format with style!');
+
+````
+
+![](https://habrastorage.org/webt/tt/mo/ki/ttmokit6fznu6-bce48wqsgmcys.png)
+
 ### Example: pretty json
 
 ```typescript
@@ -451,8 +478,9 @@ npm test
 - [x] Set style by css
 - [x] Logger level groups (trace, debug, info, warn, error)
 - [x] Clipboard data
-- [ ] Plugin system architecture (mixins)
-- [ ] Set global style + add another css class
+- [x] Plugin system architecture (mixins)
+- [x] Set global style
+- [ ] Added css classes
 - [ ] Format output console
 - [ ] Dependency Injection for Angular
 - [ ] Switch enable/disable default console output

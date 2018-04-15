@@ -13,6 +13,8 @@ export interface JsonStringifyConfigImpl {
     styles: { [key: number]: string };
 }
 
+export type JSONKeyValue = object | string;
+
 export interface JsonStringifyImpl {
-    stringify(json: object | string, options?: Partial<JsonStringifyConfigImpl>): string[];
+    stringify(json: JSONKeyValue, options?: Partial<JsonStringifyConfigImpl>): string[];
 }

@@ -1,5 +1,5 @@
-import { LoggerInjector } from '../../helpers/4spec/converter';
-import { CUSTOM_COLORS, CUSTOM_LABELS } from '../../helpers/4spec/custom-colors.enum';
+import { LoggerInjector } from '../../helpers/converter';
+import { CUSTOM_COLORS, CUSTOM_LABELS } from '../../helpers/custom-colors.enum';
 import { ClientLogger, COLORS, LABELS, LoggerLevel } from '../../index';
 import { expect } from 'chai';
 import 'mocha';

@@ -1,6 +1,7 @@
 import { ClientLogger, LoggerLevel } from '../../index';
 import { MyConsole } from './MyConsole';
 import { greatBigJSON } from './big.json';
+import { FormatLine } from '../../src/plugins/css-parser/css-parser.impl';
 
 // for testable in console
 window['testLogger'] = new ClientLogger();
@@ -241,6 +242,32 @@ window['showExample8'] = function showExample8() {
         log(...stringify(clipboard.copy(JsonValue)));
         log('The object you have on the clipboard ...');
     });
+
+};
+
+window['showExample9'] = function showExample8() {
+
+    const logger = new ClientLogger({
+        lineStyle: {
+            style: 'color: red; text-decoration: underline; font-weight: bold; font-size: 15px',
+            format: FormatLine.STRING
+        }
+    });
+
+    logger.clear();
+
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-set-global-style-line';
+    logger.log(`See how usage: ${urlDocumentation}`);
+
+    logger
+        .css('font-weight: normal; text-decoration: none;', FormatLine.NUMBER)
+        .info(3.14); // 3
+
+    logger
+        .css('font-weight: normal;', FormatLine.FLOAT)
+        .info(3.14); // 3.14
+
+    logger.warn('global format with style!');
 
 };
 

@@ -1,25 +1,49 @@
-import { ConsoleOperation, ConsoleOperationPipe, GroupParams, LineStyle, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.interfaces';
-import { config, FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
-import { CssParser } from './plugins/css-parser.class';
+import { ConsoleOperation, ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
+import { config, LoggerGroupType, LoggerLevel } from './logger.config';
+import { CssParser} from './plugins/css-parser/css-parser.class';
 import { Clipboard } from './plugins/clipboard.class';
 import { PluginMixin } from './logger.mixins';
 import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
-import { JsonStringifyConfigImpl, JsonStringifyImpl } from './plugins/json-stringify/json-stringify.impl';
+import { JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl } from './plugins/json-stringify/json-stringify.impl';
+import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/css-parser/css-parser.impl';
 
-@PluginMixin([JsonStringify])
-export class ClientLogger implements JsonStringifyImpl {
+@PluginMixin([
+    JsonStringify,
+    CssParser
+])
+export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
 
     /**
-     * @param {object} object | string - JSON by string or object structure
-     * @param {options} Partial<JsonStringifyConfigImpl> - option for print
-     * @return {string[]} - The method returns an array of strings to output to the console.
-     * @description - Improved JSON.stringify with color palette
+     * @param {JSONKeyValue} json - JSON by string or object structure
+     * @param {Partial<JsonStringifyConfigImpl>} options - option for print
+     * @return {string[]} - the method returns an array of strings to output to the console.
+     * @description - improved JSON.stringify with color palette
      */
-    public stringify: (json: object | string, options?: Partial<JsonStringifyConfigImpl>) => string[];
+    public stringify: (json: JSONKeyValue, options?: Partial<JsonStringifyConfigImpl>) => string[];
+
+    /**
+     * @param {StyleKeyValue) styleFormat - css structure as an object or string
+     * @param {FormatLine) format - way to format the string (%s, %d, %f, %o, %O)
+     * @return {this} - returns the current instance
+     * @description - Setting styles for the current output line
+     */
+    public css: (styleFormat: StyleKeyValue, format?: FormatLine) => this;
+
+    /**
+     * @description - clearing Styles for the current output line
+     * @return {void}
+     */
+    public clearCssCurrentLine: () => void;
+
+    /**
+     * @description - getting local string styles
+     * @return {LineStyle} - current line style and format
+     */
+    public getCurrentLineStyle: () => LineStyle;
 
     public clipboard: Clipboard = new Clipboard();
     private options: LoggerConfigImpl;
-    private lineStyle: Partial<LineStyle> = {};
+
     private countOpenGroup: number = 0;
     private executePipesGroup: boolean = true;
 
@@ -95,12 +119,6 @@ export class ClientLogger implements JsonStringifyImpl {
         this.options.configColor = {...configColor, ...colors};
     }
 
-    public css(styleFormat: object | string, format: FormatLine = FormatLine.STRING): ClientLogger {
-        const style = (typeof styleFormat === 'string') ? styleFormat : CssParser.toString(styleFormat);
-        this.lineStyle = {style, format};
-        return this;
-    }
-
     public pipe(...pipelines: PipelineFn[]): ClientLogger {
         if (this.executePipesGroup) {
             pipelines.forEach((line) => line(this));
@@ -171,10 +189,6 @@ export class ClientLogger implements JsonStringifyImpl {
         return this;
     }
 
-    private clearCssCurrentLine(): void {
-        this.lineStyle = {};
-    }
-
     private loggerMethodsFactory<T>(level: LoggerLevel): T {
         const canExecute = !(this.options.minLevel > level);
         let operation = this.options.noop;
@@ -217,14 +231,6 @@ export class ClientLogger implements JsonStringifyImpl {
         }
 
         return operation;
-    }
-
-    private getCurrentLineStyle(): LineStyle {
-        const defaultLineStyle = this.options.lineStyle;
-        const currentLineOption = this.lineStyle || defaultLineStyle;
-        const lineStyle = currentLineOption.style;
-        const lineFormat = currentLineOption.format;
-        return {style: lineStyle, format: lineFormat};
     }
 
     private getConsoleMethodName(level: LoggerLevel): string {

@@ -1,6 +1,6 @@
-import { LoggerConfigImpl } from '../../logger.interfaces';
+import { LoggerConfigImpl } from '../../logger.impl';
 import { config } from '../../logger.config';
-import { BaseType, JsonStringifyConfigImpl } from './json-stringify.impl';
+import { BaseType, JSONKeyValue, JsonStringifyConfigImpl } from './json-stringify.impl';
 
 export class JsonStringify {
 
@@ -12,7 +12,7 @@ export class JsonStringify {
         this.searchPattern = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
     }
 
-    public stringify = (json: object | string, options: Partial<JsonStringifyConfigImpl> = {}): string[] => {
+    public stringify = (json: JSONKeyValue, options: Partial<JsonStringifyConfigImpl> = {}): string[] => {
         const stringifyConfig = { ...this.options.stringify, ...options };
         const { spaces, styles, enableColor, replacer } = stringifyConfig;
 

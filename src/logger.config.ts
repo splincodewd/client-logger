@@ -1,12 +1,6 @@
-import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from './logger.interfaces';
+import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from './logger.impl';
 import { JsonStringifyConfig } from './plugins/json-stringify/json-stringify.config';
-
-export enum FormatLine {
-    STRING = '%s',
-    NUMBER = '%d',
-    OBJECT = '%O',
-    DOM = '%o'
-}
+import { LineStyleConfig } from './plugins/css-parser/css-parser.config';
 
 export enum LABELS {
     TRACE = '[TRACE]:',
@@ -86,11 +80,11 @@ export const config: LoggerConfigImpl = {
     noop: () => {
     },
     labelUpperCase: true,
-    lineStyle: {
-        style: null,
-        format: FormatLine.STRING
-    },
+
+    // CssParser plugin options
+    lineStyle: LineStyleConfig,
 
     // JsonStringify plugin options
     stringify: JsonStringifyConfig
+
 };

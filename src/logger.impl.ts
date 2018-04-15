@@ -1,6 +1,7 @@
-import { FormatLine, LoggerGroupType, LoggerLevel } from './logger.config';
+import { LoggerGroupType, LoggerLevel } from './logger.config';
 import { ClientLogger } from './logger.class';
 import { JsonStringifyConfigImpl } from './plugins/json-stringify/json-stringify.impl';
+import { LineStyle } from './plugins/css-parser/css-parser.impl';
 
 export interface LoggerConfigImpl {
     minLevel: LoggerLevel;
@@ -13,11 +14,6 @@ export interface LoggerConfigImpl {
     configMethods: LoggerMethods;
     configGroups: LoggerGroupsMethods;
     stringify: JsonStringifyConfigImpl;
-}
-
-export interface LineStyle {
-    style: string;
-    format: FormatLine;
 }
 
 export interface LoggerLabels {
