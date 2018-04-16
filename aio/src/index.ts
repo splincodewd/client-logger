@@ -245,7 +245,7 @@ window['showExample8'] = function showExample8() {
 
 };
 
-window['showExample9'] = function showExample8() {
+window['showExample9'] = function showExample9() {
 
     const logger = new ClientLogger({
         lineStyle: {
@@ -268,6 +268,40 @@ window['showExample9'] = function showExample8() {
         .info(3.14); // 3.14
 
     logger.warn('global format with style!');
+
+};
+
+window['showExample10'] = function showExample10() {
+
+    const logger = new ClientLogger({
+        cssClassMap: {
+            'bold': 'font-weight: bold',
+            'line-through': 'text-decoration: line-through',
+            'code-sandbox': `
+                color: #666;
+                background: #f4f4f4;
+				border-left: 3px solid #f36d33;
+                font-family: monospace;
+                font-size: 15px;
+            `
+        }
+    });
+
+    logger.clear();
+
+    const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-css-classes';
+    logger.log(`See how usage: ${urlDocumentation}`);
+
+    logger.cssClass('bold line-through')
+        .log('JavaScript sucks', 'JavaScript is the best');
+
+    logger.cssClass('code-sandbox').log(
+        '\n   @Component({ .. })' +
+        '\n   export class AppComponent { .. }    \n\n'
+    );
+
+    logger.cssClass('bold line-through')
+        .debug('JavaScript sucks', 'JavaScript is the best');
 
 };
 

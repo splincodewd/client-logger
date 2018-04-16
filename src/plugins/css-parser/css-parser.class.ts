@@ -41,9 +41,23 @@ export class CssParser {
         return result;
     }
 
+    private static getCssClassKeys(classes: string): string[] {
+        return classes.split(/(\s+)/).filter((e) => e.trim().length > 0);
+    }
+
     public css(styleFormat: StyleKeyValue, format: FormatLine): this {
         const style = CssParser.stylesToString(styleFormat);
         this.lineStyle = {style, format};
+        return this;
+    }
+
+    public cssClass(classes: string): this {
+        const classList = CssParser.getCssClassKeys(classes);
+        classList.forEach((clazz) => {
+            let prevStyle = this.lineStyle.style || '';
+            prevStyle = prevStyle.length ? `${prevStyle};` : prevStyle;
+            this.lineStyle.style = `${prevStyle}${this.options.cssClassMap[clazz]}`.trim();
+        });
         return this;
     }
 

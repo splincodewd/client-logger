@@ -1,7 +1,7 @@
 import { LoggerGroupType, LoggerLevel } from './logger.config';
 import { ClientLogger } from './logger.class';
 import { JsonStringifyConfigImpl } from './plugins/json-stringify/json-stringify.impl';
-import { LineStyle } from './plugins/css-parser/css-parser.impl';
+import { LineStyle, StringMap } from './plugins/css-parser/css-parser.impl';
 
 export interface LoggerConfigImpl {
     minLevel: LoggerLevel;
@@ -14,6 +14,7 @@ export interface LoggerConfigImpl {
     configMethods: LoggerMethods;
     configGroups: LoggerGroupsMethods;
     stringify: JsonStringifyConfigImpl;
+    cssClassMap: StringMap;
 }
 
 export interface LoggerLabels {
@@ -40,6 +41,7 @@ export interface GroupParams {
 
 export interface LoggerGroupsPipeImpl extends Function {
     group(label: string, pipeline?: PipelineFn): ClientLogger;
+
     groupCollapsed(label: string, pipeline?: PipelineFn): ClientLogger;
 }
 

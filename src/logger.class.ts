@@ -1,6 +1,6 @@
-import { ConsoleOperation, ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
+import { ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
 import { config, LoggerGroupType, LoggerLevel } from './logger.config';
-import { CssParser} from './plugins/css-parser/css-parser.class';
+import { CssParser } from './plugins/css-parser/css-parser.class';
 import { Clipboard } from './plugins/clipboard.class';
 import { PluginMixin } from './logger.mixins';
 import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
@@ -28,6 +28,13 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
      * @description - Setting styles for the current output line
      */
     public css: (styleFormat: StyleKeyValue, format?: FormatLine) => this;
+
+    /**
+     * @param {string} classes - class list, example: class1 class2
+     * @return {this} - returns the current instance
+     * @description - Simplified work with styling a console line
+     */
+    public cssClass: (classes: string) => this;
 
     /**
      * @description - clearing Styles for the current output line
@@ -83,14 +90,8 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
         return this.loggerMethodsFactory<ConsoleOperationPipe>(LoggerLevel.DEBUG);
     }
 
-    public get log(): ConsoleOperation {
-        let operation = this.options.noop;
-        const canExecute: boolean = !(this.options.minLevel > LoggerLevel.INFO);
-        if (canExecute) {
-            operation = this.console.log.bind(this.console);
-        }
-
-        return operation;
+    public get log(): ConsoleOperationPipe {
+        return this.loggerMethodsFactory<ConsoleOperationPipe>(LoggerLevel.INFO, true);
     }
 
     public get info(): ConsoleOperationPipe {
@@ -189,25 +190,34 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
         return this;
     }
 
-    private loggerMethodsFactory<T>(level: LoggerLevel): T {
+    private loggerMethodsFactory<T>(level: LoggerLevel, withoutLabel: boolean = false): T {
         const canExecute = !(this.options.minLevel > level);
         let operation = this.options.noop;
 
         if (canExecute) {
             const label = this.getLabelText(level);
             const style = this.getStyleForLabel(level);
-            const methodName = this.getConsoleMethodName(level);
+            const methodName: string = withoutLabel ? 'log' : this.getConsoleMethodName(level);
             const consoleInstance = this.console;
             const consoleMethod = consoleInstance[methodName] || operation;
             const {style: lineStyle, format: lineFormat} = this.getCurrentLineStyle();
 
             if (lineStyle) {
                 this.clearCssCurrentLine();
-                const labelLine = `${label} %c${lineFormat}`;
-                operation = consoleMethod.bind(consoleInstance, labelLine, style, lineStyle);
+
+                if (withoutLabel) {
+                    operation = consoleMethod.bind(consoleInstance, '%c%s', lineStyle);
+                } else {
+                    const labelLine = `${label} %c${lineFormat}`;
+                    operation = consoleMethod.bind(consoleInstance, labelLine, style, lineStyle);
+                }
+
+            } else if (withoutLabel) {
+                operation = consoleMethod.bind(consoleInstance);
             } else {
                 operation = consoleMethod.bind(consoleInstance, label, style);
             }
+
         }
 
         return this.defineProperties(level, operation);

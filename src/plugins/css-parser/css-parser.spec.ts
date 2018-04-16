@@ -1,4 +1,4 @@
-import { LoggerInjector } from '../../../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../../../helpers/converter';
 import { ClientLogger, LoggerLevel } from '../../../index';
 import { expect } from 'chai';
 import 'mocha';
@@ -11,6 +11,12 @@ const clientLogger = new ClientLogger({
     // and do not want the data to be output
     // during testing, we make the monkey patching
     consoleInstance: myConsoleStream,
+
+    cssClassMap: {
+        'class-1': 'font-weight: bold',
+        'class-2': 'text-decoration: line-through',
+        'class-3': 'color: #666'
+    }
 
 });
 
@@ -76,6 +82,24 @@ describe('[TEST]: Check local console line style', () => {
             style: null,
             format: '%s'
         });
+
+    });
+
+    it('Add css class', () => {
+
+        clientLogger.clear();
+
+        clientLogger.cssClass('class-1 class-3').log('Hello world');
+        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            {[TestLoggerLineType.LOG]: ['%c%s', 'font-weight: bold;color: #666', 'Hello world']},
+        ));
+
+        clientLogger.clear();
+
+        clientLogger.cssClass('class-2').debug('Test 2');
+        expect(LoggerInjector.stack()).to.equal(LoggerInjector.createStack(
+            {[TestLoggerLineType.DEBUG]: ['text-decoration: line-through', 'Test 2']},
+        ));
 
     });
 

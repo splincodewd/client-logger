@@ -42,6 +42,7 @@ const logger = new ClientLogger();
   * [Set logging level (worked in single or groups)](#example-set-minimal-logging-level)
   * [Customization style line](#example-set-style-line)
   * [Customization global style line](#example-set-global-style-line)
+  * [Add css classes](#example-css-classes)
   * [Output pretty json `stringify`](#example-pretty-json)
   * [Copy `json, object, text` to clipboard](#example-clipboard)
   * [Configuration `ClientLogger`](#example-full-configurations)
@@ -329,6 +330,40 @@ logger.warn('global format with style!');
 
 ![](https://habrastorage.org/webt/tt/mo/ki/ttmokit6fznu6-bce48wqsgmcys.png)
 
+### Example: CSS classes
+
+```ts
+import { ClientLogger } from '@splincode/client-logger';
+
+const logger = new ClientLogger({
+    cssClassMap: {
+        'bold': 'font-weight: bold',
+        'line-through': 'text-decoration: line-through',
+        'code-sandbox': `
+            color: #666;
+            background: #f4f4f4;
+            border-left: 3px solid #f36d33;
+            font-family: monospace;
+            font-size: 15px;
+        `
+    }
+});
+
+logger.cssClass('bold line-through')
+    .log('JavaScript sucks', 'JavaScript is the best');
+
+logger.cssClass('code-sandbox').log(
+    '\n   @Component({ .. })' +
+    '\n   export class AppComponent { .. }    \n\n'
+);
+
+logger.cssClass('bold line-through')
+    .debug('JavaScript sucks', 'JavaScript is the best');
+        
+```
+
+![](https://habrastorage.org/webt/wf/yr/jf/wfyrjfp5uv5ucbhhdmimlrcvazg.png)
+
 ### Example: pretty json
 
 ```typescript
@@ -480,7 +515,7 @@ npm test
 - [x] Clipboard data
 - [x] Plugin system architecture (mixins)
 - [x] Set global style
-- [ ] Added css classes
+- [x] Added css classes
 - [ ] Format output console
 - [ ] Dependency Injection for Angular
 - [ ] Switch enable/disable default console output

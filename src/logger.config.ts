@@ -1,6 +1,6 @@
 import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from './logger.impl';
 import { JsonStringifyConfig } from './plugins/json-stringify/json-stringify.config';
-import { LineStyleConfig } from './plugins/css-parser/css-parser.config';
+import { CssClassStyleMap, LineStyleConfig } from './plugins/css-parser/css-parser.config';
 
 export enum LABELS {
     TRACE = '[TRACE]:',
@@ -83,6 +83,9 @@ export const config: LoggerConfigImpl = {
 
     // CssParser plugin options
     lineStyle: LineStyleConfig,
+
+    // Default css classes
+    cssClassMap: CssClassStyleMap,
 
     // JsonStringify plugin options
     stringify: JsonStringifyConfig
