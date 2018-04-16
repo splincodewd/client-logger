@@ -1,6 +1,6 @@
 import { ConsoleOperation, ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
 import { config, LoggerGroupType, LoggerLevel } from './logger.config';
-import { CssParser} from './plugins/css-parser/css-parser.class';
+import { CssParser } from './plugins/css-parser/css-parser.class';
 import { Clipboard } from './plugins/clipboard.class';
 import { PluginMixin } from './logger.mixins';
 import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
