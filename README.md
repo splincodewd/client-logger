@@ -257,32 +257,6 @@ logger.trace.group('A')
 
 ![](https://habrastorage.org/webt/ca/rb/ub/carbube17g4h42ye2fjcvstcw_c.png)
 
-Set level in constructor ClientLogger
-
-```typescript
-import { ClientLogger, LoggerLevel } from '@splincode/client-logger';
-
-const production = true;
-const level = production ? LoggerLevel.INFO : LoggerLevel.ALL;
-
-const logger = new ClientLogger({ minLevel: level });
-logger.log('Set current logger level: ', LoggerLevel[level]);
-
-/**
- * OR:
- * const logger = new ClientLogger();
- * logger.level = minLevel;
- *
- */
-
-logger.log('custom output'); // not execute
-logger.trace('trace is worked'); // not execute
-logger.debug('debug is worked'); // not execute
-logger.info('info is worked'); // not execute
-logger.warn('warn is worked');
-logger.error('error is worked');
-```
-
 ### Example: set style line
 
 ```typescript
