@@ -14,36 +14,43 @@ import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/c
 export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
 
     /**
+     * @description - improved JSON.stringify with color palette
+     * @external JsonStringify
      * @param {JSONKeyValue} json - JSON by string or object structure
      * @param {Partial<JsonStringifyConfigImpl>} options - option for print
      * @return {string[]} - the method returns an array of strings to output to the console.
-     * @description - improved JSON.stringify with color palette
      */
     public stringify: (json: JSONKeyValue, options?: Partial<JsonStringifyConfigImpl>) => string[];
 
     /**
+     * @description - setting styles for the current output line
+     * @external CssParser
+     * @this ClientLogger
      * @param {StyleKeyValue} styleFormat - css structure as an object or string
      * @param {FormatLine} format - way to format the string (%s, %d, %f, %o, %O)
      * @return {this} - returns the current instance
-     * @description - setting styles for the current output line
      */
     public css: (styleFormat: StyleKeyValue, format?: FormatLine) => this;
 
     /**
+     * @description - simplified work with styling a console line
+     * @external CssParser
+     * @this ClientLogger
      * @param {string} classes - class list, example: class1 class2
      * @return {this} - returns the current instance
-     * @description - simplified work with styling a console line
      */
     public cssClass: (classes: string) => this;
 
     /**
      * @description - clearing styles for the current output line
+     * @external CssParser
      * @return {void}
      */
     public clearCssCurrentLine: () => void;
 
     /**
      * @description - getting local string styles
+     * @external CssParser
      * @return {LineStyle} - current line style and format
      */
     public getCurrentLineStyle: () => LineStyle;
