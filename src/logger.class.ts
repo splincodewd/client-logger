@@ -25,19 +25,19 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
      * @param {StyleKeyValue} styleFormat - css structure as an object or string
      * @param {FormatLine} format - way to format the string (%s, %d, %f, %o, %O)
      * @return {this} - returns the current instance
-     * @description - Setting styles for the current output line
+     * @description - setting styles for the current output line
      */
     public css: (styleFormat: StyleKeyValue, format?: FormatLine) => this;
 
     /**
      * @param {string} classes - class list, example: class1 class2
      * @return {this} - returns the current instance
-     * @description - Simplified work with styling a console line
+     * @description - simplified work with styling a console line
      */
     public cssClass: (classes: string) => this;
 
     /**
-     * @description - clearing Styles for the current output line
+     * @description - clearing styles for the current output line
      * @return {void}
      */
     public clearCssCurrentLine: () => void;
