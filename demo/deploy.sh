@@ -9,7 +9,7 @@ git config --global user.name "Travis CI"
 
 # deploy
 echo 'Publishing...'
-cd aio && cd output
+cd demo && cd dist
 git init
 GIT_TRACE=1 git add .
 GIT_TRACE=1 git commit -m "Deploy to Github Pages"

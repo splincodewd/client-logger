@@ -7,8 +7,8 @@ install:
 script:
   - npm run lint
   - npm test
-  - npm run aio:build
+  - npm run demo:build
 after_success:
   - npm run coverage
-  - chmod +x aio/deploy.sh
-  - bash aio/deploy.sh
+  - chmod +x demo/deploy.sh
+  - bash demo/deploy.sh
