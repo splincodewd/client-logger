@@ -1,7 +1,6 @@
-import {ClientLogger, LoggerLevel} from "../../../../index";
-import {FormatLine} from "../../../../src/plugins/css-parser/css-parser.impl";
 import {MyConsole} from "./MyConsole";
 import {greatBigJSON} from "./big.json";
+import {ClientLogger, LoggerLevel, FormatLine} from "@splincode/client-logger";
 
 window['testLogger'] = new ClientLogger(); // for testable in console runtime
 
