@@ -10,6 +10,7 @@ git config --global user.name "Travis CI"
 # deploy github pages
 echo 'Github dist publishing...'
 npm run prepublishOnly
+cp package.json README.md lib/
 cd lib
 git init
 GIT_TRACE=1 git add .
