@@ -21,7 +21,7 @@ test/
 doc/
 dist/
 src/
-examples/
+demo/
 
 # others
 index.html

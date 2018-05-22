@@ -23,7 +23,8 @@
     "@angular/router": "^5.2.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.5.6",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "@splincode/client-logger": "git+https://github.com/splincodewd/client-logger.git"
   },
   "devDependencies": {
     "@angular/cli": "~1.7.0",

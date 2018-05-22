@@ -10,7 +10,12 @@ script:
   - npm run demo:build
 after_success:
   - npm run coverage
+  # deploy site
   - chmod +x demo/deploy.sh
   - bash demo/deploy.sh
+  # deploy stack blitz repo
   - chmod +x demo/stackblitz.sh
   - bash demo/stackblitz.sh
+  # deploy dist
+  - chmod +x demo/dist-deploy.sh
+  - bash demo/dist-deploy.sh
