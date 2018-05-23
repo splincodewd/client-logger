@@ -26,14 +26,19 @@ function git_push() {
 if [ "$DEPLOY_TARGET" = "$target_gp" ]
 then
     echo "[STAGE] = $target_gp"
+    cd demo && cd dist
 elif [ "$DEPLOY_TARGET" = "$target_sb" ]
 then
     echo "[STAGE] = $target_sb"
+    cd demo
 elif [ "$DEPLOY_TARGET" = "$target_dist" ]
 then
     echo "[STAGE] = $target_dist"
     repo="${repo}-dist"
     branch="master"
+    npm run prepublishOnly
+    cp package.json README.md lib/
+    cd lib
 fi;
 
 git_config $email
