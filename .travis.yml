@@ -12,4 +12,3 @@ after_success:
   - npm run coverage
   - chmod +x deploy.sh
   - export DEPLOY_TARGET=gh-pages && bash deploy.sh
-  - export DEPLOY_TARGET=dist && bash deploy.sh
