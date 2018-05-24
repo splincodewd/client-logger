@@ -15,23 +15,18 @@ function git_config() {
   git config --global user.name "Travis CI"
 }
 
-function git_commit_website_files() {
-  git checkout -b $1
+function git_init_push() {
+  rm -rf .git/
+  git init
   git add .
-  git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
-}
-
-function git_push() {
-  git remote add origin-pages https://${GITHUB_TOKEN}@github.com/$1.git > /dev/null 2>&1
-  git push --quiet --set-upstream origin-pages $2
+  git remote add production https://${GITHUB_TOKEN}@github.com/splincodewd/$1.git
+  git push production master --force
 }
 
 git_config $email
 
 cd $current && cd demo/dist
-git_commit_website_files $DEPLOY_TARGET_REPO_GH_PAGES
-git_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
+git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
 
 cd $current && cd demo/
-git_commit_website_files $GITHUB_REPO
 git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_DIST
