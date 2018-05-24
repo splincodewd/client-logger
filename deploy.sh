@@ -16,7 +16,6 @@ function git_config() {
 }
 
 function git_init_push() {
-  rm -rf .git/
   git init
   git add .
   git commit -m "deployed to github"
@@ -25,8 +24,8 @@ function git_init_push() {
 
 git_config $email
 
-cd $current && cd demo/dist
+cd $current && rm -rf .git/ && cd demo/dist
 git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
 
-cd $current && cd demo/
+rm -rf .git/ && cd $current && cd demo/
 git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_DIST

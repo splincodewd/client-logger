@@ -2,7 +2,7 @@
 
 > Lightweight and configurable JavaScript logger (written on TypeScript)
 
- [![Build Status](https://travis-ci.org/splincodewd/client-logger.svg?branch=master)](https://travis-ci.org/splincodewd/client-logger) [![npm version](https://badge.fury.io/js/%40splincode%2Fclient-logger.svg)](https://badge.fury.io/js/%40splincode%2Fclient-logger) [![dependencies Status](https://david-dm.org/splincodewd/client-logger/status.svg)](https://david-dm.org/splincodewd/client-logger) [![Coverage Status](https://coveralls.io/repos/github/splincodewd/client-logger/badge.svg?branch=master)](https://coveralls.io/github/splincodewd/client-logger?branch=master) [![Coverage Status](https://img.shields.io/npm/dt/@splincode/client-logger.svg)](https://npm-stat.com/charts.html?package=%40splincode%2Fclient-logger&from=2017-01-12)
+ [![Build Status](https://travis-ci.org/splincodewd/client-logger.svg?branch=master)](https://travis-ci.org/splincodewd/client-logger) [![npm version](https://badge.fury.io/js/%40splincode%2Fclient-logger.svg)](https://badge.fury.io/js/%40splincode%2Fclient-logger) [![dependencies Status](https://david-dm.org/splincodewd/client-logger/status.svg)](https://david-dm.org/splincodewd/client-logger) [![Coverage Status](https://coveralls.io/repos/github/splincodewd/client-logger/badge.svg?branch=master)](https://coveralls.io/github/splincodewd/client-logger?branch=master) [![npm-stat](https://img.shields.io/npm/dt/@splincode/client-logger.svg)](https://npm-stat.com/charts.html?package=%40splincode%2Fclient-logger&from=2017-01-12)
 
 ## Installation
 
