@@ -6,6 +6,8 @@ branches:
     except:
     - sandbox
     - gh-pages
+    only:
+    - master
 install:
   - npm install
 script:
