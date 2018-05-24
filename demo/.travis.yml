@@ -6,3 +6,5 @@ install:
   - npm install
 script:
   - npm run build
+  - chmod +x deploy.sh
+  - export DEPLOY_TARGET_BRANCH=gh-pages && export BASE_PATH=dist && bash deploy.sh

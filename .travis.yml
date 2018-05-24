@@ -10,5 +10,5 @@ script:
 after_success:
   - npm run coverage
   - chmod +x deploy.sh
-  - cd demo/dist && export DEPLOY_TARGET_BRANCH=gh-pages && bash deploy.sh
-  - cd demo/ && export DEPLOY_TARGET_BRANCH=demo && bash deploy.sh
+  - cp deploy.sh demo/
+  - export DEPLOY_TARGET_BRANCH=demo && export BASE_PATH=demo && bash deploy.sh

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo '[DEPLOY_TARGET_BRANCH] = '${DEPLOY_TARGET_BRANCH}''
-current=`pwd`
+cd $BASE_PATH
 
 email="omaxphp@yandex.ru"
 
