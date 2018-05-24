@@ -19,8 +19,8 @@ function git_init_push() {
   rm -rf .git/
   git init
   git add .
-  git remote add production https://${GITHUB_TOKEN}@github.com/$1.git
-  git push production master --force
+  git commit -m "deployed to github"
+  git push --force --quiet https://${GITHUB_TOKEN}@github.com/$1.git master:$2
 }
 
 git_config $email
