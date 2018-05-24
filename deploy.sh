@@ -3,6 +3,7 @@
 echo '[DEPLOY_TARGET_REPO_GH_PAGES] = '${DEPLOY_TARGET_REPO_GH_PAGES}''
 echo '[DEPLOY_TARGET_REPO_DIST] = '${DEPLOY_TARGET_REPO_DIST}''
 pwd && sleep 10
+current=`pwd`
 
 email="omaxphp@yandex.ru"
 repo="${GITHUB_REPO}"
@@ -14,7 +15,7 @@ function git_config() {
   git config --global user.name "Travis CI"
 }
 
-function git_push() {
+function git_init_push() {
   echo "https://${GITHUB_TOKEN}@github.com/$1.git" master:$2
   # initial
   git init
@@ -26,8 +27,8 @@ function git_push() {
 
 git_config $email
 
-cd demo
-git_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
+cd $current && cd demo/dist
+git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
 
-cd dist
-git_push $GITHUB_REPO $DEPLOY_TARGET_REPO_DIST
+cd $current && cd demo/
+git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_DIST
