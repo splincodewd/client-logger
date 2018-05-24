@@ -19,7 +19,7 @@ function git_init_push() {
   rm -rf .git/
   git init
   git add .
-  git remote add production https://${GITHUB_TOKEN}@github.com/splincodewd/$1.git
+  git remote add production https://${GITHUB_TOKEN}@github.com/$1.git
   git push production master --force
 }
 
