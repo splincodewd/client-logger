@@ -5,8 +5,7 @@
     "main": "./lib/index.js",
     "typings": "./lib/index.d.ts",
     "scripts": {
-        "prepublishOnly": "tsc && npm run prepublishOnlyFileDemo",
-        "prepublishOnlyFileDemo": "cp package.json lib/ && cp lib -r demo/",
+        "prepublishOnly": "tsc",
         "compile": "ts-node src/logger.ts",
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "start": "cd demo && npm install && npm run start",
@@ -14,11 +13,11 @@
         "mocha": "mocha -r ts-node/register test/*/*.test.ts",
         "coverage": "nyc report --reporter=text-lcov | coveralls",
         "git:release": "git push origin && git push origin --tags",
-        "demo:build": "npm run prepublishOnly && cd demo && npm install && npm run build",
-        "npm:release": "git add . && git commit -m \"chore(repo): updated CHANGELOG.md\"",
         "release:major": "changelog -M && npm run npm:release && npm version major && npm publish && npm run git:release",
         "release:minor": "changelog -m && npm run npm:release && npm version minor && npm publish && npm run git:release",
-        "release:patch": "changelog -p && npm run npm:release && npm version patch && npm publish && npm run git:release"
+        "release:patch": "changelog -p && npm run npm:release && npm version patch && npm publish && npm run git:release",
+        "npm:release": "git add . && git commit -m \"chore(repo): updated CHANGELOG.md\"",
+        "npm:next": "npm publish --tag next"
     },
     "nyc": {
         "include": [
