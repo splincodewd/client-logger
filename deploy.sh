@@ -1,13 +1,9 @@
 #!/bin/bash
 
-echo '[DEPLOY_TARGET_REPO_GH_PAGES] = '${DEPLOY_TARGET_REPO_GH_PAGES}''
-echo '[DEPLOY_TARGET_REPO_DIST] = '${DEPLOY_TARGET_REPO_DIST}''
-pwd && sleep 10
+echo '[DEPLOY_TARGET_BRANCH] = '${DEPLOY_TARGET_BRANCH}''
 current=`pwd`
 
 email="omaxphp@yandex.ru"
-repo="${GITHUB_REPO}"
-branch="${DEPLOY_TARGET}"
 
 function git_config() {
   echo "[GIT CONFIGURATION] email = $1";
@@ -23,9 +19,4 @@ function git_init_push() {
 }
 
 git_config $email
-
-cd $current && cd demo/
-git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_DIST
-
-cd $current && && cd demo/dist
-git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
+git_init_push $GITHUB_REPO $DEPLOY_TARGET_BRANCH
