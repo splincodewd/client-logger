@@ -27,6 +27,8 @@ function git_init_push() {
 
 git_config $email
 
+cp .travis.yml demo/
+
 cd $current && cd demo/dist
 git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
 
