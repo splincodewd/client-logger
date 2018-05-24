@@ -18,14 +18,14 @@ function git_config() {
 function git_init_push() {
   git init
   git add .
-  git commit -m "deployed to github $1 $2"
+  git commit -m "Deployed to github [REPO - $1, BRUNCH - $2]"
   git push --force --quiet https://${GITHUB_TOKEN}@github.com/$1.git master:$2
 }
 
 git_config $email
 
-cd $current && rm -rf .git/ && cd demo/dist
-git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
-
-rm -rf .git/ && cd $current && cd demo/
+cd $current && cd demo/
 git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_DIST
+
+cd $current && && cd demo/dist
+git_init_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES

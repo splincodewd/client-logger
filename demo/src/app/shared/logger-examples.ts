@@ -1,5 +1,5 @@
 import {MyConsole} from "./MyConsole";
-import {greatBigJSON} from "./big.json";
+import {greatBigJSON} from "./entity";
 import {ClientLogger, LoggerLevel, FormatLine} from '@splincode/client-logger';
 
 window['testLogger'] = new ClientLogger(); // for testable in console runtime
