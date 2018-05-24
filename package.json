@@ -1,6 +1,6 @@
 {
     "name": "@splincode/client-logger",
-    "version": "1.0.0-0",
+    "version": "1.0.0-1",
     "description": "Lightweight and configurable JavaScript logger (written on TypeScript)",
     "main": "./lib/index.js",
     "typings": "./lib/index.d.ts",
@@ -16,7 +16,7 @@
         "release:major": "changelog -M && npm run npm:release && npm version major && npm publish && npm run git:release",
         "release:minor": "changelog -m && npm run npm:release && npm version minor && npm publish && npm run git:release",
         "release:patch": "changelog -p && npm run npm:release && npm version patch && npm publish && npm run git:release",
-        "release:next": "npm version premajor && npm run npm:next",
+        "release:next": "npm run npm:release && npm version premajor npm run git:release",
         "npm:release": "git add . && git commit -m \"chore(repo): updated CHANGELOG.md\"",
         "npm:next": "npm publish --tag next"
     },
