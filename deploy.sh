@@ -18,7 +18,7 @@ function git_config() {
 function git_init_push() {
   git init
   git add .
-  git commit -m "deployed to github"
+  git commit -m "deployed to github $1 $2"
   git push --force --quiet https://${GITHUB_TOKEN}@github.com/$1.git master:$2
 }
 

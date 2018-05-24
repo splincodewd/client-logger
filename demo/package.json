@@ -4,8 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "prerun": "cd .. && npm run prepublishOnly && cd demo/ && npm i",
-    "start": "npm run prerun && ng serve",
+    "start": "ng serve",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
