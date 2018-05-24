@@ -11,6 +11,4 @@ script:
 after_success:
   - npm run coverage
   - chmod +x deploy.sh
-  - export DEPLOY_TARGET_REPO_DIST=sandbox
-  - export DEPLOY_TARGET_REPO_GH_PAGES=gh-pages
-  - bash deploy.sh > /dev/null
+  - export DEPLOY_TARGET_REPO_DIST=sandbox && export DEPLOY_TARGET_REPO_GH_PAGES=gh-pages && bash deploy.sh
