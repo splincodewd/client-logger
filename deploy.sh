@@ -1,8 +1,10 @@
 #!/bin/bash
 
-echo '[DEPLOY_TARGET] = '${DEPLOY_TARGET}''
+echo '[DEPLOY_TARGET_REPO_GH_PAGES] = '${DEPLOY_TARGET_REPO_GH_PAGES}''
+echo '[DEPLOY_TARGET_REPO_DIST] = '${DEPLOY_TARGET_REPO_DIST}''
+pwd && sleep 10
+
 email="omaxphp@yandex.ru"
-target_gp="gh-pages"
 repo="${GITHUB_REPO}"
 branch="${DEPLOY_TARGET}"
 
@@ -21,11 +23,11 @@ function git_push() {
   GIT_TRACE=1 git push --force --quiet "https://${GITHUB_TOKEN}@github.com/$1.git" master:$2 > /dev/null 2>&1
 }
 
-if [ "$DEPLOY_TARGET" = "$target_gp" ]
-then
-    echo "[STAGE] = $target_gp"
-    cd demo && cd dist
-fi;
 
 git_config $email
-git_push $repo $branch
+
+cd demo
+git_push $GITHUB_REPO $DEPLOY_TARGET_REPO_GH_PAGES
+
+cd dist
+git_push $GITHUB_REPO $DEPLOY_TARGET_REPO_DIST
