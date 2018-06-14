@@ -6,7 +6,6 @@
     "typings": "./lib/index.d.ts",
     "scripts": {
         "prepublishOnly": "tsc",
-        "compile": "ts-node src/logger.ts",
         "lint": "tslint -c tslint.json 'src/**/*.ts'",
         "start": "cd demo && npm install && npm run start",
         "test": "nyc --reporter=html --reporter=text mocha",
@@ -57,8 +56,6 @@
     },
     "homepage": "https://github.com/splincodewd/client-logger#readme",
     "devDependencies": {
-        "@types/chai": "^4.1.3",
-        "@types/mocha": "^2.2.48",
         "chai": "^4.1.2",
         "coveralls": "^3.0.1",
         "generate-changelog": "^1.7.1",
@@ -67,8 +64,7 @@
         "ts-node": "^4.1.0",
         "tslint": "^5.10.0",
         "tslint-config-standard": "^7.0.0",
-        "typescript": "^2.8.3",
-        "typings": "^2.1.1"
+        "typescript": "^2.8.3"
     },
     "dependencies": {}
 }
