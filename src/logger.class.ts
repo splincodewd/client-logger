@@ -11,7 +11,7 @@ import { ConsoleBaseApiImpl } from './plugins/console-base-api/console-base-api.
 
 export class ClientLogger
     extends aggregation(ConsoleBaseAPI, JsonStringify, CssParser)
-    implements JsonStringifyImpl, CssParserImpl, ConsoleBaseApiImpl {
+    implements ConsoleBaseApiImpl, JsonStringifyImpl, CssParserImpl {
 
     /**
      * @description - initial runtime static configuration
