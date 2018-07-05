@@ -56,6 +56,7 @@
     },
     "homepage": "https://github.com/splincodewd/client-logger#readme",
     "devDependencies": {
+        "benchmark": "^2.1.4",
         "chai": "^4.1.2",
         "coveralls": "^3.0.1",
         "generate-changelog": "^1.7.1",
