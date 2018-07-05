@@ -8,10 +8,13 @@ tslint.json
 typings.json
 typings
 
+.github/
 *.log
 *.tgz
 *.yml
 *.iml
+*.opts
+*.sh
 
 # directories
 node_modules/
