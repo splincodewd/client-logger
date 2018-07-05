@@ -5,9 +5,9 @@ import { Clipboard } from './plugins/clipboard.class';
 import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
 import { JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl } from './plugins/json-stringify/json-stringify.impl';
 import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/css-parser/css-parser.impl';
-import { ConsoleBaseApiImpl } from './plugins/console-base-api/console-base-api.impl';
 import { ConsoleBaseAPI } from './plugins/console-base-api/console-base-api.class';
 import { aggregation } from './utils/aggregation';
+import { ConsoleBaseApiImpl } from './plugins/console-base-api/console-base-api.impl';
 
 export class ClientLogger
     extends aggregation(ConsoleBaseAPI, JsonStringify, CssParser)
@@ -63,7 +63,7 @@ export class ClientLogger
     private executePipesGroup: boolean = true;
 
     constructor(options: Partial<LoggerConfigImpl> = {}) {
-        super(ClientLogger.initConfiguraton(options));
+        super(ClientLogger.initConfiguration(options));
     }
 
     public get console(): Console {
@@ -110,9 +110,8 @@ export class ClientLogger
         return this.console.clear.bind(this.console);
     }
 
-    private static initConfiguraton(options): LoggerConfigImpl {
-        const config = {...GlobalConfig, ...options};
-        this.config = config;
+    private static initConfiguration(options: Partial<LoggerConfigImpl> = {}): LoggerConfigImpl {
+        this.config = { ...GlobalConfig, ...options };
         return this.config;
     }
 

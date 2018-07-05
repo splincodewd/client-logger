@@ -36,7 +36,7 @@
       "spaces",
       4
     ],
-    "interface-over-type-literal": true,
+    "interface-over-type-literal": false,
     "only-arrow-functions": false,
     "label-position": true,
     "max-line-length": [

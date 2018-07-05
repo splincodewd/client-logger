@@ -88,6 +88,8 @@ export const config: LoggerConfigImpl = {
     cssClassMap: CssClassStyleMap,
 
     // JsonStringify plugin options
-    stringify: JsonStringifyConfig
+    stringify: JsonStringifyConfig,
+
+    plugins: []
 
 };
