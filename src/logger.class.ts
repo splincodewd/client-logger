@@ -1,12 +1,5 @@
-import {
-    ConsoleOperationPipe,
-    GroupParams,
-    LoggerColors,
-    LoggerConfigImpl,
-    LoggerLabels,
-    PipelineFn
-} from './logger.impl';
-import { config, LoggerGroupType, LoggerLevel } from './logger.config';
+import { ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
+import { config as GlobalConfig, LoggerGroupType, LoggerLevel } from './logger.config';
 import { CssParser } from './plugins/css-parser/css-parser.class';
 import { Clipboard } from './plugins/clipboard.class';
 import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
@@ -14,17 +7,13 @@ import { JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl } from './plug
 import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/css-parser/css-parser.impl';
 import { ConsoleBaseApiImpl } from './plugins/console-base-api/console-base-api.impl';
 import { ConsoleBaseAPI } from './plugins/console-base-api/console-base-api.class';
-import { LoggerConfigurableImpl, LoggerConfigurable } from './utils/configurable';
-import { PluginConnect } from './utils/plugin-connect';
+import { ClassAggregation } from './utils/aggregation';
 
-@LoggerConfigurable(config)
-@PluginConnect([
-    ConsoleBaseAPI,
-    JsonStringify,
-    CssParser
-])
-export class ClientLogger implements LoggerConfigurableImpl, JsonStringifyImpl, CssParserImpl, ConsoleBaseApiImpl {
+export class ClientLogger
+    extends ClassAggregation(ConsoleBaseAPI, JsonStringify, CssParser)
+    implements JsonStringifyImpl, CssParserImpl, ConsoleBaseApiImpl {
 
+    public static config: LoggerConfigImpl;
     /**
      * @description - improved JSON.stringify with color palette
      * @external JsonStringify
@@ -33,7 +22,6 @@ export class ClientLogger implements LoggerConfigurableImpl, JsonStringifyImpl, 
      * @return {string[]} - the method returns an array of strings to output to the console.
      */
     public stringify: (json: JSONKeyValue, options?: Partial<JsonStringifyConfigImpl>) => string[];
-
     /**
      * @description - setting styles for the current output line
      * @external CssParser
@@ -43,7 +31,6 @@ export class ClientLogger implements LoggerConfigurableImpl, JsonStringifyImpl, 
      * @return {this} - returns the current instance
      */
     public css: (styleFormat: StyleKeyValue, format?: FormatLine) => this;
-
     /**
      * @description - simplified work with styling a console line
      * @external CssParser
@@ -52,26 +39,27 @@ export class ClientLogger implements LoggerConfigurableImpl, JsonStringifyImpl, 
      * @return {this} - returns the current instance
      */
     public cssClass: (classes: string) => this;
-
     /**
      * @description - clearing styles for the current output line
      * @external CssParser
      * @return {void}
      */
     public clearCssCurrentLine: () => void;
-
     /**
      * @description - getting local string styles
      * @external CssParser
      * @return {LineStyle} - current line style and format
      */
     public getCurrentLineStyle: () => LineStyle;
-
     public clipboard: Clipboard = new Clipboard();
     public readonly level: LoggerLevel;
     public readonly config: LoggerConfigImpl;
     private countOpenGroup: number = 0;
     private executePipesGroup: boolean = true;
+
+    constructor(options: Partial<LoggerConfigImpl> = {}) {
+        super(ClientLogger.initConfiguraton(options));
+    }
 
     public get console(): Console {
         return this.config.consoleInstance;
@@ -115,6 +103,12 @@ export class ClientLogger implements LoggerConfigurableImpl, JsonStringifyImpl, 
 
     public get clear() {
         return this.console.clear.bind(this.console);
+    }
+
+    private static initConfiguraton(options): LoggerConfigImpl {
+        const config = {...GlobalConfig, ...options};
+        this.config = config;
+        return this.config;
     }
 
     public setLabels(labels: LoggerLabels): void {
