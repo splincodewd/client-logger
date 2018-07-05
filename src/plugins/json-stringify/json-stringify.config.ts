@@ -1,6 +1,8 @@
 import { JsonStringifyConfigImpl } from './json-stringify.impl';
 import { BaseType } from './json-stringify.impl';
 
+export const SearchPattern = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
+
 export const JsonStringifyConfig: JsonStringifyConfigImpl = {
     enableColor: false, // bug chrome 65+, default: false
     spaces: '\t',

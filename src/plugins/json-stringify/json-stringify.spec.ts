@@ -1,5 +1,5 @@
 import { ClientLogger } from '../../../index';
-import { LoggerInjector, TestLoggerLineType } from '../../../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../../utils/spec-helpers/converter';
 import { expect } from 'chai';
 import 'mocha';
 import { BaseType } from './json-stringify.impl';

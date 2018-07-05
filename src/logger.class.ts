@@ -1,17 +1,29 @@
-import { ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
+import {
+    ConsoleOperationPipe,
+    GroupParams,
+    LoggerColors,
+    LoggerConfigImpl,
+    LoggerLabels,
+    PipelineFn
+} from './logger.impl';
 import { config, LoggerGroupType, LoggerLevel } from './logger.config';
 import { CssParser } from './plugins/css-parser/css-parser.class';
 import { Clipboard } from './plugins/clipboard.class';
-import { PluginMixin } from './logger.mixins';
 import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
 import { JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl } from './plugins/json-stringify/json-stringify.impl';
 import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/css-parser/css-parser.impl';
+import { ConsoleBaseApiImpl } from './plugins/console-base-api/console-base-api.impl';
+import { ConsoleBaseAPI } from './plugins/console-base-api/console-base-api.class';
+import { LoggerConfigurableImpl, LoggerConfigurable } from './utils/configurable';
+import { PluginConnect } from './utils/plugin-connect';
 
-@PluginMixin([
+@LoggerConfigurable(config)
+@PluginConnect([
+    ConsoleBaseAPI,
     JsonStringify,
     CssParser
 ])
-export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
+export class ClientLogger implements LoggerConfigurableImpl, JsonStringifyImpl, CssParserImpl, ConsoleBaseApiImpl {
 
     /**
      * @description - improved JSON.stringify with color palette
@@ -56,29 +68,17 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     public getCurrentLineStyle: () => LineStyle;
 
     public clipboard: Clipboard = new Clipboard();
-    private options: LoggerConfigImpl;
-
+    public readonly level: LoggerLevel;
+    public readonly config: LoggerConfigImpl;
     private countOpenGroup: number = 0;
     private executePipesGroup: boolean = true;
 
-    constructor(options: Partial<LoggerConfigImpl> = {}) {
-        this.options = {...config, ...options};
-    }
-
-    public get level(): LoggerLevel {
-        return this.options.minLevel;
-    }
-
-    public set level(logLevel: LoggerLevel) {
-        this.options.minLevel = logLevel;
-    }
-
     public get console(): Console {
-        return this.options.consoleInstance;
+        return this.config.consoleInstance;
     }
 
     public set console(console: Console) {
-        this.options.consoleInstance = console;
+        this.config.consoleInstance = console;
     }
 
     public get table() {
@@ -118,13 +118,13 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     }
 
     public setLabels(labels: LoggerLabels): void {
-        const configLabel = this.options.configLabel;
-        this.options.configLabel = {...configLabel, ...labels};
+        const configLabel = this.config.configLabel;
+        this.config.configLabel = {...configLabel, ...labels};
     }
 
     public setColors(colors: LoggerColors): void {
-        const configColor = this.options.configColor;
-        this.options.configColor = {...configColor, ...colors};
+        const configColor = this.config.configColor;
+        this.config.configColor = {...configColor, ...colors};
     }
 
     public pipe(...pipelines: PipelineFn[]): ClientLogger {
@@ -138,7 +138,7 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     public close(): ClientLogger {
         if (this.executePipesGroup) {
             this.countOpenGroup--;
-            this.options.consoleInstance.groupEnd();
+            this.config.consoleInstance.groupEnd();
         }
 
         return this;
@@ -147,7 +147,7 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     public closeAll(): ClientLogger {
         for (let i = this.countOpenGroup; i--; i > 0) {
             this.countOpenGroup = i;
-            this.options.consoleInstance.groupEnd();
+            this.config.consoleInstance.groupEnd();
         }
         return this;
     }
@@ -163,7 +163,7 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     }
 
     private getGroupParams(options: string | Partial<GroupParams>, type: LoggerGroupType): GroupParams {
-        let configuration: GroupParams = this.options.configGroups[type];
+        let configuration: GroupParams = this.config.configGroups[type];
 
         if (typeof options === 'string') {
             configuration.label = options;
@@ -176,14 +176,14 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
 
     private generateGroup(configuration: GroupParams, pipeLine?: PipelineFn) {
         const {label, level, type} = configuration;
-        const canExecute = !(this.options.minLevel > level);
+        const canExecute = !(this.config.minLevel > level);
 
         if (canExecute) {
             this.executePipesGroup = true;
             this.countOpenGroup++;
             const labelText = this.getLabelText(level, ` ${label}`);
             const style = this.getStyleForLabel(level);
-            const consoleInstance = this.options.consoleInstance;
+            const consoleInstance = this.config.consoleInstance;
             consoleInstance[type].call(consoleInstance, labelText, style);
 
             if (pipeLine) {
@@ -198,8 +198,8 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     }
 
     private loggerMethodsFactory<T>(level: LoggerLevel, withoutLabel: boolean = false): T {
-        const canExecute = !(this.options.minLevel > level);
-        let operation = this.options.noop;
+        const canExecute = !(this.config.minLevel > level);
+        let operation = this.config.noop;
 
         if (canExecute) {
             const label = this.getLabelText(level);
@@ -231,7 +231,7 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     }
 
     private defineProperties<T>(level: LoggerLevel, operation: T): T {
-        const configGroups = this.options.configGroups;
+        const configGroups = this.config.configGroups;
         for (const index in configGroups) {
             if (configGroups.hasOwnProperty(index)) {
                 const group = configGroups[index];
@@ -251,18 +251,18 @@ export class ClientLogger implements JsonStringifyImpl, CssParserImpl {
     }
 
     private getConsoleMethodName(level: LoggerLevel): string {
-        return this.options.configMethods[level];
+        return this.config.configMethods[level];
     }
 
     private getLabelText(level: LoggerLevel, customLabel: string = ''): string {
-        const text = `${this.options.configLabel[level]}${customLabel}`;
-        const toUpperCase = this.options.labelUpperCase;
+        const text = `${this.config.configLabel[level]}${customLabel}`;
+        const toUpperCase = this.config.labelUpperCase;
         const labelText = toUpperCase ? text.toLocaleUpperCase() : text;
         return `%c${labelText}`;
     }
 
     private getStyleForLabel(level: LoggerLevel): string {
-        return `color: ${this.options.configColor[level]}; font-weight: bold;`;
+        return `color: ${this.config.configColor[level]}; font-weight: bold;`;
     }
 
 }

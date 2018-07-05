@@ -31,7 +31,6 @@
       "rxjs/Rx"
     ],
     "import-spacing": true,
-    "import-destructuring-spacing": true,
     "indent": [
       true,
       "spaces",
@@ -87,7 +86,6 @@
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "space-before-function-paren": [
@@ -142,13 +140,9 @@
       "check-preblock",
       "check-typecast"
     ],
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": true,
     "no-input-rename": false,
     "no-output-rename": false,
     "use-life-cycle-interface": false,
-    "use-pipe-transform-interface": true,
     "component-class-suffix": false,
     "directive-class-suffix": false
   }

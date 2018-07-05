@@ -1,4 +1,3 @@
-import { config } from '../../logger.config';
 import { LoggerConfigImpl } from '../../logger.impl';
 import { FormatLine, LineStyle, StyleKeyValue } from './css-parser.impl';
 
@@ -6,11 +5,9 @@ export class CssParser {
 
     private globalLineStyle: Partial<LineStyle> = {};
     private lineStyle: Partial<LineStyle> = {};
-    private readonly options: LoggerConfigImpl;
 
-    constructor(options: Partial<LoggerConfigImpl> = {}) {
-        this.options = {...config, ...options};
-        const {style, format} = this.options.lineStyle;
+    constructor(public readonly config: LoggerConfigImpl) {
+        const {style, format} = config.lineStyle;
         const newStyle = style && style.length ? `${style};` : '';
         this.globalLineStyle = {style: newStyle, format};
     }
@@ -56,7 +53,7 @@ export class CssParser {
         classList.forEach((clazz) => {
             let prevStyle = this.lineStyle.style || '';
             prevStyle = prevStyle.length ? `${prevStyle};` : prevStyle;
-            this.lineStyle.style = `${prevStyle}${this.options.cssClassMap[clazz]}`.trim();
+            this.lineStyle.style = `${prevStyle}${this.config.cssClassMap[clazz]}`.trim();
         });
         return this;
     }

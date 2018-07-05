@@ -1,6 +1,6 @@
-import { TestLoggerGroupType, LoggerInjector, TestLoggerLineType } from '../../helpers/converter';
-import { CUSTOM_COLORS, CUSTOM_LABELS } from '../../helpers/custom-colors.enum';
-import { ClientLogger, LoggerLevel } from '../../index';
+import { TestLoggerGroupType, LoggerInjector, TestLoggerLineType } from '../../utils/spec-helpers/converter';
+import { CUSTOM_COLORS, CUSTOM_LABELS } from '../../utils/spec-helpers/custom-colors.enum';
+import { ClientLogger, LoggerLevel } from './../../../index';
 import { expect } from 'chai';
 import 'mocha';
 

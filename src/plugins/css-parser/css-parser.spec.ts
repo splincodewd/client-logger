@@ -1,26 +1,26 @@
-import { LoggerInjector, TestLoggerLineType } from '../../../helpers/converter';
+import { LoggerInjector, TestLoggerLineType } from '../../utils/spec-helpers/converter';
 import { ClientLogger, LoggerLevel } from '../../../index';
 import { expect } from 'chai';
 import 'mocha';
 
 const myConsoleStream: Console = LoggerInjector.patch();
 
-const clientLogger = new ClientLogger({
-
-    // Since we are emulating the console
-    // and do not want the data to be output
-    // during testing, we make the monkey patching
-    consoleInstance: myConsoleStream,
-
-    cssClassMap: {
-        'class-1': 'font-weight: bold',
-        'class-2': 'text-decoration: line-through',
-        'class-3': 'color: #666'
-    }
-
-});
-
 describe('[TEST]: Check local console line style', () => {
+
+    const clientLogger = new ClientLogger({
+
+        // Since we are emulating the console
+        // and do not want the data to be output
+        // during testing, we make the monkey patching
+        consoleInstance: myConsoleStream,
+
+        cssClassMap: {
+            'class-1': 'font-weight: bold',
+            'class-2': 'text-decoration: line-through',
+            'class-3': 'color: #666'
+        }
+
+    });
 
     it(`Set style another console line `, () => {
 

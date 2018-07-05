@@ -1,14 +1,30 @@
-import {MyConsole} from "./MyConsole";
-import {greatBigJSON} from "./entity";
-import {ClientLogger, LoggerLevel, FormatLine} from '@splincode/client-logger';
+declare var require: any;
+export interface WindowLogger {
+  call: object;
+}
 
-window['testLogger'] = new ClientLogger(); // for testable in console runtime
+import { MyConsole } from './MyConsole';
+
+import { greatBigJSON } from './entity';
+import { environment } from '../../environments/environment';
+
+let LoggerAPI;
+if (environment.production) {
+  LoggerAPI = require(`../logger/lib.prod`).default;
+} else {
+  LoggerAPI = require(`../logger/lib.dev`).default;
+}
+
+
+
+const {ClientLogger, LoggerLevel, FormatLine} = LoggerAPI as any;
+const testLogger = windowLoggerInit();
 
 export class LoggerExamples {
 
   public static showExample1() {
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-basic-methods';
@@ -24,7 +40,7 @@ export class LoggerExamples {
 
   public static showExample2() {
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-groups';
@@ -54,7 +70,7 @@ export class LoggerExamples {
 
   public static showExample3() {
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-nested-groups';
@@ -105,7 +121,7 @@ export class LoggerExamples {
     const production = true;
     const level = production ? LoggerLevel.WARN : LoggerLevel.ALL;
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-set-minimal-logging-level';
@@ -124,7 +140,7 @@ export class LoggerExamples {
 
   public static showExample5() {
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-set-style-line';
@@ -145,7 +161,7 @@ export class LoggerExamples {
 
   public static showExample6() {
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-pretty-json';
@@ -167,7 +183,7 @@ export class LoggerExamples {
 
   public static showExample7() {
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-level-groups';
@@ -221,7 +237,7 @@ export class LoggerExamples {
 
   public static showExample8() {
 
-    const logger = new ClientLogger();
+    const logger = testLogger.call = new ClientLogger();
     logger.clear();
 
     const urlDocumentation = 'https://github.com/splincodewd/client-logger#example-clipboard';
@@ -239,7 +255,7 @@ export class LoggerExamples {
 
   public static showExample9() {
 
-    const logger = new ClientLogger({
+    const logger = testLogger.call = new ClientLogger({
       lineStyle: {
         style: 'color: red; text-decoration: underline; font-weight: bold; font-size: 15px',
         format: FormatLine.STRING
@@ -265,7 +281,7 @@ export class LoggerExamples {
 
   public static showExample10() {
 
-    const logger = new ClientLogger({
+    const logger = testLogger.call = new ClientLogger({
       cssClassMap: {
         'bold': 'font-weight: bold',
         'line-through': 'text-decoration: line-through',
@@ -299,7 +315,7 @@ export class LoggerExamples {
 
   public static showExampleEnd() {
 
-    const logger = new ClientLogger({
+    const logger = testLogger.call = new ClientLogger({
 
       // Drop-in replacement for console, if needed
       consoleInstance: new MyConsole() as Console,
@@ -340,4 +356,11 @@ export class LoggerExamples {
 
   }
 
+}
+
+
+function windowLoggerInit(): WindowLogger {
+  window['ClientLogger'] = ClientLogger;
+  const testLogger: WindowLogger = window['testLogger'] = {call: new ClientLogger()};
+  return testLogger;
 }

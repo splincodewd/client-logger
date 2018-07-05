@@ -1,19 +1,16 @@
 import { LoggerConfigImpl } from '../../logger.impl';
-import { config } from '../../logger.config';
 import { BaseType, JSONKeyValue, JsonStringifyConfigImpl } from './json-stringify.impl';
+import { SearchPattern } from './json-stringify.config';
 
 export class JsonStringify {
 
-    private readonly searchPattern: RegExp;
-    private readonly options: LoggerConfigImpl;
+    private readonly searchPattern: RegExp = SearchPattern;
 
-    constructor(options: Partial<LoggerConfigImpl> = {}) {
-        this.options = { ...config, ...options };
-        this.searchPattern = /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g;
+    constructor(public readonly config: LoggerConfigImpl) {
     }
 
     public stringify = (json: JSONKeyValue, options: Partial<JsonStringifyConfigImpl> = {}): string[] => {
-        const stringifyConfig = { ...this.options.stringify, ...options };
+        const stringifyConfig = { ...this.config.stringify, ...options };
         const { spaces, styles, enableColor, replacer } = stringifyConfig;
 
         if (typeof json !== 'string') {
