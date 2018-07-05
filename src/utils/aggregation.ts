@@ -2,7 +2,7 @@ import { LoggerConfigImpl } from '../logger.impl';
 
 export type Class = { new(...args: any[]): any; };
 
-export function ClassAggregation(baseClass: Class, ...mixins: any[]): Class {
+export function aggregation(baseClass: Class, ...mixins: any[]): Class {
     class Base extends baseClass {
         constructor(...args) {
             super(...args);

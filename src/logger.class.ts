@@ -7,13 +7,17 @@ import { JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl } from './plug
 import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/css-parser/css-parser.impl';
 import { ConsoleBaseApiImpl } from './plugins/console-base-api/console-base-api.impl';
 import { ConsoleBaseAPI } from './plugins/console-base-api/console-base-api.class';
-import { ClassAggregation } from './utils/aggregation';
+import { aggregation } from './utils/aggregation';
 
 export class ClientLogger
-    extends ClassAggregation(ConsoleBaseAPI, JsonStringify, CssParser)
+    extends aggregation(ConsoleBaseAPI, JsonStringify, CssParser)
     implements JsonStringifyImpl, CssParserImpl, ConsoleBaseApiImpl {
 
+    /**
+     * @description - initial runtime static configuration
+     */
     public static config: LoggerConfigImpl;
+
     /**
      * @description - improved JSON.stringify with color palette
      * @external JsonStringify
@@ -51,6 +55,7 @@ export class ClientLogger
      * @return {LineStyle} - current line style and format
      */
     public getCurrentLineStyle: () => LineStyle;
+
     public clipboard: Clipboard = new Clipboard();
     public readonly level: LoggerLevel;
     public readonly config: LoggerConfigImpl;
