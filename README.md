@@ -281,7 +281,7 @@ logger.info('For global configuration, use the constructor parameters');
 ### Example: set global style line
 
 ```typescript
-import { ClientLogger } from '@splincode/client-logger';
+import { ClientLogger, FormatLine } from '@splincode/client-logger';
 
 const logger = new ClientLogger({
     lineStyle: {
