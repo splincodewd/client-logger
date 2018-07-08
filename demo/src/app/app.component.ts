@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as devtools from 'devtools-detect';
 import { Examples } from './common/examples';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { Examples } from './common/examples';
 export class AppComponent implements OnInit {
 
   public loaded: boolean;
-  public devToolsIsOpen: boolean = devtools.open;
+  public devToolsIsOpen: boolean = environment.stackblitz || devtools.open;
   public LoggerExamplesTemplate = Examples;
 
   public ngOnInit() {
