@@ -1,23 +1,18 @@
 import { environment } from '../../environments/environment';
 
-declare var require: any;
-
-export interface WindowLogger {
-  call: object;
-}
-
-let LoggerAPI;
-if (environment.production) {
-  LoggerAPI = require(`../logger/lib.prod`).default;
-} else {
-  LoggerAPI = require(`../logger/lib.dev`).default;
-}
-
-const { ClientLogger } = LoggerAPI as any;
-
-export function windowLoggerInit(): WindowLogger {
+function windowLoggerInit(LoggerAPI) {
+  const { ClientLogger } = LoggerAPI as any;
   window['ClientLogger'] = ClientLogger;
-  return window['testLogger'] = { call: new ClientLogger() };
 }
 
-export default LoggerAPI;
+export async function LoggerInit() {
+  let LoggerAPI: any;
+  if (environment.production || environment.stackblitz) {
+    LoggerAPI = await import('./../logger/lib.prod');
+  } else {
+    LoggerAPI = await import('./../logger/lib.dev');
+  }
+
+  windowLoggerInit(LoggerAPI.default);
+  return LoggerAPI.default;
+}

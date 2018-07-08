@@ -1,12 +1,11 @@
 import { MyConsole } from './my-console';
 import { greatBigJSON } from './entity';
-import LoggerAPI from './init';
-
-const { ClientLogger, LoggerLevel, FormatLine } = LoggerAPI as any;
+import {LoggerInit} from './init';
 
 export class Examples {
 
-  public static showExample1() {
+  public static async showExample1() {
+    const { ClientLogger } = await LoggerInit();
 
     const logger = new ClientLogger();
     logger.clear();
@@ -22,7 +21,8 @@ export class Examples {
 
   }
 
-  public static showExample2() {
+  public static async showExample2() {
+    const { ClientLogger } = await LoggerInit();
 
     const logger = new ClientLogger();
     logger.clear();
@@ -52,7 +52,8 @@ export class Examples {
 
   }
 
-  public static showExample3() {
+  public static async showExample3() {
+    const { ClientLogger } = await LoggerInit();
 
     const logger = new ClientLogger();
     logger.clear();
@@ -100,7 +101,8 @@ export class Examples {
 
   }
 
-  public static showExample4() {
+  public static async showExample4() {
+    const { ClientLogger, LoggerLevel } = await LoggerInit();
 
     const production = true;
     const level = production ? LoggerLevel.WARN : LoggerLevel.ALL;
@@ -122,7 +124,8 @@ export class Examples {
 
   }
 
-  public static showExample5() {
+  public static async showExample5() {
+    const { ClientLogger } = await LoggerInit();
 
     const logger = new ClientLogger();
     logger.clear();
@@ -143,7 +146,8 @@ export class Examples {
 
   }
 
-  public static showExample6() {
+  public static async showExample6() {
+    const { ClientLogger } = await LoggerInit();
 
     const logger = new ClientLogger();
     logger.clear();
@@ -165,7 +169,8 @@ export class Examples {
 
   }
 
-  public static showExample7() {
+  public static async showExample7() {
+    const { ClientLogger, LoggerLevel } = await LoggerInit();
 
     const logger = new ClientLogger();
     logger.clear();
@@ -219,7 +224,8 @@ export class Examples {
 
   }
 
-  public static showExample8() {
+  public static async showExample8() {
+    const { ClientLogger, LoggerLevel } = await LoggerInit();
 
     const logger = new ClientLogger();
     logger.clear();
@@ -237,7 +243,8 @@ export class Examples {
 
   }
 
-  public static showExample9() {
+  public static async showExample9() {
+    const { ClientLogger, FormatLine } = await LoggerInit();
 
     const logger = new ClientLogger({
       lineStyle: {
@@ -263,7 +270,8 @@ export class Examples {
 
   }
 
-  public static showExample10() {
+  public static async showExample10() {
+    const { ClientLogger } = await LoggerInit();
 
     const logger = new ClientLogger({
       cssClassMap: {
@@ -297,7 +305,8 @@ export class Examples {
 
   }
 
-  public static showExampleEnd() {
+  public static async showExampleEnd() {
+    const { ClientLogger, LoggerLevel } = await LoggerInit();
 
     const logger = new ClientLogger({
 
