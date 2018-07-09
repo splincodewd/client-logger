@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as devtools from 'devtools-detect';
-import { Examples } from './common/examples';
+import { Examples } from './examples/examples.class';
 import { environment } from '../environments/environment';
 
 @Component({

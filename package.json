@@ -6,7 +6,7 @@
     "typings": "./lib/index.d.ts",
     "scripts": {
         "prepublishOnly": "tsc",
-        "lint": "tslint -c tslint.json 'src/**/*.ts'",
+        "lint": "tslint -c tslint.json '**/src/**/*.ts'",
         "start": "tsc && concurrently \"tsc -w\" \"npm run demo:serve\"",
         "demo:serve": "cd demo && npm install && npm run start",
         "test": "nyc --reporter=html --reporter=text mocha --opts ./mocha.opts",
