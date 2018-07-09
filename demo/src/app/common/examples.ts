@@ -1,6 +1,6 @@
 import { MyConsole } from './my-console';
 import { greatBigJSON } from './entity';
-import {LoggerInit} from './init';
+import { LoggerInit } from './init';
 
 export class Examples {
 
