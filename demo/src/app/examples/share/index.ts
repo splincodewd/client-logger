@@ -1,5 +1,5 @@
 import { environment } from '../../../environments/environment';
-import { ClientLogger, LoggerLevel, FormatLine } from '@splincode/client-logger';
+import { ClientLogger, FormatLine, LoggerLevel } from '@splincode/client-logger';
 
 function windowLoggerInit(LoggerAPI) {
   const { ClientLogger: Logger } = LoggerAPI;
@@ -9,10 +9,14 @@ function windowLoggerInit(LoggerAPI) {
 export async function LoggerBootstrapInit() {
   let LoggerAPI;
 
-  if (environment.production || environment.stackblitz) {
-    LoggerAPI = { ClientLogger, LoggerLevel, FormatLine };
-  } else {
-    LoggerAPI = await import('./../../../../../lib/index');
+  try {
+    if (environment.production || environment.stackblitz) {
+      LoggerAPI = { ClientLogger, LoggerLevel, FormatLine };
+    } else {
+      LoggerAPI = await import('./../../../../../lib/index');
+    }
+  } catch (e) {
+    console.error(e);
   }
 
   windowLoggerInit(LoggerAPI);
@@ -20,5 +24,7 @@ export async function LoggerBootstrapInit() {
 }
 
 declare global {
-  interface Window { ClientLogger: ClientLogger; }
+  interface Window {
+    ClientLogger: ClientLogger;
+  }
 }
