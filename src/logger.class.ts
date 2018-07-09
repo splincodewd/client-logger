@@ -1,7 +1,7 @@
 import { ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
 import { config as GlobalConfig, LoggerGroupType, LoggerLevel } from './logger.config';
 import { CssParser } from './plugins/css-parser/css-parser.class';
-import { Clipboard } from './plugins/clipboard.class';
+import { Clipboard } from './plugins/clipboard/clipboard.class';
 import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
 import { JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl } from './plugins/json-stringify/json-stringify.impl';
 import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/css-parser/css-parser.impl';
@@ -19,12 +19,19 @@ export class ClientLogger
     public static config: LoggerConfigImpl;
 
     /**
+     * @description - copy capability
+     * @type {Clipboard}
+     */
+    public clipboard: Clipboard = new Clipboard();
+
+    /**
      * @description - improved JSON.stringify with color palette
      * @external JsonStringify
      * @param {JSONKeyValue} json - JSON by string or object structure
      * @param {Partial<JsonStringifyConfigImpl>} options - option for print
      * @return {string[]} - the method returns an array of strings to output to the console.
      */
+
     public stringify: (json: JSONKeyValue, options?: Partial<JsonStringifyConfigImpl>) => string[];
     /**
      * @description - setting styles for the current output line
@@ -34,6 +41,7 @@ export class ClientLogger
      * @param {FormatLine} format - way to format the string (%s, %d, %f, %o, %O)
      * @return {this} - returns the current instance
      */
+
     public css: (styleFormat: StyleKeyValue, format?: FormatLine) => this;
     /**
      * @description - simplified work with styling a console line
@@ -42,21 +50,23 @@ export class ClientLogger
      * @param {string} classes - class list, example: class1 class2
      * @return {this} - returns the current instance
      */
+
     public cssClass: (classes: string) => this;
     /**
      * @description - clearing styles for the current output line
      * @external CssParser
      * @return {void}
      */
+
     public clearCssCurrentLine: () => void;
     /**
      * @description - getting local string styles
      * @external CssParser
      * @return {LineStyle} - current line style and format
      */
+
     public getCurrentLineStyle: () => LineStyle;
 
-    public clipboard: Clipboard = new Clipboard();
     public readonly level: LoggerLevel;
     public readonly config: LoggerConfigImpl;
     private countOpenGroup: number = 0;
@@ -117,12 +127,12 @@ export class ClientLogger
 
     public setLabels(labels: LoggerLabels): void {
         const configLabel = this.config.configLabel;
-        this.config.configLabel = {...configLabel, ...labels};
+        this.config.configLabel = { ...configLabel, ...labels };
     }
 
     public setColors(colors: LoggerColors): void {
         const configColor = this.config.configColor;
-        this.config.configColor = {...configColor, ...colors};
+        this.config.configColor = { ...configColor, ...colors };
     }
 
     public pipe(...pipelines: PipelineFn[]): ClientLogger {
@@ -166,14 +176,14 @@ export class ClientLogger
         if (typeof options === 'string') {
             configuration.label = options;
         } else {
-            configuration = {...configuration, ...options};
+            configuration = { ...configuration, ...options };
         }
 
         return configuration;
     }
 
     private generateGroup(configuration: GroupParams, pipeLine?: PipelineFn) {
-        const {label, level, type} = configuration;
+        const { label, level, type } = configuration;
         const canExecute = !(this.config.minLevel > level);
 
         if (canExecute) {
@@ -205,7 +215,7 @@ export class ClientLogger
             const methodName: string = withoutLabel ? 'log' : this.getConsoleMethodName(level);
             const consoleInstance = this.console;
             const consoleMethod = consoleInstance[methodName] || operation;
-            const {style: lineStyle, format: lineFormat} = this.getCurrentLineStyle();
+            const { style: lineStyle, format: lineFormat } = this.getCurrentLineStyle();
 
             if (lineStyle) {
                 this.clearCssCurrentLine();
@@ -239,7 +249,7 @@ export class ClientLogger
                     enumerable: true,
                     configurable: true,
                     value: (label: string, pipeLine?: PipelineFn) => {
-                        return this.generateGroup({label, level, type}, pipeLine);
+                        return this.generateGroup({ label, level, type }, pipeLine);
                     }
                 });
             }
