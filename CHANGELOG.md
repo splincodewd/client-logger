@@ -1,3 +1,59 @@
+## 1.0.0 (2018-07-09)
+
+##### Chores
+
+* **package:**  save security ([91016289](https://github.com/splincodewd/client-logger/commit/910162896900f4ff5c73184cb7748697929c9917))
+
+##### Continuous Integration
+
+* **demo:**
+  *  usage require for skip errors ([1fc5556c](https://github.com/splincodewd/client-logger/commit/1fc5556c9e95c83ed66edf032416184396651e94))
+  *  set try-catch for dev import ([9ebdaadd](https://github.com/splincodewd/client-logger/commit/9ebdaadd89bedca4511d9622de0fefe558bde108))
+  *  bugfix deploy ([b0257101](https://github.com/splincodewd/client-logger/commit/b0257101cd276edc1e598adb1a9a761d4c8e5418))
+  *  bugfix deploy ([da1f235f](https://github.com/splincodewd/client-logger/commit/da1f235f71e9fa509725ff5389866b1c812ef448))
+
+##### Documentation Changes
+
+* **README.md:**  add Format.Line ([9a6ab713](https://github.com/splincodewd/client-logger/commit/9a6ab7137f1e25d9bd32e25f32dbda5996cb2b59))
+* **REAMDE.md:**  remove unused scripts ([5a82dec3](https://github.com/splincodewd/client-logger/commit/5a82dec3658e69f563d82b2021d27bae1ae8e2d6))
+
+##### New Features
+
+* **logger:**
+  *  add benchmark ([d12e89bd](https://github.com/splincodewd/client-logger/commit/d12e89bdf92c3eef6bb80cb0e801942f1c146052))
+  *  new API for configuration plugins ([#47](https://github.com/splincodewd/client-logger/pull/47)) ([02f1455e](https://github.com/splincodewd/client-logger/commit/02f1455e3bdf65be6ea5a5825f1a244cdb61256f))
+* **demo:**  add repl on stackblitz and codesandbox ([c52806c3](https://github.com/splincodewd/client-logger/commit/c52806c3eca9464cb3595b66b93058a6813f4b96))
+
+##### Bug Fixes
+
+* **demo:**
+  *  add lint for demo ([5aae21ee](https://github.com/splincodewd/client-logger/commit/5aae21ee95387599bc6ac12cb18ecec46c65a80a))
+  *  auto open when usage stackblitz ([1a1b676f](https://github.com/splincodewd/client-logger/commit/1a1b676f69ccdca31ac96ff69ca20e96170529f5))
+  *  change es2015 to esnext ([e4b16679](https://github.com/splincodewd/client-logger/commit/e4b1667953cd928deee14f7e9c7637a28787d2a3))
+  *  remove require import (usage dynamic import) ([50d45405](https://github.com/splincodewd/client-logger/commit/50d4540510fb9906f008f0ee3879b45b5e9c3112))
+  *  remove detect lint ([912c8aff](https://github.com/splincodewd/client-logger/commit/912c8aff965fe0cf4fa86bcab65888cc6c3984ed))
+* **logger:**
+  *  update demo with add repl reference ([a2bbcc88](https://github.com/splincodewd/client-logger/commit/a2bbcc88260acaabbb56d30203f64479dbe17734))
+  *  set typing for aggregation mechanism ([27a7ce21](https://github.com/splincodewd/client-logger/commit/27a7ce21cb9734e257604f7731adb87633d3e1c6))
+* **packages:**  fixed npm audit problem ([d698a5ba](https://github.com/splincodewd/client-logger/commit/d698a5ba0f2df54d3af49a601b9c3f74a7d67f6e))
+
+##### Other Changes
+
+* **ISSUE_TEMPLATE:**  remove unused blocks ([ee8b526d](https://github.com/splincodewd/client-logger/commit/ee8b526d00fb77efdbe523c9f25f477070a8143d))
+* **logger:**  add 1.0.0-4 beta ([d19f4379](https://github.com/splincodewd/client-logger/commit/d19f4379145bff3e17b8e985930a19072a79ffbf))
+* **repo:**  add ISSUE_TEMPLATE.md ([11450121](https://github.com/splincodewd/client-logger/commit/11450121fc52434f5a83d583609d10fbdcefa3e1))
+
+##### Refactors
+
+* **logger:**
+  *  rename aggregation class ([2a2c6463](https://github.com/splincodewd/client-logger/commit/2a2c6463a340ef91072d0aa719b4e39c7eb7d60b))
+  *  new API extending ([255b0bd6](https://github.com/splincodewd/client-logger/commit/255b0bd67a07c0a32d4e8523c3ede471e4c25df5))
+* **ui:**  stackblitz enable ([5fbd8395](https://github.com/splincodewd/client-logger/commit/5fbd83955754a3f65f658e4d7dfcfbb8b83a8cb1))
+
+##### Tests
+
+* **logger:**  add test for clipboard ([604ca5ff](https://github.com/splincodewd/client-logger/commit/604ca5ffb24d1e3846c4d455232b1ba1620ab273))
+
 #### 0.5.1 (2018-04-08)
 
 ##### Chores
