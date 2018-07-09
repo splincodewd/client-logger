@@ -9,6 +9,7 @@
     "tslint:recommended"
   ],
   "rules": {
+    "no-var-requires": false,
     "prefer-for-of": false,
     "trailing-comma": [
       false,

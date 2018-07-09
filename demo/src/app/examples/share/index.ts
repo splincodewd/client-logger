@@ -13,10 +13,11 @@ export async function LoggerBootstrapInit() {
     if (environment.production || environment.stackblitz) {
       LoggerAPI = { ClientLogger, LoggerLevel, FormatLine };
     } else {
-      LoggerAPI = await import('./../../../../../lib/index');
+      const devAPI = await import('./lib.dev');
+      LoggerAPI = devAPI.default;
     }
   } catch (e) {
-    console.error(e);
+    console.log(e);
   }
 
   windowLoggerInit(LoggerAPI);
