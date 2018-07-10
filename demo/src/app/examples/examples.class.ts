@@ -1,5 +1,5 @@
-import { MyConsole } from './share/my-console';
-import { greatBigJSON } from './share/entity';
+import { MyConsole } from '@app/my-console';
+import { greatBigJSON } from '@app/entity';
 import { LoggerBootstrapInit } from './share';
 
 export class Examples {
@@ -236,9 +236,10 @@ export class Examples {
 
     const JsonValue = { a: 1, b: [1, 2, 3] };
 
-    logger.group('copy JSON', ({ log, stringify, clipboard }) => {
+    logger.group('copy JSON', ({ log, stringify, clipboard, table }) => {
       log(...stringify(clipboard.copy(JsonValue)));
-      log('The object you have on the clipboard ...', clipboard.paste());
+      log('The object you have on the clipboard ... \n', 'copy.paste() ->');
+      table(clipboard.paste());
     });
 
   }
@@ -280,7 +281,7 @@ export class Examples {
         'code-sandbox': `
                 color: #666;
                 background: #f4f4f4;
-				border-left: 3px solid #f36d33;
+                border-left: 3px solid #f36d33;
                 font-family: monospace;
                 font-size: 15px;
             `

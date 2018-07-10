@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as devtools from 'devtools-detect';
-import { Examples } from './examples/examples.class';
-import { environment } from '../environments/environment';
+import { Examples } from '@app/examples.class';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-root',

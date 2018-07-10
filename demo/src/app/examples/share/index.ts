@@ -1,4 +1,4 @@
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import { ClientLogger, FormatLine, LoggerLevel } from '@splincode/client-logger';
 
 function windowLoggerInit(LoggerAPI) {

@@ -1,7 +1,7 @@
-import { LoggerConfigImpl } from '../logger.impl';
-import { PluginImpl, Plugin } from '../plugins';
+import { LoggerConfigImpl } from '@logger/impl';
+import { PluginImpl, PluginType } from '@logger/plugins.impl';
 
-export function aggregation(BaseClass: PluginImpl, ...plugins: PluginImpl[]): Plugin {
+export function aggregation(BaseClass: PluginImpl, ...plugins: PluginImpl[]): PluginType {
     class Base extends BaseClass {
         constructor(public readonly config: LoggerConfigImpl) {
             super(config);

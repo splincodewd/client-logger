@@ -1,25 +1,23 @@
-import { ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from './logger.impl';
-import { config as GlobalConfig, LoggerGroupType, LoggerLevel } from './logger.config';
-import { CssParser } from './plugins/css-parser/css-parser.class';
-import { Clipboard } from './plugins/clipboard/clipboard.class';
-import { JsonStringify } from './plugins/json-stringify/json-stringify.class';
-import { JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl } from './plugins/json-stringify/json-stringify.impl';
-import { CssParserImpl, FormatLine, LineStyle, StyleKeyValue } from './plugins/css-parser/css-parser.impl';
-import { ConsoleBaseAPI } from './plugins/console-base-api/console-base-api.class';
-import { aggregation } from './utils/aggregation';
-import { ConsoleBaseApiImpl } from './plugins/console-base-api/console-base-api.impl';
+import { ConsoleBaseApiImpl, CssParserImpl, FormatLine, JSONKeyValue, JsonStringifyConfigImpl, JsonStringifyImpl, LineStyle, StyleKeyValue } from '@logger/plugins.impl';
+import { ConsoleOperationPipe, GroupParams, LoggerColors, LoggerConfigImpl, LoggerLabels, PipelineFn } from '@logger/impl';
+import { LOGGER_CONFIG, LoggerGroupType, LoggerLevel } from '@logger/config';
+import { Clipboard, ConsoleBaseAPI, CssParser, JsonStringify } from '@logger/plugins.class';
+import { aggregation } from '@logger/utils';
 
 export class ClientLogger
     extends aggregation(ConsoleBaseAPI, JsonStringify, CssParser)
     implements ConsoleBaseApiImpl, JsonStringifyImpl, CssParserImpl {
 
     /**
-     * @description - initial runtime static configuration
+     * @description - initial runtime configuration
      */
     public static config: LoggerConfigImpl;
+    public readonly config: LoggerConfigImpl;
 
     /**
-     * @description - copy capability
+     * @description - copies the current selection to the clipboard
+     * @property {function} copy [string] - copies to the clipboard
+     * @property {function} paste [ClipboardPasteImpl] - report on the success of copying
      * @type {Clipboard}
      */
     public clipboard: Clipboard = new Clipboard();
@@ -68,7 +66,6 @@ export class ClientLogger
     public getCurrentLineStyle: () => LineStyle;
 
     public readonly level: LoggerLevel;
-    public readonly config: LoggerConfigImpl;
     private countOpenGroup: number = 0;
     private executePipesGroup: boolean = true;
 
@@ -121,7 +118,7 @@ export class ClientLogger
     }
 
     private static initConfiguration(options: Partial<LoggerConfigImpl> = {}): LoggerConfigImpl {
-        this.config = { ...GlobalConfig, ...options };
+        this.config = { ...LOGGER_CONFIG, ...options };
         return this.config;
     }
 

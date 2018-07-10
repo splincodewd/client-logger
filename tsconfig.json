@@ -1,8 +1,13 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
+        "target": "es6",
         "module": "commonjs",
-        "target": "es5",
+        "moduleResolution": "node",
+        "rootDir": ".",
+        "baseUrl": "src",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "declaration": true,
         "lib": [
             "es2015",
             "es2017",
@@ -10,21 +15,38 @@
         ],
         "noImplicitAny": false,
         "sourceMap": false,
-        "declaration": true,
         "strictNullChecks": false,
         "suppressImplicitAnyIndexErrors": false,
-        "experimentalDecorators": true,
         "outDir": "./lib",
-        "moduleResolution": "node"
+        "paths": {
+            "@logger/plugins.class": [
+                "plugins/plugins.class.ts"
+            ],
+            "@logger/plugins.config": [
+                "plugins/plugins.config.ts"
+            ],
+            "@logger/plugins.impl": [
+                "plugins/plugins.impl.ts"
+            ],
+            "@logger/class": [
+                "logger.class.ts"
+            ],
+            "@logger/impl": [
+                "logger.impl.ts"
+            ],
+            "@logger/config": [
+                "logger.config.ts"
+            ],
+            "@logger/utils": [
+                "utils/index.ts"
+            ]
+        }
     },
-    "filesGlob": [
-        "./**/*.ts",
-        "!./node_modules/**/*.ts"
-    ],
     "files": [
         "./index.ts"
     ],
     "exclude": [
-        "node_modules/**"
+        "node_modules/**",
+        "demo/**"
     ]
 }

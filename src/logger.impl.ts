@@ -1,8 +1,8 @@
-import { LoggerGroupType, LoggerLevel } from './logger.config';
-import { ClientLogger } from './logger.class';
-import { JsonStringifyConfigImpl } from './plugins/json-stringify/json-stringify.impl';
-import { LineStyle, StringMap } from './plugins/css-parser/css-parser.impl';
-import { PluginImpl } from './plugins';
+import { LoggerGroupType, LoggerLevel } from '@logger/config';
+import { ClientLogger } from '@logger/class';
+import { JsonStringifyConfigImpl } from '@logger/plugins.impl';
+import { LineStyle, StringMap } from '@logger/plugins.impl';
+import { PluginImpl } from '@logger/plugins.impl';
 
 export interface LoggerConfigImpl {
     minLevel: LoggerLevel;

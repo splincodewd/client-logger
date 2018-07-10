@@ -1,6 +1,6 @@
-import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from './logger.impl';
-import { JsonStringifyConfig } from './plugins/json-stringify/json-stringify.config';
-import { CssClassStyleMap, LineStyleConfig } from './plugins/css-parser/css-parser.config';
+import { LoggerColors, LoggerConfigImpl, LoggerGroupsMethods, LoggerLabels, LoggerMethods } from '@logger/impl';
+import { JsonStringifyConfig } from '@logger/plugins.config';
+import { CssClassStyleMap, LineStyleConfig } from '@logger/plugins.config';
 
 export enum LABELS {
     TRACE = '[TRACE]:',
@@ -70,7 +70,7 @@ export const DEFAULT_GROUPS_CONFIG: LoggerGroupsMethods = {
     }
 };
 
-export const config: LoggerConfigImpl = {
+export const LOGGER_CONFIG: LoggerConfigImpl = {
     minLevel: LoggerLevel.ALL,
     consoleInstance: {...{}, ...(console || {})} as Console,
     configLabel: DEFAULT_LABELS,
