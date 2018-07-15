@@ -6,7 +6,6 @@
     "typings": "./lib/index.d.ts",
     "scripts": {
         "tsc": "tsc",
-        "prepublishOnly": "npm run build",
         "start": "npm run build && concurrently 'npm:lib:*'",
         "lib:demo": "cd demo && npm install && npm run start",
         "lib:rebuild": "onchange 'src/**/*.ts' -- npm run build",
