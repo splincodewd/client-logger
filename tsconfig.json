@@ -1,9 +1,8 @@
 {
+    "compileOnSave": false,
     "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
+        "target": "es5",
         "moduleResolution": "node",
-        "rootDir": ".",
         "baseUrl": "src",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -14,7 +13,7 @@
             "dom"
         ],
         "noImplicitAny": false,
-        "sourceMap": false,
+        "sourceMap": true,
         "strictNullChecks": false,
         "suppressImplicitAnyIndexErrors": false,
         "outDir": "./lib",
@@ -42,11 +41,15 @@
             ]
         }
     },
-    "files": [
-        "./index.ts"
+    "include": [
+        "./index.ts",
+        "./src/**/*"
     ],
     "exclude": [
-        "node_modules/**",
-        "demo/**"
+        "./node_modules/**",
+        "./src/benchmark/**",
+        "./src/utils/spec-helpers/**",
+        "./src/**/*.spec.ts",
+        "./demo/**"
     ]
 }

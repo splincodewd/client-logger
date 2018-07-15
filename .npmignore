@@ -1,31 +1,36 @@
-.idea/
-.nyc_output/
+# IDEA
+.idea
+*.iml
 
-.editorconfig
-gulpfile.js
-tsconfig.json
-tslint.json
-typings.json
-typings
+# Logs
+logs
+*.log
+npm-debug.log*
+package-lock.json
+.rpt2_cache
 
+# Coverage directory used by tools like istanbul
+coverage
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Output of 'npm pack'
+*.tgz
+
+# Custom for npm
 .github/
+demo/
+src/
 *.log
 *.tgz
 *.yml
 *.iml
 *.opts
 *.sh
-
-# directories
-node_modules/
-coverage/
-helpers/
-test/
-doc/
-dist/
-src/
-demo/
-
-# others
-index.html
-CHANGELOG.md
