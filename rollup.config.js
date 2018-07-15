@@ -5,7 +5,7 @@ import path from 'path';
 export default {
     input: path.resolve('index.ts'),
     output: [
-        { file: pkg.main, format: 'umd', name: pkg.name, sourcemap: true }
+        { file: pkg.main, format: 'umd', name: pkg.name }
     ],
     plugins: [
         typescript()

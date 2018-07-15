@@ -2,8 +2,10 @@
     "compileOnSave": false,
     "compilerOptions": {
         "target": "es5",
+        "module": "esnext",
         "moduleResolution": "node",
-        "baseUrl": "src",
+        "rootDir": ".",
+        "baseUrl": "./src",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "declaration": true,
@@ -13,37 +15,36 @@
             "dom"
         ],
         "noImplicitAny": false,
-        "sourceMap": true,
+        "sourceMap": false,
         "strictNullChecks": false,
         "suppressImplicitAnyIndexErrors": false,
         "outDir": "./lib",
         "paths": {
             "@logger/plugins.class": [
-                "plugins/plugins.class.ts"
+                "./plugins/plugins.class.ts"
             ],
             "@logger/plugins.config": [
-                "plugins/plugins.config.ts"
+                "./plugins/plugins.config.ts"
             ],
             "@logger/plugins.impl": [
-                "plugins/plugins.impl.ts"
+                "./plugins/plugins.impl.ts"
             ],
             "@logger/class": [
-                "logger.class.ts"
+                "./logger.class.ts"
             ],
             "@logger/impl": [
-                "logger.impl.ts"
+                "./logger.impl.ts"
             ],
             "@logger/config": [
-                "logger.config.ts"
+                "./logger.config.ts"
             ],
             "@logger/utils": [
-                "utils/index.ts"
+                "./utils/index.ts"
             ]
         }
     },
     "include": [
-        "./index.ts",
-        "./src/**/*"
+        "./index.ts"
     ],
     "exclude": [
         "./node_modules/**",

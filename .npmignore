@@ -34,3 +34,10 @@ src/
 *.iml
 *.opts
 *.sh
+
+# project files
+index.ts
+rollup.config.js
+tsconfig.json
+tslint.json
+.editorconfig
