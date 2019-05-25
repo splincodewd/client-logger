@@ -17,6 +17,8 @@ in the design and development of the enterprise application level.
 Easy setting of logging levels and convenient work with groups.
 Among other things, you can use meta programming (decorators).
 
+Implementation on Angular [here...](https://github.com/Angular-RU/angular-logger)
+
 ## Usage
 
 You could easily use this Logger in the browser. 
