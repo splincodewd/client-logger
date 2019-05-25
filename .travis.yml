@@ -1,0 +1,10 @@
+language: node_js
+sudo: false
+node_js:
+  - "9.3"
+install:
+  - npm install
+script:
+  - npm run build
+  - chmod +x deploy.sh
+  - export DEPLOY_TARGET_BRANCH=gh-pages && export BASE_PATH=dist && bash deploy.sh

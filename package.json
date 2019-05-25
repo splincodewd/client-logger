@@ -1,0 +1,39 @@
+{
+  "name": "demo",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --open --environment=staging",
+    "build": "ng build --prod"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^5.2.11",
+    "@angular/common": "^5.2.11",
+    "@angular/compiler": "^5.2.11",
+    "@angular/core": "^5.2.11",
+    "@angular/forms": "^5.2.11",
+    "@angular/http": "^5.2.11",
+    "@angular/platform-browser": "^5.2.11",
+    "@angular/platform-browser-dynamic": "^5.2.11",
+    "@angular/router": "^5.2.11",
+    "core-js": "^2.5.6",
+    "rxjs": "^5.5.11",
+    "zone.js": "^0.8.19",
+    "devtools-detect": "^2.2.0",
+    "@splincode/client-logger": "next"
+  },
+  "devDependencies": {
+    "@angular/cli": "~1.7.0",
+    "@angular/compiler-cli": "^5.2.11",
+    "@angular/language-service": "^5.2.11",
+    "@types/jasmine": "^2.8.7",
+    "@types/jasminewd2": "~2.0.2",
+    "@types/node": "^6.0.111",
+    "codelyzer": "^4.3.0",
+    "ts-node": "~4.1.0",
+    "tslint": "~5.9.1",
+    "typescript": "~2.5.3"
+  }
+}
